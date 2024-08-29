@@ -1,11 +1,11 @@
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import Footer, { beforeFooterStyle } from "../components/footer";
-import { login } from "../database/pocketbase";
+import { login, pb } from "../database/pocketbase";
 import { LoginResult } from "../database/enums";
 import LoadingSpinner from "../components/loading-spinner";
 import { msg } from "../language";
@@ -18,6 +18,14 @@ export default function LoginPage() {
 
   const [error, setError] = useState(LoginResult.SUCCESS);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (pb.authStore.isValid) {
+      navigate("/panel");
+    }
+  }, [navigate]);
+
+  if (pb.authStore.isValid) return null;
 
   const getErrorMessage = () => {
     switch (error) {
