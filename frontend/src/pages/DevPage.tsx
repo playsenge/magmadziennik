@@ -48,7 +48,7 @@ export default function DevPage() {
               <li key={subject.id} className="text-sm">
                 {subject.name} ({subject.shorthand}){" "}
                 <span
-                  onClick={() => devMsg(subject)}
+                  onClick={() => devMsg(JSON.stringify(subject, undefined, 2))}
                   className="cursor-pointer underline"
                 >
                   Log to console
