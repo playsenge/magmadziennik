@@ -6,6 +6,7 @@ export default function HomeTab() {
     <div className="grid grid-cols-3 gap-4">
   <div className="h-64 rounded-2xl bg-white">
     <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
+    <div className="rounded-xl border-3 p-5"><span className="block text-xl text-red-500 w-10 h-10">4+</span></div>
   </div>
   <div className="h-64 rounded-2xl bg-white">
   <h1 className="m-3 text-4xl">{msg.tabs.tests}</h1>

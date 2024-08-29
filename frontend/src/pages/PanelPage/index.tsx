@@ -148,7 +148,7 @@ export default function PanelPage() {
   );
 
   return (
-    <div className="flex">
+    <div className="flex bg-slate-200">
       {mobileExpanded && (
         <TransparentCover onClick={() => setMobileExpanded(false)} />
       )}
