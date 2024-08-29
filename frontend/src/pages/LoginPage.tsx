@@ -54,6 +54,7 @@ export default function LoginPage() {
             placeholder={msg.universal.password}
             ref={passwordInput}
             icon={<FaLock />}
+            minLength={8}
             name="password"
           />
           <Link to="/forgot-password" className="underline">
@@ -67,11 +68,11 @@ export default function LoginPage() {
 
               if (!emailInput.current || !passwordInput.current) return;
 
-              setLoading(true);
-              setError(LoginResult.SUCCESS);
-
               const email = emailInput.current.value;
               const password = passwordInput.current.value;
+
+              setLoading(true);
+              setError(LoginResult.SUCCESS);
 
               const result = await login(email, password);
 

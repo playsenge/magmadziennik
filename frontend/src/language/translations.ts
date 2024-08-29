@@ -23,6 +23,9 @@ export default {
             "server_side_error": "A server side error occurred. Still, our uptime is higher than that of Librus.",
             "forgot_password": "Forgot password?",
         },
+        "register_page": {
+            "password_too_short": "Your password must be at least 8 characters long.",
+        },
         "footer": {
             "gdpr": "GDPR",
             "contact": "Contact",
@@ -59,6 +62,10 @@ export default {
             "incorrect_email_or_password": "Nieprawidłowy e-mail lub hasło",
             "server_side_error": "Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż Librus.",
             "forgot_password": "Nie pamiętasz hasła?",
+            "password_too_short": "Twoje hasło musi mieć co najmniej 8 znaków.",
+        },
+        "register_page": {
+            "password_too_short": "Twoje hasło musi mieć co najmniej 8 znaków.",
         },
         "footer": {
             "gdpr": "RODO",
