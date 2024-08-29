@@ -7,7 +7,7 @@ import { LuCalendarDays } from "react-icons/lu";
 import { FiMessageSquare } from "react-icons/fi";
 import { IoIosCheckmarkCircleOutline, IoIosSettings } from "react-icons/io";
 import { RiFilePaper2Line } from "react-icons/ri";
-import { FaBars, FaCircle, FaDotCircle, FaPenFancy } from "react-icons/fa";
+import { FaBars, FaPenFancy } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
 import { AiOutlineAppstore } from "react-icons/ai";
 
