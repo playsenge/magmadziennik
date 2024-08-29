@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { pb, userAvatar } from "../../database/pocketbase";
 import { UserGeneric } from "../../database/interfaces";
 import { msg } from "../../language";
@@ -22,6 +22,7 @@ import SettingsTab from "./tabs/SettingsTab";
 import React from "react";
 import LanguageSwitcher from "../../components/language-switcher";
 import TransparentCover from "../../components/transparent-cover";
+import { AnimatePresence, motion } from "framer-motion";
 
 enum CurrentTab {
   HOME,
@@ -101,58 +102,71 @@ export default function PanelPage() {
         <TransparentCover onClick={() => setUserDropdownOpen(false)} />
       )}
 
-      <div
-        className={`${mobileExpanded ? "block w-full" : "hidden"} h-screen bg-gray-800 text-white md:block md:w-64`}
-      >
-        <MobileExpander className="absolute right-[0.4rem] top-3 bg-gray-700" />
-        <div className="flex items-center p-4 text-lg font-bold">
-          {getTimeOfDay()}, {user.first_name}!
-        </div>
-        <nav>
-          <NavTab
-            icon={<AiOutlineAppstore />}
-            label={msg.tabs.home}
-            value={CurrentTab.HOME}
-          />
-          <NavTab
-            icon={<LuCalendarDays />}
-            label={msg.tabs.timetable}
-            value={CurrentTab.TIMETABLE}
-          />
-          <NavTab
-            icon={<FaListCheck />}
-            label={msg.tabs.grades}
-            value={CurrentTab.GRADES}
-          />
-          <NavTab
-            icon={<FaPenFancy />}
-            label={msg.tabs.tests}
-            value={CurrentTab.TESTS}
-          />
-          <NavTab
-            icon={<RiFilePaper2Line />}
-            label={msg.tabs.homework}
-            value={CurrentTab.HOMEWORK}
-          />
-          <NavTab
-            icon={<IoIosCheckmarkCircleOutline />}
-            label={msg.tabs.attendance}
-            value={CurrentTab.ATTENDANCE}
-          />
-          <NavTab
-            icon={<FiMessageSquare />}
-            label={msg.tabs.messages}
-            value={CurrentTab.MESSAGES}
-          />
-          <NavTab
-            icon={<IoIosSettings />}
-            label={msg.tabs.settings}
-            value={CurrentTab.SETTINGS}
-          />
-        </nav>
-      </div>
+      <AnimatePresence>
+        <motion.div
+          className={`${mobileExpanded ? "block w-full" : "hidden"} h-screen bg-gray-800 text-white md:block md:w-64`}
+          transition={{
+            type: "spring",
+            bounce: 0.25,
+            stiffness: 130,
+            damping: 9,
+            duration: 0.3,
+          }}
+        >
+          <MobileExpander className="absolute right-[0.4rem] top-3 bg-gray-700" />
+          <div className="flex items-center p-4 text-lg font-bold">
+            {getTimeOfDay()}, {user.first_name}!
+          </div>
+          <nav>
+            <NavTab
+              icon={<AiOutlineAppstore />}
+              label={msg.tabs.home}
+              value={CurrentTab.HOME}
+            />
+            <NavTab
+              icon={<LuCalendarDays />}
+              label={msg.tabs.timetable}
+              value={CurrentTab.TIMETABLE}
+            />
+            <NavTab
+              icon={<FaListCheck />}
+              label={msg.tabs.grades}
+              value={CurrentTab.GRADES}
+            />
+            <NavTab
+              icon={<FaPenFancy />}
+              label={msg.tabs.tests}
+              value={CurrentTab.TESTS}
+            />
+            <NavTab
+              icon={<RiFilePaper2Line />}
+              label={msg.tabs.homework}
+              value={CurrentTab.HOMEWORK}
+            />
+            <NavTab
+              icon={<IoIosCheckmarkCircleOutline />}
+              label={msg.tabs.attendance}
+              value={CurrentTab.ATTENDANCE}
+            />
+            <NavTab
+              icon={<FiMessageSquare />}
+              label={msg.tabs.messages}
+              value={CurrentTab.MESSAGES}
+            />
+            <NavTab
+              icon={<IoIosSettings />}
+              label={msg.tabs.settings}
+              value={CurrentTab.SETTINGS}
+            />
+          </nav>
+        </motion.div>
+      </AnimatePresence>
       <div className={`flex-1 p-6 ${mobileExpanded ? "hidden md:block" : ""}`}>
+
         <div className="-m-6 mb-6 flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
+          <Link className="quicksand ml-4 mr-auto text-3xl text-slate-500" to="/">
+            MAGMA
+          </Link>
           <div className="flex flex-row items-center justify-center gap-2">
             <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
           </div>
