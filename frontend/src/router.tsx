@@ -4,11 +4,13 @@ import "./index.css";
 import { AnimatePresence } from "framer-motion"; // Assuming 'framer-motion' is the library where 'AnimatePresence' is defined
 import MainPage from "./pages/MainPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 
 const App = () => (
   <AnimatePresence mode="wait">
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage/>} />
     </Routes>
   </AnimatePresence>
 );
