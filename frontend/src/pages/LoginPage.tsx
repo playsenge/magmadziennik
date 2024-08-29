@@ -6,6 +6,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import Footer from "../components/footer";
 import { login } from "../database/pocketbase";
+import { LoginResult } from "../database/enums";
 
 export default function LoginPage() {
   const emailInput = useRef<HTMLInputElement>(null);
@@ -33,12 +34,13 @@ export default function LoginPage() {
             Zapomniałeś hasła?
           </Link>
           <Button
-            onClick={() => {
+            onClick={async () => {
               if (!emailInput.current || !passwordInput.current) return;
 
               const email = emailInput.current.value;
               const password = passwordInput.current.value;
-              login(email, password);
+
+              const result = await login(email, password);
             }}
           >
             Zaloguj się

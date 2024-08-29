@@ -1,0 +1,5 @@
+export enum LoginResult { 
+    SUCCESS,
+    INCORRECT_EMAIL_OR_PASSWORD,
+    UNIDENTIFIED_ERROR,
+}

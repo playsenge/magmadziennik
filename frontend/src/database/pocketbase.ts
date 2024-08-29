@@ -1,6 +1,7 @@
-import PocketBase from "pocketbase";
+import PocketBase, { ClientResponseError } from "pocketbase";
 import { useEffect, useState } from "react";
 import { Student, Teacher, UserGeneric } from "./interfaces";
+import { LoginResult } from "./enums";
 
 export const pb = new PocketBase(
     "https://magmapb.senge1337.cc"
@@ -34,6 +35,17 @@ export const formatUsername = (username: string) => {
     return username.replace(/[^0-9A-Za-z_-]/g, "");
 };
 
-export const login = async (email: string, password: string) => {
-    alert(`(teraz będzie próbówał backend logowanie z danymi ${email} i ${password})`);
-}
+export const login = async (email: string, password: string): Promise<LoginResult> => { 
+    try {
+        await pb.collection("students").authWithPassword(email, password);
+    } catch (e) {
+        if (e instanceof ClientResponseError) {
+            if (e.status === 400) {  // Check for the status code instead of response.code
+                return LoginResult.INCORRECT_EMAIL_OR_PASSWORD;
+            }
+        }
+        return LoginResult.UNIDENTIFIED_ERROR;
+    }
+
+    return LoginResult.SUCCESS;
+};
