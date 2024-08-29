@@ -98,5 +98,57 @@ export default {
             "messages": "Wiadomości",
             "settings": "Ustawienia"
         }
+    },
+
+    "sb": {
+        "name": "Sigma",
+        "flag": "va",
+
+        "universal": {
+            "subjects": "Classes 'n Stuff",
+            "timetable": "When's My Stuff",
+            "grades": "W's and L's",
+            "account": "My Spot",
+            "logout": "Peace Out",
+            "login": "Hop In",
+            "password": "Secret Code"
+        },
+        "dev_page": {
+            "title": "Skibidi Dev Zone",
+            "your_subjects": "Your Classes 'n Stuff",
+            "login_as_demo": "Hop in as Demo",
+            "log_to_console": "Yeet to Console"
+        },
+        "login_page": {
+            "incorrect_email_or_password": "Bruh, wrong email or secret code",
+            "server_side_error": "Server bugged out. But hey, we still got better uptime than Ohio Librus.",
+            "forgot_password": "Forgot your secret code?",
+            "password_too_short": "Yo, your secret code needs at least 8 letters."
+        },
+        "register_page": {
+            "password_too_short": "Yo, your secret code needs at least 8 letters."
+        },
+        "footer": {
+            "gdpr": "GDPR Vibes",
+            "contact": "Hit Us Up",
+            "about_us": "Our Squad",
+            "privacy_policy": "Privacy Vibes"
+        },
+        "greetings": {
+            "morning": "Skibidi Morning!",
+            "afternoon": "Skibidi Afternoon!",
+            "evening": "Skibidi Evening!"
+        },
+        "tabs": {
+            "home": "Main Vibe",
+            "timetable": "When's My Stuff",
+            "grades": "W's and L's",
+            "tests": "Tests 'n Quizzes",
+            "homework": "Homework Grind",
+            "attendance": "Who's Here?",
+            "messages": "Chatbox",
+            "settings": "Fix Yo Stuff"
+        }
     }
+
 };
