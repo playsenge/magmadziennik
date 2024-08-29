@@ -35,9 +35,9 @@ export const formatUsername = (username: string) => {
     return username.replace(/[^0-9A-Za-z_-]/g, "");
 };
 
-export const login = async (email: string, password: string): Promise<LoginResult> => { 
+export const login = async (email: string, password: string, teacher?: boolean): Promise<LoginResult> => { 
     try {
-        await pb.collection("students").authWithPassword(email, password);
+        await pb.collection(teacher ? "teachers" : "students").authWithPassword(email, password);
     } catch (e) {
         if (e instanceof ClientResponseError) {
             if (e.status === 400) {  // Check for the status code instead of response.code
