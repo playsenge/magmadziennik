@@ -99,7 +99,7 @@ export default function PanelPage() {
         >
           <MobileExpander className="absolute right-5 top-5 bg-gray-700" />
           <div className="flex items-center p-4 text-lg font-bold">
-            {getTimeOfDay()}, {user.first_name}
+            {getTimeOfDay()}, {user.first_name}!
           </div>
           <nav className="*:block *:rounded *:px-4 *:py-2.5">
             <NavTab
