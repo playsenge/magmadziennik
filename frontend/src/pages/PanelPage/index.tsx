@@ -96,75 +96,86 @@ export default function PanelPage() {
     </button>
   ));
 
+  const NavContents = (
+    <>
+      <MobileExpander className="absolute right-4 top-4 bg-gray-700" />
+      <div className="flex items-center p-4 text-lg font-bold">
+        {getTimeOfDay()}, {user.first_name}!
+      </div>
+      <nav>
+        <NavTab
+          icon={<AiOutlineAppstore />}
+          label={msg.tabs.home}
+          value={CurrentTab.HOME}
+        />
+        <NavTab
+          icon={<LuCalendarDays />}
+          label={msg.tabs.timetable}
+          value={CurrentTab.TIMETABLE}
+        />
+        <NavTab
+          icon={<FaListCheck />}
+          label={msg.tabs.grades}
+          value={CurrentTab.GRADES}
+        />
+        <NavTab
+          icon={<FaPenFancy />}
+          label={msg.tabs.tests}
+          value={CurrentTab.TESTS}
+        />
+        <NavTab
+          icon={<RiFilePaper2Line />}
+          label={msg.tabs.homework}
+          value={CurrentTab.HOMEWORK}
+        />
+        <NavTab
+          icon={<IoIosCheckmarkCircleOutline />}
+          label={msg.tabs.attendance}
+          value={CurrentTab.ATTENDANCE}
+        />
+        <NavTab
+          icon={<FiMessageSquare />}
+          label={msg.tabs.messages}
+          value={CurrentTab.MESSAGES}
+        />
+        <NavTab
+          icon={<IoIosSettings />}
+          label={msg.tabs.settings}
+          value={CurrentTab.SETTINGS}
+        />
+      </nav>
+    </>
+  );
+
   return (
     <div className="flex">
-      {userDropdownOpen && (
-        <TransparentCover onClick={() => setUserDropdownOpen(false)} />
+      {mobileExpanded && (
+        <TransparentCover onClick={() => setMobileExpanded(false)} />
       )}
 
-      <AnimatePresence>
-        <motion.div
-          className={`${mobileExpanded ? "block w-full" : "hidden"} h-screen bg-gray-800 text-white md:block md:w-64`}
-          transition={{
-            type: "spring",
-            bounce: 0.25,
-            stiffness: 130,
-            damping: 9,
-            duration: 0.3,
-          }}
-        >
-          <MobileExpander className="absolute right-[0.4rem] top-3 bg-gray-700" />
-          <div className="flex items-center p-4 text-lg font-bold">
-            {getTimeOfDay()}, {user.first_name}!
-          </div>
-          <nav>
-            <NavTab
-              icon={<AiOutlineAppstore />}
-              label={msg.tabs.home}
-              value={CurrentTab.HOME}
-            />
-            <NavTab
-              icon={<LuCalendarDays />}
-              label={msg.tabs.timetable}
-              value={CurrentTab.TIMETABLE}
-            />
-            <NavTab
-              icon={<FaListCheck />}
-              label={msg.tabs.grades}
-              value={CurrentTab.GRADES}
-            />
-            <NavTab
-              icon={<FaPenFancy />}
-              label={msg.tabs.tests}
-              value={CurrentTab.TESTS}
-            />
-            <NavTab
-              icon={<RiFilePaper2Line />}
-              label={msg.tabs.homework}
-              value={CurrentTab.HOMEWORK}
-            />
-            <NavTab
-              icon={<IoIosCheckmarkCircleOutline />}
-              label={msg.tabs.attendance}
-              value={CurrentTab.ATTENDANCE}
-            />
-            <NavTab
-              icon={<FiMessageSquare />}
-              label={msg.tabs.messages}
-              value={CurrentTab.MESSAGES}
-            />
-            <NavTab
-              icon={<IoIosSettings />}
-              label={msg.tabs.settings}
-              value={CurrentTab.SETTINGS}
-            />
-          </nav>
-        </motion.div>
+      <AnimatePresence mode="wait">
+        {mobileExpanded && (
+          <motion.div
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "keyframes", stiffness: 300 }}
+            className="fixed left-0 top-0 z-50 h-screen w-full bg-gray-800 text-white md:hidden"
+          >
+            {NavContents}
+          </motion.div>
+        )}
       </AnimatePresence>
-      <div className={`flex-1 p-6 ${mobileExpanded ? "hidden md:block" : ""}`}>
+      <div className="z-50 hidden h-screen w-64 bg-gray-800 text-white md:block">
+        {NavContents}
+      </div>
 
+      <div className={`flex-1 p-6 ${mobileExpanded ? "overflow-hidden" : ""}`}>
         <div className="-m-6 mb-6 flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
-          <Link className="quicksand ml-4 mr-auto text-3xl text-slate-500" to="/">
+          <Link
+            className="quicksand ml-4 mr-auto text-3xl text-slate-500"
+            to="/"
+          >
             MAGMA
           </Link>
           <div className="flex flex-row items-center justify-center gap-2">
