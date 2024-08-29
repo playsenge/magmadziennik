@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pb } from "../../database/pocketbase";
 import { UserGeneric } from "../../database/interfaces";
@@ -59,29 +59,31 @@ export default function PanelPage() {
     return msg.greetings.evening;
   };
 
-  const NavTab = ({
-    icon,
-    label,
-    value,
-  }: {
-    icon: JSX.Element;
-    label: string;
-    value: CurrentTab;
-  }) => (
-    <span
-      className={
-        value === currentTab
-          ? "bg-gray-700"
-          : "cursor-pointer hover:bg-gray-600"
-      }
-      onClick={() => setCurrentTab(value)}
-    >
-      {React.cloneElement(icon, { className: "me-2 inline text-2xl" })}
-      {label}
-    </span>
+  const NavTab = memo(
+    ({
+      icon,
+      label,
+      value,
+    }: {
+      icon: JSX.Element;
+      label: string;
+      value: CurrentTab;
+    }) => (
+      <span
+        className={
+          value === currentTab
+            ? "bg-gray-700"
+            : "cursor-pointer hover:bg-gray-600"
+        }
+        onClick={() => setCurrentTab(value)}
+      >
+        {React.cloneElement(icon, { className: "me-2 inline text-2xl" })}
+        {label}
+      </span>
+    ),
   );
 
-  const MobileExpander = ({ className }: { className: string }) => (
+  const MobileExpander = memo(({ className }: { className: string }) => (
     <button
       id="menuBtn"
       className={`block rounded p-2 text-white md:hidden ${className}`}
@@ -89,7 +91,7 @@ export default function PanelPage() {
     >
       <FaBars />
     </button>
-  );
+  ));
 
   return (
     <div>
