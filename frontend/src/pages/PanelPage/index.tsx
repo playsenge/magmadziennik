@@ -1,13 +1,13 @@
 import { memo, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { pb } from "../../database/pocketbase";
+import { pb, userAvatar } from "../../database/pocketbase";
 import { UserGeneric } from "../../database/interfaces";
 import { msg } from "../../language";
 import { LuCalendarDays } from "react-icons/lu";
 import { FiMessageSquare } from "react-icons/fi";
 import { IoIosCheckmarkCircleOutline, IoIosSettings } from "react-icons/io";
 import { RiFilePaper2Line } from "react-icons/ri";
-import { FaBars, FaPenFancy } from "react-icons/fa";
+import { FaBars, FaCircle, FaDotCircle, FaPenFancy } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
 import { AiOutlineAppstore } from "react-icons/ai";
 
@@ -98,7 +98,7 @@ export default function PanelPage() {
       <div
         className={`${mobileExpanded ? "block w-full" : "hidden"} h-screen bg-gray-800 text-white md:block md:w-64`}
       >
-        <MobileExpander className="absolute right-5 top-5 bg-gray-700" />
+        <MobileExpander className="absolute right-5 top-3 bg-gray-700" />
         <div className="flex items-center p-4 text-lg font-bold">
           {getTimeOfDay()}, {user.first_name}!
         </div>
@@ -146,10 +146,17 @@ export default function PanelPage() {
         </nav>
       </div>
       <div className={`flex-1 p-6 ${mobileExpanded ? "hidden md:block" : ""}`}>
-        <MobileExpander className="absolute right-5 top-5 bg-gray-800" />
-
-        <div className="absolute right-[3.75rem] top-5 flex flex-row items-center justify-center md:right-6 md:top-6">
-          <LanguageSwitcher imageClasses="w-10 px-1" />
+        <div className="-m-6 mb-6 flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
+          <div className="flex flex-row items-center justify-center gap-2">
+            <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
+          </div>
+          <div className="mx-3 block h-14 w-1 rounded-full bg-gray-300"></div>
+          <img
+            src={userAvatar()}
+            alt="Avatar"
+            className="aspect-square size-8 rounded-full border-4 border-gray-300 object-cover"
+          />
+          <MobileExpander className="ml-4 bg-gray-800" />
         </div>
 
         {currentTab === CurrentTab.HOME && <HomeTab />}
