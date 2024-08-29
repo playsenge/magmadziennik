@@ -4,6 +4,7 @@ import { Subject } from "../database/interfaces";
 import { Button } from "../components/ui/button";
 import { useRerender } from "../components/hooks/rerender";
 import LoadingSpinner from "../components/loading-spinner";
+import { devMsg } from "../utils";
 
 export default function DevPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -15,7 +16,7 @@ export default function DevPage() {
         const fetchedSubjects = await getSubjects();
         setSubjects(fetchedSubjects);
       } catch (error) {
-        console.error("Failed to fetch subjects:", error);
+        devMsg("Failed to fetch subjects: " + error);
       }
     };
     fetchSubjects();
@@ -31,7 +32,7 @@ export default function DevPage() {
       await login("demo@demo.com", "12345678");
       rerender();
     } catch (error) {
-      console.error("Login failed:", error);
+      devMsg("Login failed: " + error);
     }
   };
 
@@ -47,7 +48,7 @@ export default function DevPage() {
               <li key={subject.id} className="text-sm">
                 {subject.name} ({subject.shorthand}){" "}
                 <span
-                  onClick={() => console.log(subject)}
+                  onClick={() => devMsg(subject)}
                   className="cursor-pointer underline"
                 >
                   Log to console
