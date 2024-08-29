@@ -15,7 +15,7 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex h-[93vh] items-center justify-center">
-        <div className="flex flex-col items-center justify-center gap-5 rounded-xl bg-gray-700 p-12 text-white shadow-xl shadow-slate-800">
+        <form className="flex flex-col items-center justify-center gap-5 rounded-xl bg-gray-700 p-12 text-white shadow-xl shadow-slate-800">
           <h1 className="text-4xl font-bold">Zaloguj się</h1>
           <Input
             className="bg-slate-600"
@@ -23,41 +23,48 @@ export default function LoginPage() {
             placeholder="E-mail"
             ref={emailInput}
             icon={<MdOutlineAlternateEmail />}
+            name="email"
           />
           <Input
             type="password"
             placeholder="Hasło"
             ref={passwordInput}
             icon={<FaLock />}
+            name="password"
           />
           <Link to="/forgot-password" className="underline">
             Zapomniałeś hasła?
           </Link>
           <Button
-            onClick={async () => {
+            type="submit"
+            onClick={async (e) => {
+              e.preventDefault();
+
               if (!emailInput.current || !passwordInput.current) return;
 
               const email = emailInput.current.value;
               const password = passwordInput.current.value;
 
               const result = await login(email, password);
-              switch(result)
-              {
+
+              switch (result) {
                 case LoginResult.SUCCESS:
-                    alert("Zalogowano!");
-                    break;
+                  alert("Zalogowano!");
+                  break;
                 case LoginResult.INCORRECT_EMAIL_OR_PASSWORD:
-                    alert("Nieprawidłowy e-mail lub hasło");
-                    break;
+                  alert("Nieprawidłowy e-mail lub hasło");
+                  break;
                 case LoginResult.UNIDENTIFIED_ERROR:
-                    alert("Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż librus.");
-                    break;
+                  alert(
+                    "Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż librus.",
+                  );
+                  break;
               }
             }}
           >
             Zaloguj się
           </Button>
-        </div>
+        </form>
       </div>
       <Footer />
     </>
