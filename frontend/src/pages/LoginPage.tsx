@@ -50,7 +50,7 @@ export default function LoginPage() {
 
               switch (result) {
                 case LoginResult.SUCCESS:
-                    navigate("/panel");
+                  navigate("/panel");
                   break;
                 case LoginResult.INCORRECT_EMAIL_OR_PASSWORD:
                   alert("Nieprawidłowy e-mail lub hasło");
