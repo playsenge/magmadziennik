@@ -53,6 +53,8 @@ export default function DevPage() {
     }
   };
 
+  if (!import.meta.env.DEV) return null;
+
   return (
     <div className="ml-4 mt-4 space-y-4">
       <h1 className="text-3xl font-bold">Dev Page</h1>

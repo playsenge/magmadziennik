@@ -13,32 +13,13 @@ export interface UserGeneric {
     updated: Date;
 }
 
-export interface Student {
-    id: string;
-    username: string;
-    email: string;
-    first_name: string;
-    last_name: string;
+export interface Student extends UserGeneric {
     date_of_birth: Date;
     address: string;
-    phone_number: string;
-    subjects: string[];
-    avatar: string;
-    created: Date;
-    updated: Date;
 }
 
-export interface Teacher {
-    id: string;
-    username: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-    phone_number: string;
-    subjects: string[];
-    avatar: string;
-    created: Date;
-    updated: Date;
+export interface Teacher extends UserGeneric {
+    admin: boolean;
 }
 
 export interface Subject {
