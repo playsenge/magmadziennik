@@ -75,3 +75,17 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+@keyframes rotating {
+	0% {
+		transform: rotate(0)
+	}
+
+	to {
+		transform: rotate(360deg)
+	}
+}
+
+.rotating {
+	animation: rotating 2s linear infinite
+}

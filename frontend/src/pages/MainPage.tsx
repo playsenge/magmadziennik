@@ -1,23 +1,13 @@
-import { useState } from "react";
-import { Button } from "../components/ui/button";
-import { AiFillDiscord } from "react-icons/ai";
+import { useEffect } from "react";
+import { pb } from "../database/pocketbase";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
-  const [counter, setCounter] = useState(0);
+  const navigate = useNavigate();
 
-  return (
-    <h1>
-      Hello World! {counter}
-      <AiFillDiscord className="text-9xl" />
-      <Button
-        className="mt-4 flex items-center justify-center pb-4"
-        onClick={() => {
-          alert("hi!");
-          setCounter(counter + 1);
-        }}
-      >
-        Test
-      </Button>
-    </h1>
-  );
+  useEffect(() => {
+    navigate(pb.authStore.isValid ? "/panel" : "/login");
+  }, [navigate]);
+
+  return null;
 }
