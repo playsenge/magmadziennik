@@ -36,6 +36,16 @@ export default {
             "morning": "Good morning",
             "afternoon": "Good afternoon",
             "evening": "Good evening",
+        },
+        "tabs": {
+            "home": "Home",
+            "timetable": "Timetable",
+            "grades": "Grades",
+            "tests": "Tests",
+            "homework": "Homework",
+            "attendance": "Attendance",
+            "messages": "Messages",
+            "settings": "Settings",
         }
     },
 
@@ -77,6 +87,16 @@ export default {
             "morning": "Dzień dobry",
             "afternoon": "Dzień dobry",
             "evening": "Dobry wieczór",
+        },
+        "tabs": {
+            "home": "Strona główna",
+            "timetable": "Plan lekcji",
+            "grades": "Oceny",
+            "tests": "Sprawdziany",
+            "homework": "Zadania domowe",
+            "attendance": "Frekwencja",
+            "messages": "Wiadomości",
+            "settings": "Ustawienia"
         }
     }
 };
