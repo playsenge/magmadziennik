@@ -12,7 +12,7 @@ import { FaListCheck } from "react-icons/fa6";
 import { AiOutlineAppstore } from "react-icons/ai";
 
 import HomeTab from "./tabs/HomeTab";
-import TimetableTab from "./tabs/TimeTableTab";
+import TimetableTab from "./tabs/TimetableTab";
 import GradesTab from "./tabs/GradesTab";
 import TestsTab from "./tabs/TestsTab";
 import HomeworkTab from "./tabs/HomeworkTab";
