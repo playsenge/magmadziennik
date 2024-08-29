@@ -3,6 +3,7 @@ import { getSubjects, login, pb } from "../database/pocketbase";
 import { Subject } from "../database/interfaces";
 import { Button } from "../components/ui/button";
 import { useRerender } from "../components/hooks/rerender";
+import LoadingSpinner from "../components/loading-spinner";
 
 export default function DevPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -40,19 +41,23 @@ export default function DevPage() {
 
       <section>
         <h2 className="text-xl font-semibold">Subjects</h2>
-        <ul className="ml-6 list-disc space-y-1">
-          {subjects.map((subject) => (
-            <li key={subject.id} className="text-sm">
-              {subject.name} ({subject.shorthand}){" "}
-              <span
-                onClick={() => console.log(subject)}
-                className="cursor-pointer underline"
-              >
-                Log to console
-              </span>
-            </li>
-          ))}
-        </ul>
+        {subjects.length ? (
+          <ul className="ml-6 list-disc space-y-1">
+            {subjects.map((subject) => (
+              <li key={subject.id} className="text-sm">
+                {subject.name} ({subject.shorthand}){" "}
+                <span
+                  onClick={() => console.log(subject)}
+                  className="cursor-pointer underline"
+                >
+                  Log to console
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <LoadingSpinner />
+        )}
       </section>
 
       <section>
