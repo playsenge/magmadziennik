@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import Footer from "../components/footer";
+import { login } from "../database/pocketbase";
 
 export default function LoginPage() {
   const emailInput = useRef<HTMLInputElement>(null);
@@ -37,7 +38,7 @@ export default function LoginPage() {
 
               const email = emailInput.current.value;
               const password = passwordInput.current.value;
-              alert(`email: ${email}`);
+              login(email, password);
             }}
           >
             Zaloguj się
