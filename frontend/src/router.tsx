@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import PanelPage from "./pages/PanelPage";
 import LogoutPage from "./pages/LogoutPage";
+import DevPage from "./pages/DevPage";
 
 const App = () => (
   <AnimatePresence mode="wait">
@@ -15,6 +16,7 @@ const App = () => (
       <Route path="/login" element={<LoginPage />} />
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/panel" element={<PanelPage />} />
+      {import.meta.env.DEV && <Route path="/dev" element={<DevPage />} />}
     </Routes>
   </AnimatePresence>
 );
