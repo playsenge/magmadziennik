@@ -49,3 +49,11 @@ export const login = async (email: string, password: string, teacher?: boolean):
 
     return LoginResult.SUCCESS;
 };
+
+// export const getSubjects = () => {
+//     await pb.collection("subjects").getFullList();
+// };
+
+// export const getSubjectsForStudent = () => {
+
+// };

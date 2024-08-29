@@ -7,6 +7,7 @@ export interface UserGeneric {
     first_name: string;
     last_name: string;
     phone_number: string;
+    subjects: string[];
     avatar: string;
     created: Date;
     updated: Date;
@@ -21,6 +22,7 @@ export interface Student {
     date_of_birth: Date;
     address: string;
     phone_number: string;
+    subjects: string[];
     avatar: string;
     created: Date;
     updated: Date;
@@ -33,8 +35,8 @@ export interface Teacher {
     first_name: string;
     last_name: string;
     phone_number: string;
-    avatar: string;
     subjects: string[];
+    avatar: string;
     created: Date;
     updated: Date;
 }
