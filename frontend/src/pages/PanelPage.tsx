@@ -19,5 +19,13 @@ export default function PanelPage() {
   if (!pb.authStore.isValid) return null;
   if (!user) return null;
 
-  return <h1>Panel @{user.username}</h1>;
+  return (
+    <aside className="h-screen">
+      <nav className="flex h-full flex-col border-r bg-slate-800 text-white shadow-sm">
+        <div className="flex items-center justify-between p-4 pb-2">
+          <p className="text-3xl">Dzień dobry, {user.first_name}</p>
+        </div>
+      </nav>
+    </aside>
+  );
 }
