@@ -1,11 +1,16 @@
 import PocketBase, { ClientResponseError } from "pocketbase";
 import { useEffect, useState } from "react";
-import { Student, Teacher, UserGeneric } from "./interfaces";
+import { Student, Subject, Teacher, UserGeneric } from "./interfaces";
 import { LoginResult } from "./enums";
+import { devMsg } from "../utils";
 
 export const pb = new PocketBase(
     "https://magmapb.senge1337.cc"
 );
+
+pb.authStore.onChange(() => {
+    devMsg(pb.authStore.isValid ? "Logged into @" + pb.authStore!.model!.username : "Logged out");
+});
 
 export function useAuth() {
     const [isLoggedIn, setIsLoggedIn] = useState(pb.authStore.isValid);
@@ -50,10 +55,16 @@ export const login = async (email: string, password: string, teacher?: boolean):
     return LoginResult.SUCCESS;
 };
 
-// export const getSubjects = () => {
-//     await pb.collection("subjects").getFullList();
-// };
+export const getSubjects = async () => {
+    const subjects = await pb.collection("subjects").getFullList();
 
-// export const getSubjectsForStudent = () => {
+    return subjects.map((subject) => ({
+        ...subject,
+        created: new Date(subject.created),
+        updated: new Date(subject.updated),
+    })) as unknown as Subject[];
+};
 
-// };
+export const getSubjectsForStudent = () => {
+
+};
