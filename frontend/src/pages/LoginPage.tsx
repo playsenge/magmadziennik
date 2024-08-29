@@ -41,6 +41,18 @@ export default function LoginPage() {
               const password = passwordInput.current.value;
 
               const result = await login(email, password);
+              switch(result)
+              {
+                case LoginResult.SUCCESS:
+                    alert("Zalogowano!");
+                    break;
+                case LoginResult.INCORRECT_EMAIL_OR_PASSWORD:
+                    alert("Nieprawidłowy e-mail lub hasło");
+                    break;
+                case LoginResult.UNIDENTIFIED_ERROR:
+                    alert("Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż librus.");
+                    break;
+              }
             }}
           >
             Zaloguj się
