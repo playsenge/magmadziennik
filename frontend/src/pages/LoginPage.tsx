@@ -1,6 +1,6 @@
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
@@ -11,6 +11,7 @@ import { LoginResult } from "../database/enums";
 export default function LoginPage() {
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function LoginPage() {
 
               switch (result) {
                 case LoginResult.SUCCESS:
-                  alert("Zalogowano!");
+                    navigate("/panel");
                   break;
                 case LoginResult.INCORRECT_EMAIL_OR_PASSWORD:
                   alert("Nieprawidłowy e-mail lub hasło");
