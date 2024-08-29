@@ -1,0 +1,5 @@
+- Ustawić PocketBase jako backend
+- Subdomena od PocketBase
+- Create Vite App
+- Napisać pocketbase.ts
+- Zimportować podstawowe komponenty typu AlignCenter.tsx
