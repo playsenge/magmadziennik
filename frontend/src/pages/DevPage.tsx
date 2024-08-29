@@ -10,6 +10,7 @@ import { Button } from "../components/ui/button";
 import { useRerender } from "../components/hooks/rerender";
 import LoadingSpinner from "../components/loading-spinner";
 import { devMsg } from "../utils";
+import { availableLanguages, msg, msgAs, setLanguage } from "../language";
 
 export default function DevPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -33,7 +34,7 @@ export default function DevPage() {
       try {
         setStudentSubjects(await getSubjectsForStudent());
       } catch (error) {
-        devMsg("Failed to fetch subjects: " + error);
+        devMsg("Failed to fetch student subjects: " + error);
       }
     };
     fetchStudentSubjects();
@@ -57,10 +58,10 @@ export default function DevPage() {
 
   return (
     <div className="ml-4 mt-4 space-y-4">
-      <h1 className="text-3xl font-bold">Dev Page</h1>
+      <h1 className="text-3xl font-bold">{msg.dev_page.title}</h1>
 
       <section>
-        <h2 className="text-xl font-semibold">Subjects</h2>
+        <h2 className="text-xl font-semibold">{msg.universal.subjects}</h2>
         {subjects.length ? (
           <ul className="ml-6 list-disc space-y-1">
             {subjects.map((subject) => (
@@ -70,7 +71,7 @@ export default function DevPage() {
                   onClick={() => devMsg(JSON.stringify(subject, undefined, 2))}
                   className="cursor-pointer underline"
                 >
-                  Log to console
+                  {msg.dev_page.log_to_console}
                 </span>
               </li>
             ))}
@@ -81,7 +82,7 @@ export default function DevPage() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold">Your Subjects</h2>
+        <h2 className="text-xl font-semibold">{msg.dev_page.your_subjects}</h2>
         {studentSubjects.length ? (
           <ul className="ml-6 list-disc space-y-1">
             {studentSubjects.map((subject) => (
@@ -91,7 +92,7 @@ export default function DevPage() {
                   onClick={() => devMsg(JSON.stringify(subject, undefined, 2))}
                   className="cursor-pointer underline"
                 >
-                  Log to console
+                  {msg.dev_page.log_to_console}
                 </span>
               </li>
             ))}
@@ -102,7 +103,7 @@ export default function DevPage() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold">Your current account</h2>
+        <h2 className="text-xl font-semibold">{msg.universal.account}</h2>
         <pre className="rounded border bg-gray-100 p-2">
           {JSON.stringify(pb.authStore.model ?? "null", null, 2)}
         </pre>
@@ -110,11 +111,19 @@ export default function DevPage() {
 
       <section className="flex gap-4">
         <Button onClick={handleDemoLogin} variant="secondary">
-          Login to Demo
+          {msg.dev_page.login_as_demo}
         </Button>
         <Button onClick={handleClearAuth} variant="destructive">
-          Clear auth
+          {msg.universal.logout}
         </Button>
+      </section>
+
+      <section className="flex gap-4">
+        {availableLanguages.map((language) => (
+          <Button key={language} onClick={() => setLanguage(language)}>
+            {msgAs(language).name}
+          </Button>
+        ))}
       </section>
     </div>
   );
