@@ -85,7 +85,6 @@ export default function PanelPage() {
 
   const MobileExpander = memo(({ className }: { className: string }) => (
     <button
-      id="menuBtn"
       className={`block rounded p-2 text-white md:hidden ${className}`}
       onClick={() => setMobileExpanded(!mobileExpanded)}
     >
