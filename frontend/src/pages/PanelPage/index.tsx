@@ -21,6 +21,7 @@ import MessagesTab from "./tabs/MessagesTab";
 import SettingsTab from "./tabs/SettingsTab";
 import React from "react";
 import LanguageSwitcher from "../../components/language-switcher";
+import TransparentCover from "../../components/transparent-cover";
 
 enum CurrentTab {
   HOME,
@@ -42,6 +43,7 @@ export default function PanelPage() {
 
   const [currentTab, setCurrentTab] = useState<CurrentTab>(CurrentTab.HOME);
   const [mobileExpanded, setMobileExpanded] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!pb.authStore.isValid) {
@@ -95,10 +97,14 @@ export default function PanelPage() {
 
   return (
     <div className="flex">
+      {userDropdownOpen && (
+        <TransparentCover onClick={() => setUserDropdownOpen(false)} />
+      )}
+
       <div
         className={`${mobileExpanded ? "block w-full" : "hidden"} h-screen bg-gray-800 text-white md:block md:w-64`}
       >
-        <MobileExpander className="absolute right-5 top-3 bg-gray-700" />
+        <MobileExpander className="absolute right-[0.4rem] top-3 bg-gray-700" />
         <div className="flex items-center p-4 text-lg font-bold">
           {getTimeOfDay()}, {user.first_name}!
         </div>
@@ -150,13 +156,31 @@ export default function PanelPage() {
           <div className="flex flex-row items-center justify-center gap-2">
             <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
           </div>
-          <div className="mx-3 block h-14 w-1 rounded-full bg-gray-300"></div>
-          <img
-            src={userAvatar()}
-            alt="Avatar"
-            className="aspect-square size-8 rounded-full border-4 border-gray-300 object-cover"
-          />
-          <MobileExpander className="ml-4 bg-gray-800" />
+          <div className="mx-2 block h-14 w-1 rounded-full bg-gray-300"></div>
+          <div className="relative inline-block text-left">
+            <img
+              src={userAvatar()}
+              alt="Avatar"
+              className="aspect-square size-8 cursor-pointer rounded-full border-4 border-gray-300 object-cover"
+              onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+            />
+            <div
+              className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none`}
+            >
+              <div className="py-1" role="none">
+                <span
+                  className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => {
+                    pb.authStore.clear();
+                    navigate("/login");
+                  }}
+                >
+                  Wyloguj
+                </span>
+              </div>
+            </div>
+          </div>
+          <MobileExpander className="ml-3 bg-gray-800" />
         </div>
 
         {currentTab === CurrentTab.HOME && <HomeTab />}
