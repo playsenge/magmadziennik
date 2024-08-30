@@ -11,6 +11,8 @@ import { useRerender } from "../components/hooks/rerender";
 import LoadingSpinner from "../components/loading-spinner";
 import { devMsg } from "../utils";
 import { availableLanguages, msg, msgAs, setLanguage } from "../language";
+import { config } from "../config";
+import GradeTile from "../components/grade-tile";
 
 export default function DevPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -124,6 +126,15 @@ export default function DevPage() {
             {msgAs(language).name}
           </Button>
         ))}
+      </section>
+
+      <section className="flex flex-col">
+        <h2 className="text-xl font-semibold">{msg.universal.grades}</h2>
+        <div className="my-4 grid max-w-sm grid-cols-5 gap-3">
+          {config.grades.map((grade) => (
+            <GradeTile key={grade.text} grade={grade} />
+          ))}
+        </div>
       </section>
     </div>
   );

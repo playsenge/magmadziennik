@@ -29,3 +29,9 @@ export interface Subject {
     created: Date;
     updated: Date;
 }
+
+export interface Grade {
+    text: string;
+    value: number;
+    color: string;
+}
