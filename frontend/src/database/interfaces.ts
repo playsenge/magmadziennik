@@ -30,10 +30,8 @@ export interface Subject {
     updated: Date;
 }
 
-export interface Grade {
+export interface GradeModel {
     text: string;
     value: number;
-    weight: number;
-    date: Date;
     color: string;
 }

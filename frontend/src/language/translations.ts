@@ -167,7 +167,7 @@ export default {
         {
             "weight": "How much",
             "teacher": "Bro",
-            "date": "when",
+            "date": "When",
             "value": "For real"
         }
     }

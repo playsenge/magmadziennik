@@ -1,12 +1,12 @@
 import { memo } from "react";
-import { Grade, Subject } from "../database/interfaces";
+import { GradeModel, Subject } from "../database/interfaces";
 import { msg } from "../language";
 
 export function GradeTile({
   grade,
   subject,
 }: {
-  grade: Grade;
+  grade: GradeModel;
   subject: Subject;
 }) {
   return (
@@ -28,7 +28,12 @@ export function GradeTile({
       >
         {subject.shorthand}
       </p>
-      <div className="mt-2 hidden w-56 rounded-r-xl rounded-b-xl bg-slate-950/40 p-1 text-xs text-white group-hover:block"><p>{msg.grade_details.weight}: {grade.weight}</p><p>{msg.grade_details.teacher}: Andrzej Pierdziwór</p><p>{msg.grade_details.date}: {grade.date.toDateString()} {grade.date.toTimeString()}</p><p>{msg.grade_details.value}: {grade.value}</p></div>
+      <div className="mt-2 hidden w-56 rounded-r-xl bg-slate-950/40 p-1 text-xs text-white group-hover:block">
+        <p>{msg.grade_details.weight}: 69</p>
+        <p>{msg.grade_details.teacher}: Andrzej Pierdziwór</p>
+        <p>{msg.grade_details.date}: 10.10.1010 25:30</p>
+        <p>{msg.grade_details.value}: 69420</p>
+      </div>
     </div>
   );
 }
