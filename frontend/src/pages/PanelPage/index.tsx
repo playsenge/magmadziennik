@@ -1,5 +1,4 @@
 import { memo, useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { pb, userAvatar } from "../../database/pocketbase";
 import { UserGeneric } from "../../database/interfaces";
 import { msg } from "../../language";
@@ -24,6 +23,7 @@ import LanguageSwitcher from "../../components/language-switcher";
 import TransparentCover from "../../components/transparent-cover";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../components/logo";
+import { useNavigate } from "react-router-dom";
 
 enum CurrentTab {
   HOME,

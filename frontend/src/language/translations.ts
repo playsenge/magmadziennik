@@ -46,6 +46,13 @@ export default {
             "attendance": "Attendance",
             "messages": "Messages",
             "settings": "Settings",
+        },
+        "grade_details":
+        {
+            "weight": "Multiplier",
+            "teacher": "Teacher",
+            "date": "Date",
+            "value": "Real value"
         }
     },
 
@@ -97,6 +104,13 @@ export default {
             "attendance": "Frekwencja",
             "messages": "Wiadomości",
             "settings": "Ustawienia"
+        },
+        "grade_details":
+        {
+            "weight": "Waga",
+            "teacher": "Nauczyciel",
+            "date": "Data",
+            "value": "Wartość realna"
         }
     },
 
@@ -148,6 +162,13 @@ export default {
             "attendance": "Who's Here?",
             "messages": "Chatbox",
             "settings": "Fix Yo Stuff"
+        },
+        "grade_details":
+        {
+            "weight": "How much",
+            "teacher": "Bro",
+            "date": "when",
+            "value": "For real"
         }
     }
 

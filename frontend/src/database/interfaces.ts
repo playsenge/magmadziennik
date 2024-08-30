@@ -33,5 +33,7 @@ export interface Subject {
 export interface Grade {
     text: string;
     value: number;
+    weight: number;
+    date: Date;
     color: string;
 }
