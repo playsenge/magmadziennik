@@ -1,15 +1,26 @@
 import { Grade } from "../database/interfaces";
 
-export default function GradeTile({ grade }: { grade: Grade }) {
+export default function GradeTile({
+  grade,
+  subject,
+}: {
+  grade: Grade;
+  subject: string;
+}) {
   return (
-    <span
-      className="flex size-10 items-center justify-center rounded-xl border-4 p-6 text-xl font-semibold"
-      style={{
-        borderColor: grade.color,
-        color: grade.color,
-      }}
-    >
-      {grade.text}
-    </span>
+    <div className="size-16 rounded text-white">
+      <p
+        className="flex h-12 w-16 flex-col items-center justify-center rounded-t border-2 text-3xl"
+        style={{
+          borderColor: grade.color,
+          color: grade.color,
+        }}
+      >
+        {grade.text}
+      </p>
+      <p className="flex h-5 w-16 items-center justify-center rounded-b bg-red-500 text-xs">
+        {subject}
+      </p>
+    </div>
   );
 }
