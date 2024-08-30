@@ -43,45 +43,39 @@ export default function HomeTab() {
   if (!subjects.length) return <LoadingSpinner />;
 
   return (
-    <>
-      <div className="">
-        <div className="grid grid-cols-3 gap-4">
-          <AnimatedTile className="scale-50">
-            <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
-            <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
-              {subjects.map((subject) => (
-                <GradeTile
-                  key={subject.id}
-                  grade={
-                    config.grades[
-                      Math.floor(Math.random() * config.grades.length)
-                    ]
-                  }
-                  subject={subject}
-                />
-              ))}
-            </div>
-          </AnimatedTile>
-          <AnimatedTile>
-            <h1 className="m-3 text-4xl">{msg.tabs.tests}</h1>
-          </AnimatedTile>
-          <AnimatedTile>
-            <h1 className="m-3 text-4xl">{msg.tabs.homework}</h1>
-          </AnimatedTile>
-          <AnimatedTile className="col-span-2">
-            <h1 className="m-3 text-4xl">{msg.universal.timetable}</h1>
-          </AnimatedTile>
-          <AnimatedTile>
-            <h1 className="m-3 text-4xl">{msg.tabs.attendance}</h1>
-          </AnimatedTile>
-          <AnimatedTile>
-            <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>
-          </AnimatedTile>
-          <AnimatedTile className="col-span-2">
-            <h1 className="m-3 text-4xl">idk</h1>
-          </AnimatedTile>
+    <div className="grid grid-cols-3 gap-4">
+      <AnimatedTile className="scale-50">
+        <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
+        <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
+          {subjects.map((subject) => (
+            <GradeTile
+              key={subject.id}
+              grade={
+                config.grades[Math.floor(Math.random() * config.grades.length)]
+              }
+              subject={subject}
+            />
+          ))}
         </div>
-      </div>
-    </>
+      </AnimatedTile>
+      <AnimatedTile>
+        <h1 className="m-3 text-4xl">{msg.tabs.tests}</h1>
+      </AnimatedTile>
+      <AnimatedTile>
+        <h1 className="m-3 text-4xl">{msg.tabs.homework}</h1>
+      </AnimatedTile>
+      <AnimatedTile className="col-span-2">
+        <h1 className="m-3 text-4xl">{msg.universal.timetable}</h1>
+      </AnimatedTile>
+      <AnimatedTile>
+        <h1 className="m-3 text-4xl">{msg.tabs.attendance}</h1>
+      </AnimatedTile>
+      <AnimatedTile>
+        <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>
+      </AnimatedTile>
+      <AnimatedTile className="col-span-2">
+        <h1 className="m-3 text-4xl">idk</h1>
+      </AnimatedTile>
+    </div>
   );
 }

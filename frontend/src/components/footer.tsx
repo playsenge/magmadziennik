@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { msg } from "../language";
 import LanguageSwitcher from "./language-switcher";
+import Logo from "./logo";
 
 const height = 7;
 
@@ -17,9 +18,7 @@ export default function Footer() {
         height: height + "vh",
       }}
     >
-      <Link className="mr-auto text-3xl" to="/">
-        MAGMA
-      </Link>
+      <Logo />
 
       <Link to="/gdpr">{msg.footer.gdpr}</Link>
       <Link to="/contact">{msg.footer.contact}</Link>

@@ -23,6 +23,7 @@ import React from "react";
 import LanguageSwitcher from "../../components/language-switcher";
 import TransparentCover from "../../components/transparent-cover";
 import { AnimatePresence, motion } from "framer-motion";
+import Logo from "../../components/logo";
 
 enum CurrentTab {
   HOME,
@@ -172,12 +173,7 @@ export default function PanelPage() {
 
       <div className={`flex-1 p-6 ${mobileExpanded ? "overflow-hidden" : ""}`}>
         <div className="-m-6 mb-6 flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
-          <Link
-            className="quicksand ml-4 mr-auto text-3xl text-slate-500"
-            to="/"
-          >
-            MAGMA
-          </Link>
+          <Logo className="ml-4" />
           <div className="flex flex-row items-center justify-center gap-2">
             <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
           </div>
