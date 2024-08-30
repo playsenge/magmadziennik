@@ -10,7 +10,7 @@ export default function GradeTile({
   return (
     <div className="size-16 rounded text-white">
       <p
-        className="flex h-12 w-16 flex-col items-center justify-center rounded-t border-2 text-3xl"
+        className="flex h-12 w-[4.5rem] flex-col items-center justify-center rounded-t border-2 text-3xl"
         style={{
           borderColor: grade.color,
           color: grade.color,
@@ -19,7 +19,7 @@ export default function GradeTile({
         {grade.text}
       </p>
       <p
-        className="flex h-5 w-16 items-center justify-center rounded-b text-xs"
+        className="flex h-6 w-[4.5rem] items-center justify-center rounded-b text-xs"
         style={{
           backgroundColor: grade.color,
         }}
