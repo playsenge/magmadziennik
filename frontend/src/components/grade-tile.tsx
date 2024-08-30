@@ -1,11 +1,11 @@
-import { Grade } from "../database/interfaces";
+import { Grade, Subject } from "../database/interfaces";
 
 export default function GradeTile({
   grade,
   subject,
 }: {
   grade: Grade;
-  subject: string;
+  subject: Subject;
 }) {
   return (
     <div className="size-16 rounded text-white">
@@ -18,8 +18,13 @@ export default function GradeTile({
       >
         {grade.text}
       </p>
-      <p className="flex h-5 w-16 items-center justify-center rounded-b bg-red-500 text-xs">
-        {subject}
+      <p
+        className="flex h-5 w-16 items-center justify-center rounded-b text-xs"
+        style={{
+          backgroundColor: grade.color,
+        }}
+      >
+        {subject.shorthand}
       </p>
     </div>
   );

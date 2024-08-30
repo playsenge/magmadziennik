@@ -2,9 +2,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import { msg } from "../../../language";
 import { config } from "../../../config";
 import GradeTile from "../../../components/grade-tile";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { getSubjects } from "../../../database/pocketbase";
+import { Subject } from "../../../database/interfaces";
+import LoadingSpinner from "../../../components/loading-spinner";
 
 export default function HomeTab() {
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      const subjects = await getSubjects();
+      setSubjects(subjects);
+    };
+
+    fetchSubjects();
+  }, []);
+
   const AnimatedTile = memo(
     ({
       children,
@@ -26,6 +40,8 @@ export default function HomeTab() {
     ),
   );
 
+  if (!subjects.length) return <LoadingSpinner />;
+
   return (
     <>
       <div className="">
@@ -33,7 +49,7 @@ export default function HomeTab() {
           <AnimatedTile className="scale-50">
             <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
             <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
-              <GradeTile grade={config.grades[0]} subject={"Fizyka"} />
+              <GradeTile grade={config.grades[5]} subject={subjects[3]} />
             </div>
           </AnimatedTile>
           <AnimatedTile>
