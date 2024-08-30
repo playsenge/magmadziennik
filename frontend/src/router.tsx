@@ -10,6 +10,9 @@ import LogoutPage from "./pages/LogoutPage";
 import DevPage from "./pages/DevPage";
 import eventEmitter from "./language/event";
 import { useRerender } from "./components/hooks/rerender";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const rerender = useRerender();
@@ -38,7 +41,9 @@ const App = () => {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>,
 );

@@ -32,7 +32,7 @@ export default function LoginPage() {
       case LoginResult.INCORRECT_EMAIL_OR_PASSWORD:
         return msg.login_page.incorrect_email_or_password;
       case LoginResult.UNIDENTIFIED_ERROR:
-        return msg.login_page.server_side_error;
+        return msg.universal.server_side_error;
       default:
         return "";
     }

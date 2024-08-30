@@ -41,37 +41,29 @@ export const login = async (email: string, password: string, teacher?: boolean):
 };
 
 export const getSubjects = async (): Promise<Subject[]> => {
-    try {
-        const subjects = await pb.collection("subjects").getFullList({
-            requestKey: "getSubjects",
-        });
+    const subjects = await pb.collection("subjects").getFullList({
+        requestKey: "getSubjects",
+    });
 
-        return subjects.map((subject) => ({
-            ...subject,
-            created: new Date(subject.created),
-            updated: new Date(subject.updated),
-        })) as unknown as Subject[];
-    } catch {
-        return [];
-    }
+    return subjects.map((subject) => ({
+        ...subject,
+        created: new Date(subject.created),
+        updated: new Date(subject.updated),
+    })) as unknown as Subject[];
 };
 
 export const getSubjectsForStudent = async (): Promise<Subject[]> => {
-    try {
-        const subjectIds = pb.authStore!.model!.subjects ?? [];
-        if (subjectIds.length <= 0) return [];
+    const subjectIds = pb.authStore!.model!.subjects ?? [];
+    if (subjectIds.length <= 0) return [];
 
-        const subjects = await pb.collection("subjects").getFullList({
-            filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
-            requestKey: "getSubjectsForStudent",
-        });
+    const subjects = await pb.collection("subjects").getFullList({
+        filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
+        requestKey: "getSubjectsForStudent",
+    });
 
-        return subjects.map((subject) => ({
-            ...subject,
-            created: new Date(subject.created),
-            updated: new Date(subject.updated),
-        })) as unknown as Subject[];
-    } catch {
-        return [];
-    }
+    return subjects.map((subject) => ({
+        ...subject,
+        created: new Date(subject.created),
+        updated: new Date(subject.updated),
+    })) as unknown as Subject[];
 };
