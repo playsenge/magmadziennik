@@ -1,4 +1,5 @@
 import { Grade } from "./database/interfaces";
+import { Language } from "./language";
 
 export const config = {
     grades: [
@@ -19,4 +20,5 @@ export const config = {
         { text: "6", value: 6, color: "#4ac0f6" },
         { text: "nb", value: 0, color: "#9CA3AF" },
     ] as Grade[],
+    defaultLanguage: "pl" as Language,
 };

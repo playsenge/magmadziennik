@@ -30,8 +30,8 @@ export default function HomeTab() {
       <AnimatePresence>
         <motion.div
           className={`h-64 rounded-2xl bg-white ${className ?? ""}`}
-          animate={{ scale: 1, type: "inertia", opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, type: "tween" }}
           initial={{ scale: 0, opacity: 0 }}
         >
           {children}

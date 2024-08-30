@@ -1,3 +1,4 @@
+import { config } from "../config";
 import { devMsg } from "../utils";
 import eventEmitter from "./event";
 import translations from "./translations";
@@ -5,9 +6,8 @@ import translations from "./translations";
 export type Language = keyof typeof translations;
 export type Translations = typeof translations[Language];
 
-const defaultLanguage: Language = "pl";
 export const getCurrentLanguage = (): Language => {
-    return (localStorage.getItem('language') as Language) || defaultLanguage;
+    return (localStorage.getItem('language') as Language) || config.defaultLanguage;
 };
 
 const createMsgProxy = (language: Language) => {
