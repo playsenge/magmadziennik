@@ -131,9 +131,10 @@ export default function DevPage() {
       <section className="flex flex-col">
         <h2 className="text-xl font-semibold">{msg.universal.grades}</h2>
         <div className="my-4 grid max-w-sm grid-cols-5 gap-3">
-          {config.grades.map((grade) => (
-            <GradeTile key={grade.text} grade={grade} />
-          ))}
+          {subjects.length &&
+            config.grades.map((grade) => (
+              <GradeTile key={grade.text} grade={grade} subject={subjects[0]} />
+            ))}
         </div>
       </section>
     </div>
