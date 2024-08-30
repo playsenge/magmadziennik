@@ -49,7 +49,17 @@ export default function HomeTab() {
           <AnimatedTile className="scale-50">
             <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
             <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
-              <GradeTile grade={config.grades[5]} subject={subjects[3]} />
+              {subjects.map((subject) => (
+                <GradeTile
+                  key={subject.id}
+                  grade={
+                    config.grades[
+                      Math.floor(Math.random() * config.grades.length)
+                    ]
+                  }
+                  subject={subject}
+                />
+              ))}
             </div>
           </AnimatedTile>
           <AnimatedTile>
