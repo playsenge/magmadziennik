@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { msg } from "../language";
 import LanguageSwitcher from "./language-switcher";
 import Logo from "./logo";
-import { memo } from "react";
 
 const height = 7;
 
