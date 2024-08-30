@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import {
   getSubjects,
   getSubjectsForStudent,
   login,
   pb,
 } from "../database/pocketbase";
-import { Subject } from "../database/interfaces";
 import { Button } from "../components/ui/button";
 import { useRerender } from "../components/hooks/rerender";
 import LoadingSpinner from "../components/loading-spinner";
@@ -13,34 +11,19 @@ import { devMsg } from "../utils";
 import { availableLanguages, msg, msgAs, setLanguage } from "../language";
 import { config } from "../config";
 import GradeTile from "../components/grade-tile";
+import { useQuery } from "react-query";
 
 export default function DevPage() {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [studentSubjects, setStudentSubjects] = useState<Subject[]>([]);
+  const { data: subjects, error: subjectsError } = useQuery(
+    "subjects",
+    getSubjects,
+  );
+  const { data: studentSubjects, error: studentSubjectsError } = useQuery(
+    "studentSubjects",
+    getSubjectsForStudent,
+  );
 
   const rerender = useRerender();
-
-  useEffect(() => {
-    const fetchSubjects = async () => {
-      try {
-        setSubjects(await getSubjects());
-      } catch (error) {
-        devMsg("Failed to fetch subjects: " + error);
-      }
-    };
-    fetchSubjects();
-  }, []);
-
-  useEffect(() => {
-    const fetchStudentSubjects = async () => {
-      try {
-        setStudentSubjects(await getSubjectsForStudent());
-      } catch (error) {
-        devMsg("Failed to fetch student subjects: " + error);
-      }
-    };
-    fetchStudentSubjects();
-  }, []);
 
   const handleClearAuth = () => {
     pb.authStore.clear();
@@ -56,6 +39,8 @@ export default function DevPage() {
     }
   };
 
+  if (subjectsError || studentSubjectsError)
+    return <h1>{msg.universal.server_side_error}</h1>;
   if (!import.meta.env.DEV) return null;
 
   return (
@@ -64,7 +49,7 @@ export default function DevPage() {
 
       <section>
         <h2 className="text-xl font-semibold">{msg.universal.subjects}</h2>
-        {subjects.length ? (
+        {subjects ? (
           <ul className="ml-6 list-disc space-y-1">
             {subjects.map((subject) => (
               <li key={subject.id} className="text-sm">
@@ -85,7 +70,7 @@ export default function DevPage() {
 
       <section>
         <h2 className="text-xl font-semibold">{msg.dev_page.your_subjects}</h2>
-        {studentSubjects.length ? (
+        {studentSubjects ? (
           <ul className="ml-6 list-disc space-y-1">
             {studentSubjects.map((subject) => (
               <li key={subject.id} className="text-sm">
@@ -131,7 +116,7 @@ export default function DevPage() {
       <section className="flex flex-col">
         <h2 className="text-xl font-semibold">{msg.universal.grades}</h2>
         <div className="my-4 grid max-w-sm grid-cols-5 gap-3">
-          {subjects.length &&
+          {subjects &&
             config.grades.map((grade) => (
               <GradeTile key={grade.text} grade={grade} subject={subjects[0]} />
             ))}

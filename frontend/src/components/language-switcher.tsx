@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   availableLanguages,
   getCurrentLanguage,
@@ -5,7 +6,7 @@ import {
   setLanguage,
 } from "../language";
 
-export default function LanguageSwitcher(props: { imageClasses?: string }) {
+export function LanguageSwitcher({ imageClasses }: { imageClasses?: string }) {
   return (
     <>
       {availableLanguages.map((language) => (
@@ -16,7 +17,7 @@ export default function LanguageSwitcher(props: { imageClasses?: string }) {
               ? "cursor-pointer"
               : "cursor-default") +
             " " +
-            (props.imageClasses ?? "")
+            (imageClasses ?? "")
           }
           onClick={() =>
             language != getCurrentLanguage() && setLanguage(language)
@@ -29,3 +30,5 @@ export default function LanguageSwitcher(props: { imageClasses?: string }) {
     </>
   );
 }
+
+export default memo(LanguageSwitcher);

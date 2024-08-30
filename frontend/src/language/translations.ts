@@ -11,6 +11,7 @@ export default {
             "logout": "Log Out",
             "login": "Login",
             "password": "Password",
+            "server_side_error": "A server side error occurred. Still, our uptime is higher than that of Librus.",
         },
         "dev_page": {
             "title": "Dev Page",
@@ -20,7 +21,6 @@ export default {
         },
         "login_page": {
             "incorrect_email_or_password": "Incorrect email or password",
-            "server_side_error": "A server side error occurred. Still, our uptime is higher than that of Librus.",
             "forgot_password": "Forgot password?",
         },
         "register_page": {
@@ -61,6 +61,7 @@ export default {
             "logout": "Wyloguj się",
             "login": "Zaloguj się",
             "password": "Hasło",
+            "server_side_error": "Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż Librus.",
         },
         "dev_page": {
             "title": "Strona deweloperska",
@@ -70,7 +71,6 @@ export default {
         },
         "login_page": {
             "incorrect_email_or_password": "Nieprawidłowy e-mail lub hasło",
-            "server_side_error": "Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż Librus.",
             "forgot_password": "Nie pamiętasz hasła?",
             "password_too_short": "Twoje hasło musi mieć co najmniej 8 znaków.",
         },
@@ -111,7 +111,8 @@ export default {
             "account": "My Spot",
             "logout": "Peace Out",
             "login": "Hop In",
-            "password": "Secret Code"
+            "password": "Secret Code",
+            "server_side_error": "Server bugged out. But hey, we still got better uptime than Ohio Librus.",
         },
         "dev_page": {
             "title": "Skibidi Dev Zone",
@@ -121,7 +122,6 @@ export default {
         },
         "login_page": {
             "incorrect_email_or_password": "Bruh, wrong email or secret code",
-            "server_side_error": "Server bugged out. But hey, we still got better uptime than Ohio Librus.",
             "forgot_password": "Forgot your secret code?",
             "password_too_short": "Yo, your secret code needs at least 8 letters."
         },

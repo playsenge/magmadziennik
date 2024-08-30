@@ -1,4 +1,6 @@
-export default function TransparentCover({
+import { memo } from "react";
+
+export function TransparentCover({
   onClick,
 }: {
   onClick: React.MouseEventHandler<HTMLDivElement>;
@@ -17,3 +19,5 @@ export default function TransparentCover({
     ></div>
   );
 }
+
+export default memo(TransparentCover);

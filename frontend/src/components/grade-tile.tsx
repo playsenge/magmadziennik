@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Grade, Subject } from "../database/interfaces";
 
-export default function GradeTile({
+export function GradeTile({
   grade,
   subject,
 }: {
@@ -29,3 +30,5 @@ export default function GradeTile({
     </div>
   );
 }
+
+export default memo(GradeTile);
