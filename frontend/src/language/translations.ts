@@ -47,8 +47,7 @@ export default {
             "messages": "Messages",
             "settings": "Settings",
         },
-        "grade_details":
-        {
+        "grade_details": {
             "weight": "Multiplier",
             "teacher": "Teacher",
             "date": "Date",
@@ -105,8 +104,7 @@ export default {
             "messages": "Wiadomości",
             "settings": "Ustawienia"
         },
-        "grade_details":
-        {
+        "grade_details": {
             "weight": "Waga",
             "teacher": "Nauczyciel",
             "date": "Data",
@@ -163,8 +161,7 @@ export default {
             "messages": "Chatbox",
             "settings": "Fix Yo Stuff"
         },
-        "grade_details":
-        {
+        "grade_details": {
             "weight": "How much",
             "teacher": "Bro",
             "date": "When",
