@@ -2,9 +2,10 @@ import PocketBase, { ClientResponseError } from "pocketbase";
 import { Student, Subject, Teacher, UserGeneric } from "./interfaces";
 import { LoginResult } from "./enums";
 import { devMsg } from "../utils";
+import { config } from "../config";
 
 export const pb = new PocketBase(
-    "https://magmapb.senge1337.cc"
+    config.pocketbaseURL
 );
 
 pb.authStore.onChange(() => {

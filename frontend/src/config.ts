@@ -25,4 +25,5 @@ export const config = {
         { text: "nb", value: 0, color: "#9CA3AF" },
     ] as GradeModel[],
     defaultLanguage: "pl" as Language,
+    pocketbaseURL: "https://magmapb.senge1337.cc",
 };
