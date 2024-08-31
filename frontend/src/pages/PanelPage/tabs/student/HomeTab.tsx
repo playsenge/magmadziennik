@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { msg } from "../../../../language";
-import { config } from "../../../../config";
 import GradeTile from "../../../../components/grade-tile";
 import { memo } from "react";
-import { getStudentGrades, getSubjects } from "../../../../database/pocketbase";
+import { getStudentGrades } from "../../../../database/pocketbase";
 import LoadingSpinner from "../../../../components/loading-spinner";
 import { useQuery } from "react-query";
 
@@ -43,7 +42,9 @@ export default function StudentHomeTab() {
           {grades ? (
             grades.map((grade) => <GradeTile key={grade.id} grade={grade} />)
           ) : !gradesError ? (
-            <LoadingSpinner />
+            <span>
+              <LoadingSpinner />
+            </span>
           ) : (
             msg.universal.server_side_error
           )}
@@ -54,7 +55,9 @@ export default function StudentHomeTab() {
         <p className="ms-3 mt-0">{msg.home_tab_tests.this_week}2</p>
         <div className="max-h-[60%] overflow-y-auto">
           <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">{msg.home_tab_tests.test}</span>
+            <span className="text-xl font-semibold">
+              {msg.home_tab_tests.test}
+            </span>
             <span className="float-end">Matematyka</span>
             <br />
             <span className="text-sm">Logarytmy</span>
