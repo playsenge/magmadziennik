@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { pb, userAvatar } from "../../database/pocketbase";
 import { UserGeneric } from "../../database/interfaces";
 import { msg } from "../../language";
@@ -21,35 +21,41 @@ import StudentHomeTab from "./tabs/student/HomeTab";
 import StudentAttendaceTab from "./tabs/student/AttendanceTab";
 import StudentGradesTab from "./tabs/student/GradesTab";
 import StudentHomeworkTab from "./tabs/student/HomeworkTab";
-import StudentMessagesTab from "./tabs/student/MessagesTab";
 import StudentSettingsTab from "./tabs/student/SettingsTab";
 import StudentTestsTab from "./tabs/student/TestsTab";
 import StudentTimetableTab from "./tabs/student/TimetableTab";
+
 import TeacherHomeTab from "./tabs/teacher/HomeTab";
 
-enum CurrentTab {
-  // Student
-  STUDENT_HOME,
-  STUDENT_TIMETABLE,
-  STUDENT_GRADES,
-  STUDENT_TESTS,
-  STUDENT_HOMEWORK,
-  STUDENT_ATTENDANCE,
-  STUDENT_SETTINGS,
-  // Teacher
-  TEACHER_HOME,
-  TEACHER_TIMETABLE,
-  TEACHER_GRADES,
-  TEACHER_HOMEWORK,
-  // Universal
-  MESSAGES,
-}
+import MessagesTab from "./tabs/MessagesTab";
+
+const studentTabMap: { [key: string]: JSX.Element } = {
+  home: <StudentHomeTab />,
+  timetable: <StudentTimetableTab />,
+  grades: <StudentGradesTab />,
+  tests: <StudentTestsTab />,
+  homework: <StudentHomeworkTab />,
+  attendance: <StudentAttendaceTab />,
+  settings: <StudentSettingsTab />,
+  messages: <MessagesTab />,
+};
+
+const teacherTabMap: { [key: string]: JSX.Element } = {
+  home: <TeacherHomeTab />,
+  timetable: <>tbd</>,
+  grades: <>tbd</>,
+  homework: <>tbd</>,
+  messages: <MessagesTab />,
+};
 
 export default function PanelPage() {
   const navigate = useNavigate();
+  const params = useParams();
 
-  const user: UserGeneric = useMemo(
-    () => pb.authStore.model as UserGeneric,
+  const route = useMemo(() => params.route ?? "home", [params.route]);
+
+  const TabNotFound = useMemo(
+    () => <div className="flex items-center justify-center text-4xl">404</div>,
     [],
   );
 
@@ -58,9 +64,23 @@ export default function PanelPage() {
     [],
   );
 
-  const [currentTab, setCurrentTab] = useState<CurrentTab>(
-    teacherPanel ? CurrentTab.TEACHER_HOME : CurrentTab.STUDENT_HOME,
+  const tabMap: { [key: string]: JSX.Element } = teacherPanel
+    ? teacherTabMap
+    : studentTabMap;
+
+  const [currentTab, setCurrentTab] = useState(() => {
+    return tabMap[route] || TabNotFound;
+  });
+
+  useEffect(() => {
+    setCurrentTab(tabMap[route] || TabNotFound);
+  }, [TabNotFound, route, tabMap]);
+
+  const user: UserGeneric = useMemo(
+    () => pb.authStore.model as UserGeneric,
+    [],
   );
+
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
@@ -70,37 +90,27 @@ export default function PanelPage() {
     }
   }, [navigate]);
 
-  if (!pb.authStore.isValid) return null;
-  if (!user) return null;
+  if (!pb.authStore.isValid || !user) return null;
 
   const getTimeOfDay = () => {
     const hours = new Date().getHours();
-
     if (hours >= 6 && hours < 12) return msg.greetings.morning;
     if (hours >= 12 && hours < 18) return msg.greetings.afternoon;
     return msg.greetings.evening;
   };
 
   const NavTab = memo(
-    ({
-      icon,
-      label,
-      value,
-    }: {
-      icon: JSX.Element;
-      label: string;
-      value: CurrentTab;
-    }) => (
+    (params: { icon: JSX.Element; label: string; route: string }) => (
       <span
         className={
-          (value === currentTab
+          (params.route === route
             ? "bg-gray-700"
             : "cursor-pointer hover:bg-gray-600") + " block rounded px-4 py-2.5"
         }
-        onClick={() => setCurrentTab(value)}
+        onClick={() => navigate(`/panel/${params.route}`)}
       >
-        {React.cloneElement(icon, { className: "me-2 inline text-2xl" })}
-        {label}
+        {React.cloneElement(params.icon, { className: "me-2 inline text-2xl" })}
+        {params.label}
       </span>
     ),
   );
@@ -114,6 +124,20 @@ export default function PanelPage() {
     </button>
   ));
 
+  function getIconForRoute(route: keyof typeof tabMap): JSX.Element {
+    const icons: { [key: keyof typeof tabMap]: JSX.Element } = {
+      home: <AiOutlineAppstore />,
+      timetable: <LuCalendarDays />,
+      grades: <FaListCheck />,
+      tests: <FaPenFancy />,
+      homework: <RiFilePaper2Line />,
+      attendance: <IoIosCheckmarkCircleOutline />,
+      settings: <IoIosSettings />,
+      messages: <FiMessageSquare />,
+    };
+    return icons[route] || <AiOutlineAppstore />;
+  }
+
   const NavContents = (
     <>
       <MobileExpander className="absolute right-4 top-4 bg-gray-700" />
@@ -122,78 +146,14 @@ export default function PanelPage() {
       </div>
 
       <nav>
-        {teacherPanel ? (
-          <>
-            <NavTab
-              icon={<AiOutlineAppstore />}
-              label={msg.tabs.home}
-              value={CurrentTab.TEACHER_HOME}
-            />
-            <NavTab
-              icon={<LuCalendarDays />}
-              label={msg.tabs.timetable}
-              value={CurrentTab.TEACHER_TIMETABLE}
-            />
-            <NavTab
-              icon={<FaListCheck />}
-              label={msg.tabs.grades}
-              value={CurrentTab.TEACHER_GRADES}
-            />
-            <NavTab
-              icon={<RiFilePaper2Line />}
-              label={msg.tabs.homework}
-              value={CurrentTab.TEACHER_HOMEWORK}
-            />
-            <NavTab
-              icon={<FiMessageSquare />}
-              label={msg.tabs.messages}
-              value={CurrentTab.MESSAGES}
-            />
-          </>
-        ) : (
-          <>
-            <NavTab
-              icon={<AiOutlineAppstore />}
-              label={msg.tabs.home}
-              value={CurrentTab.STUDENT_HOME}
-            />
-            <NavTab
-              icon={<LuCalendarDays />}
-              label={msg.tabs.timetable}
-              value={CurrentTab.STUDENT_TIMETABLE}
-            />
-            <NavTab
-              icon={<FaListCheck />}
-              label={msg.tabs.grades}
-              value={CurrentTab.STUDENT_GRADES}
-            />
-            <NavTab
-              icon={<FaPenFancy />}
-              label={msg.tabs.tests}
-              value={CurrentTab.STUDENT_TESTS}
-            />
-            <NavTab
-              icon={<RiFilePaper2Line />}
-              label={msg.tabs.homework}
-              value={CurrentTab.STUDENT_HOMEWORK}
-            />
-            <NavTab
-              icon={<IoIosCheckmarkCircleOutline />}
-              label={msg.tabs.attendance}
-              value={CurrentTab.STUDENT_ATTENDANCE}
-            />
-            <NavTab
-              icon={<FiMessageSquare />}
-              label={msg.tabs.messages}
-              value={CurrentTab.MESSAGES}
-            />
-            <NavTab
-              icon={<IoIosSettings />}
-              label={msg.tabs.settings}
-              value={CurrentTab.STUDENT_SETTINGS}
-            />
-          </>
-        )}
+        {Object.keys(tabMap).map((route) => (
+          <NavTab
+            key={route}
+            icon={getIconForRoute(route)}
+            label={msg.tabs?.[route as keyof typeof msg.tabs] || route}
+            route={route}
+          />
+        ))}
       </nav>
     </>
   );
@@ -255,30 +215,7 @@ export default function PanelPage() {
             <MobileExpander className="ml-3 bg-gray-800" />
           </div>
 
-          <div className="overflow-y-auto p-6">
-            {/* Student */}
-            {currentTab === CurrentTab.STUDENT_HOME && <StudentHomeTab />}
-            {currentTab === CurrentTab.STUDENT_TIMETABLE && (
-              <StudentTimetableTab />
-            )}
-            {currentTab === CurrentTab.STUDENT_GRADES && <StudentGradesTab />}
-            {currentTab === CurrentTab.STUDENT_TESTS && <StudentTestsTab />}
-            {currentTab === CurrentTab.STUDENT_HOMEWORK && (
-              <StudentHomeworkTab />
-            )}
-            {currentTab === CurrentTab.STUDENT_ATTENDANCE && (
-              <StudentAttendaceTab />
-            )}
-            {currentTab === CurrentTab.STUDENT_MESSAGES && (
-              <StudentMessagesTab />
-            )}
-            {currentTab === CurrentTab.STUDENT_SETTINGS && (
-              <StudentSettingsTab />
-            )}
-
-            {/* Teacher */}
-            {currentTab === CurrentTab.TEACHER_HOME && <TeacherHomeTab />}
-          </div>
+          <div className="overflow-y-auto p-6">{currentTab}</div>
         </div>
       </div>
     </div>

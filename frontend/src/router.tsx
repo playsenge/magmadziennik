@@ -33,6 +33,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/teacher-login" element={<LoginPage />} />
         <Route path="/panel" element={<PanelPage />} />
+        <Route path="/panel/:route" element={<PanelPage />} />
         <Route path="/logout" element={<LogoutPage />} />
         {import.meta.env.DEV && <Route path="/dev" element={<DevPage />} />}
       </Routes>
