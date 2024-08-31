@@ -57,26 +57,37 @@ export default function StudentHomeTab() {
       </AnimatedTile>
       <AnimatedTile>
         <h1 className="m-3 text-4xl">{msg.tabs.tests}</h1>
-        <p className="ms-3 mt-0">{msg.home_tab_tests.this_week}2</p>
-        <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_tests.test}</span><span className="float-end">Matematyka</span><br/><span className="text-sm">Logarytmy</span><span className="float-end">11.11.2022</span></div>
-        <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_tests.quiz}</span><span className="float-end">j. Polski</span><br/><span className="text-sm">Lektura "Konrad Walikoń"</span><span className="float-end">16.11.2022</span></div>
+        <p className="ms-3 mt-0 ">{msg.home_tab_tests.this_week}2</p>
+        <div className="max-h-[60%] overflow-y-auto">
+          <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_tests.test}</span><span className="float-end">Matematyka</span><br/><span className="text-sm">Logarytmy</span><span className="float-end">11.11.2022</span></div>
+          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_tests.quiz}</span><span className="float-end">j. Polski</span><br/><span className="text-sm">Lektura "Konrad Walikoń"</span><span className="float-end">16.11.2022</span></div>
+          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_tests.quiz}</span><span className="float-end">j. Polski</span><br/><span className="text-sm">Lektura "Konrad Walikoń"</span><span className="float-end">16.11.2022</span></div>
+          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_tests.quiz}</span><span className="float-end">j. Polski</span><br/><span className="text-sm">Lektura "Konrad Walikoń"</span><span className="float-end">16.11.2022</span></div>
+        </div>
       </AnimatedTile>
       <AnimatedTile>
-        <h1 className="m-3 text-4xl">{msg.tabs.homework}</h1>
-        <p className="ms-3 mt-0">{msg.home_tab_homework.this_week}2</p>
-        <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_homework.homework}</span><span className="float-end">Fizyka</span><br/><span className="text-sm">Przeczytać strony 10-120 bo jest początek roku i już zalegamy z materiałem xdd</span><span className="float-end">03.09.2022</span></div>
-        <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_homework.homework}</span><span className="float-end">Historia</span><br/><span className="text-sm">Prezentacja nt. II Wojny Skibidi</span><span className="float-end">05.09.2022</span></div>
+      <h1 className="m-3 text-4xl">{msg.tabs.homework}</h1>
+      <p className="ms-3 mt-0">{msg.home_tab_homework.this_week}2</p>
+        <div className="max-h-[60%] overflow-y-auto">
+          <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_homework.homework}</span><span className="float-end">Fizyka</span><br/><span className="text-sm">Przeczytać strony 10-120 bo jest początek roku i już zalegamy z materiałem xdd</span><span className="float-end">03.09.2022</span></div>
+          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_homework.homework}</span><span className="float-end">Historia</span><br/><span className="text-sm">Prezentacja nt. II Wojny Skibidi</span><span className="float-end">05.09.2022</span></div>
+        </div>
       </AnimatedTile>
       <AnimatedTile className="col-span-2">
         <h1 className="m-3 text-4xl">{msg.universal.timetable}</h1>
       </AnimatedTile>
       <AnimatedTile>
         <h1 className="m-3 text-4xl">{msg.tabs.attendance}</h1>
+        <p className="text-8xl font-bold justify-center items-center flex my-auto">87%</p>
       </AnimatedTile>
       <AnimatedTile>
         <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>
         <p className="ms-3 mt-0">1{msg.home_tab_messages.unread_singular}</p>
-        <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">Mariusz Kiła</span><span className="float-end">Odwołana lekcja</span><br/><span className="text-sm">Historia o 8 rano odwołana mozna spac dluzej !!!</span><span className="float-end">03.09.2022 08:05</span></div>
+        <div className="max-h-[60%] overflow-y-auto">
+          <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">Mariusz Kiła</span><span className="float-end">Odwołana lekcja</span><br/><span className="text-sm">Historia o 8 rano odwołana mozna spac dluzej !!!</span><span className="float-end">03.09.2022 08:05</span></div>
+          <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">Anna Kula</span><span className="float-end">Zwrot książek</span><br/><span className="text-sm">Ten kto nie zwróci książek zostanie zabity  :-)</span><span className="float-end">03.09.2022 08:05</span></div>
+          <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">Mariusz Kiła</span><span className="float-end">Zmiana planu lekcji</span><br/><span className="text-sm">pprsze wszystkih o sprawdzenie sal bo byly tez korekty sal</span><span className="float-end">03.09.2022 08:05</span></div>
+        </div>
       </AnimatedTile>
       <AnimatedTile className="col-span-2">
         <h1 className="m-3 text-4xl">idk</h1>
