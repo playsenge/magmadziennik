@@ -38,7 +38,7 @@ export default function StudentHomeTab() {
   if (subjectsError) return msg.universal.server_side_error;
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <AnimatedTile className="scale-50">
         <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
         <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
@@ -73,12 +73,12 @@ export default function StudentHomeTab() {
           <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">{msg.home_tab_homework.homework}</span><span className="float-end">Historia</span><br/><span className="text-sm">Prezentacja nt. II Wojny Skibidi</span><span className="float-end">05.09.2022</span></div>
         </div>
       </AnimatedTile>
-      <AnimatedTile className="col-span-2">
+      <AnimatedTile className="col-span-2 hidden lg:block">
         <h1 className="m-3 text-4xl">{msg.universal.timetable}</h1>
       </AnimatedTile>
-      <AnimatedTile>
+      <AnimatedTile className="hidden lg:block">
         <h1 className="m-3 text-4xl">{msg.tabs.attendance}</h1>
-        <p className="text-8xl font-bold justify-center items-center flex my-auto">87%</p>
+        <p className="my-auto flex items-center justify-center text-8xl font-bold">87%</p>
       </AnimatedTile>
       <AnimatedTile>
         <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>
@@ -89,7 +89,7 @@ export default function StudentHomeTab() {
           <div className="mx-auto  mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl"><span className="text-xl">Mariusz Kiła</span><span className="float-end">Zmiana planu lekcji</span><br/><span className="text-sm">pprsze wszystkih o sprawdzenie sal bo byly tez korekty sal</span><span className="float-end">03.09.2022 08:05</span></div>
         </div>
       </AnimatedTile>
-      <AnimatedTile className="col-span-2">
+      <AnimatedTile className="col-span-2 hidden lg:block">
         <h1 className="m-3 text-4xl">idk</h1>
       </AnimatedTile>
     </div>
