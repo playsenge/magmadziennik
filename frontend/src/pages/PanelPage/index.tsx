@@ -215,7 +215,9 @@ export default function PanelPage() {
             <MobileExpander className="ml-3 bg-gray-800" />
           </div>
 
-          <div className="overflow-y-auto p-6">{currentTab}</div>
+          <div key={msg.name} className="overflow-y-auto p-6">
+            {currentTab}
+          </div>
         </div>
       </div>
     </div>

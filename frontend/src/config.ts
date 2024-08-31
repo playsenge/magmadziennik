@@ -26,4 +26,5 @@ export const config = {
     ] as GradeModel[],
     defaultLanguage: "pl" as Language,
     pocketbaseURL: "https://magmapb.senge1337.cc",
+    schoolYear: "2024/2025",
 };

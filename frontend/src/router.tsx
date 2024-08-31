@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode, useCallback, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { AnimatePresence } from "framer-motion"; // Assuming 'framer-motion' is the library where 'AnimatePresence' is defined
@@ -11,6 +11,7 @@ import DevPage from "./pages/DevPage";
 import eventEmitter from "./language/event";
 import { useRerender } from "./components/hooks/rerender";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { devMsg } from "./utils";
 
 const queryClient = new QueryClient();
 
@@ -18,13 +19,18 @@ const queryClient = new QueryClient();
 const App = () => {
   const rerender = useRerender();
 
+  const rerenderFunc = useCallback(() => {
+    rerender();
+    devMsg("Global rerender");
+  }, [rerender]);
+
   useEffect(() => {
-    eventEmitter.on("rerender", rerender);
+    eventEmitter.on("rerender", rerenderFunc);
 
     return () => {
-      eventEmitter.off("rerender", rerender);
+      eventEmitter.off("rerender", rerenderFunc);
     };
-  }, [rerender]);
+  }, [rerenderFunc]);
 
   return (
     <AnimatePresence mode="wait">
@@ -32,7 +38,7 @@ const App = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/teacher-login" element={<LoginPage />} />
-        <Route path="/panel" element={<PanelPage />} />
+        <Route path="/panele" element={<PanelPage />} />
         <Route path="/panel/:route" element={<PanelPage />} />
         <Route path="/logout" element={<LogoutPage />} />
         {import.meta.env.DEV && <Route path="/dev" element={<DevPage />} />}

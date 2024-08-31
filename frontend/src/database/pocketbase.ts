@@ -1,8 +1,10 @@
 import PocketBase, { ClientResponseError } from "pocketbase";
-import { Student, Subject, Teacher, UserGeneric } from "./interfaces";
+import { Grade, Student, Subject, Teacher, UserGeneric } from "./interfaces";
 import { LoginResult } from "./enums";
 import { devMsg } from "../utils";
 import { config } from "../config";
+import SubjectBuilder from "./builders/SubjectBuilder";
+import GradeBuilder from "./builders/GradeBuilder";
 
 export const pb = new PocketBase(
     config.pocketbaseURL
@@ -42,30 +44,27 @@ export const login = async (email: string, password: string, teacher?: boolean):
 };
 
 export const getSubjects = async (): Promise<Subject[]> => {
-    const subjects = await pb.collection("subjects").getFullList({
+    return SubjectBuilder(await pb.collection("subjects").getFullList({
         requestKey: "getSubjects",
-    });
-
-    return subjects.map((subject) => ({
-        ...subject,
-        created: new Date(subject.created),
-        updated: new Date(subject.updated),
-    })) as unknown as Subject[];
+    }));
 };
 
 export const getSubjectsForStudent = async (): Promise<Subject[]> => {
     const subjectIds = pb.authStore!.model!.subjects ?? [];
     if (subjectIds.length <= 0) return [];
 
-    const subjects = await pb.collection("subjects").getFullList({
+    return SubjectBuilder(await pb.collection("subjects").getFullList({
         // TODO: potentially refactor into queried parameter with pb.filter()??? (shouldn't cause SQL injection tho, it's sanitized server-side)
         filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
         requestKey: "getSubjectsForStudent",
-    });
+    }));
+};
 
-    return subjects.map((subject) => ({
-        ...subject,
-        created: new Date(subject.created),
-        updated: new Date(subject.updated),
-    })) as unknown as Subject[];
+export const getStudentGrades = async (): Promise<Grade[]> => {
+    if(!pb.authStore.isValid) return [];
+
+    return GradeBuilder(await pb.collection("grades").getFullList({
+        filter: ``,
+        expand: "student"
+    }));
 };
