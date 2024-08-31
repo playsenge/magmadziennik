@@ -171,47 +171,51 @@ export default function PanelPage() {
         {NavContents}
       </div>
 
-      <div className={`flex-1 p-6 ${mobileExpanded ? "overflow-hidden" : ""}`}>
-        <div className="-m-6 mb-6 flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
-          <Logo className="ml-4" />
-          <div className="flex flex-row items-center justify-center gap-2">
-            <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
-          </div>
-          <div className="mx-2 block h-14 w-1 rounded-full bg-gray-300"></div>
-          <div className="relative inline-block text-left">
-            <img
-              src={userAvatar()}
-              alt="Avatar"
-              className="aspect-square size-8 cursor-pointer rounded-full border-4 border-gray-300 object-cover"
-              onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-            />
-            <div
-              className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none`}
-            >
-              <div className="py-1" role="none">
-                <span
-                  className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => {
-                    pb.authStore.clear();
-                    navigate("/login");
-                  }}
-                >
-                  Wyloguj
-                </span>
+      <div className={`flex-1 ${mobileExpanded ? "overflow-hidden" : ""}`}>
+        <div className="flex h-screen flex-col">
+          <div className="flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
+            <Logo className="ml-4" />
+            <div className="flex flex-row items-center justify-center gap-2">
+              <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
+            </div>
+            <div className="mx-2 block h-14 w-1 rounded-full bg-gray-300"></div>
+            <div className="relative inline-block text-left">
+              <img
+                src={userAvatar()}
+                alt="Avatar"
+                className="aspect-square size-8 cursor-pointer rounded-full border-4 border-gray-300 object-cover"
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+              />
+              <div
+                className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none`}
+              >
+                <div className="py-1" role="none">
+                  <span
+                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => {
+                      pb.authStore.clear();
+                      navigate("/login");
+                    }}
+                  >
+                    Wyloguj
+                  </span>
+                </div>
               </div>
             </div>
+            <MobileExpander className="ml-3 bg-gray-800" />
           </div>
-          <MobileExpander className="ml-3 bg-gray-800" />
-        </div>
 
-        {currentTab === CurrentTab.HOME && <HomeTab />}
-        {currentTab === CurrentTab.TIMETABLE && <TimetableTab />}
-        {currentTab === CurrentTab.GRADES && <GradesTab />}
-        {currentTab === CurrentTab.TESTS && <TestsTab />}
-        {currentTab === CurrentTab.HOMEWORK && <HomeworkTab />}
-        {currentTab === CurrentTab.ATTENDANCE && <AttendaceTab />}
-        {currentTab === CurrentTab.MESSAGES && <MessagesTab />}
-        {currentTab === CurrentTab.SETTINGS && <SettingsTab />}
+          <div className="overflow-y-auto p-6">
+            {currentTab === CurrentTab.HOME && <HomeTab />}
+            {currentTab === CurrentTab.TIMETABLE && <TimetableTab />}
+            {currentTab === CurrentTab.GRADES && <GradesTab />}
+            {currentTab === CurrentTab.TESTS && <TestsTab />}
+            {currentTab === CurrentTab.HOMEWORK && <HomeworkTab />}
+            {currentTab === CurrentTab.ATTENDANCE && <AttendaceTab />}
+            {currentTab === CurrentTab.MESSAGES && <MessagesTab />}
+            {currentTab === CurrentTab.SETTINGS && <SettingsTab />}
+          </div>
+        </div>
       </div>
     </div>
   );
