@@ -70,6 +70,9 @@ export default {
             "unread_singular": " unread message",
             "unread_plural": " unread messages"
         },
+        "home_tab_attendance": {
+            "lowest": "The lowest: "
+        },
 
     },
 
@@ -144,6 +147,9 @@ export default {
             "unread_singular": " nieprzeczytana wiadomość",
             "unread_plural": " nieprzeczytanych wiadomości"
         },
+        "home_tab_attendance": {
+            "lowest": "Najniższa: "
+        },
     },
 
     "sb": {
@@ -217,6 +223,9 @@ export default {
         "home_tab_messages": {
             "unread_singular": " DM in yo chatbox",
             "unread_plural": " DMs in yo chatbox"
+        },
+        "home_tab_attendance": {
+            "lowest": "The weakest: "
         },
     }
 
