@@ -56,7 +56,21 @@ export default {
             "teacher": "Teacher",
             "date": "Date",
             "value": "Real value"
-        }
+        },
+        "home_tab_tests": {
+            "this_week": "This week: ",
+            "test": "Test",
+            "quiz": "Quiz" //idk if "quiz" fits
+        },
+        "home_tab_homework": {
+            "this_week": "Due this week: ",
+            "homework": "Homework"
+        },
+        "home_tab_messages": {
+            "unread_singular": " unread message",
+            "unread_plural": " unread messages"
+        },
+
     },
 
     "pl": {
@@ -116,7 +130,20 @@ export default {
             "teacher": "Nauczyciel",
             "date": "Data",
             "value": "Wartość realna"
-        }
+        },
+        "home_tab_tests": {
+            "this_week": "W tym tygodniu: ",
+            "test": "Sprawdzian",
+            "quiz": "Kartkówka"
+        },
+        "home_tab_homework": {
+            "this_week": "W tym tygodniu: ",
+            "homework": "Zadanie domowe"
+        },
+        "home_tab_messages": {
+            "unread_singular": " nieprzeczytana wiadomość",
+            "unread_plural": " nieprzeczytanych wiadomości"
+        },
     },
 
     "sb": {
@@ -169,7 +196,7 @@ export default {
             "tests": "Tests 'n Quizzes",
             "homework": "Homework Grind",
             "attendance": "Who's Here?",
-            "messages": "Chatbox",
+            "messages": "DMs",
             "settings": "Fix Yo Stuff"
         },
         "grade_details": {
@@ -177,7 +204,20 @@ export default {
             "teacher": "Bro",
             "date": "When",
             "value": "For real"
-        }
+        },
+        "home_tab_tests": {
+            "this_week": "this week",
+            "test": "test",
+            "quiz": "Quizlet"
+        },
+        "home_tab_homework": {
+            "this_week": "till this week: ",
+            "homework": "Home stuff"
+        },
+        "home_tab_messages": {
+            "unread_singular": " DM in yo chatbox",
+            "unread_plural": " DMs in yo chatbox"
+        },
     }
 
 };
