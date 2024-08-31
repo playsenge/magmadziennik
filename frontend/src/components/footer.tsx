@@ -9,23 +9,48 @@ const height = 7;
 export const beforeFooterStyle: React.CSSProperties = {
   height: 100 - height + "vh",
 };
-
 export default function Footer() {
-  return (
-    <footer
-      className={`quicksand z-50 flex items-center gap-7 bg-gray-300 px-6 text-slate-500`}
-      style={{
-        height: height + "vh",
-      }}
-    >
-      <Logo />
-
+  const Links = (
+    <>
       <Link to="/gdpr">{msg.footer.gdpr}</Link>
       <Link to="/contact">{msg.footer.contact}</Link>
       <Link to="/about-us">{msg.footer.about_us}</Link>
       <Link to="/privacy-policy">{msg.footer.privacy_policy}</Link>
+    </>
+  );
 
-      <LanguageSwitcher imageClasses="size-5" />
+  return (
+    <footer
+      className="quicksand z-50 bg-gray-300 text-slate-500"
+      style={{
+        height: height + "vh",
+      }}
+    >
+      {/* Desktop Version */}
+      <div className="hidden h-full items-center justify-between px-6 md:flex">
+        <div className="flex grow items-center gap-7">
+          <Logo className="mr-auto" />
+          <nav className="mr-5 flex gap-5">{Links}</nav>
+        </div>
+        <div className="flex items-center gap-5">
+          <LanguageSwitcher imageClasses="size-5" />
+        </div>
+      </div>
+
+      {/* Mobile Version */}
+      <div className="flex h-full flex-col items-center bg-gray-300 md:hidden">
+        <div className="flex size-full flex-col justify-between *:bg-gray-300">
+          <div className="flex justify-center gap-7 py-3">
+            <Logo />
+          </div>
+          <nav className="flex w-full flex-col gap-3 pt-3 text-center">
+            {Links}
+          </nav>
+          <div className="flex items-center justify-center gap-5 py-6">
+            <LanguageSwitcher imageClasses="size-5" />
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }

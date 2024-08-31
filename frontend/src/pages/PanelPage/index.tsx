@@ -184,7 +184,7 @@ export default function PanelPage() {
       <div className={`flex-1 ${mobileExpanded ? "overflow-hidden" : ""}`}>
         <div className="flex h-screen flex-col">
           <div className="flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
-            <Logo className="ml-4" />
+            <Logo className="ml-4 mr-auto" />
             <div className="flex flex-row items-center justify-center gap-2">
               <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
             </div>
