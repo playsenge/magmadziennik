@@ -9,6 +9,7 @@ const height = 7;
 export const beforeFooterStyle: React.CSSProperties = {
   height: 100 - height + "vh",
 };
+
 export default function Footer() {
   const Links = (
     <>
@@ -21,7 +22,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="quicksand z-50 bg-gray-300 text-slate-500"
+      className="quicksand z-50 text-slate-600 *:*:*:bg-gray-200 dark:bg-gray-700 dark:text-slate-500 *:*:*:dark:bg-gray-700 *:dark:text-gray-200"
       style={{
         height: height + "vh",
       }}
@@ -38,9 +39,9 @@ export default function Footer() {
       </div>
 
       {/* Mobile Version */}
-      <div className="flex h-full flex-col items-center bg-gray-300 md:hidden">
-        <div className="flex size-full flex-col justify-between *:bg-gray-300">
-          <div className="flex justify-center gap-7 py-3">
+      <div className="flex h-full flex-col items-center md:hidden">
+        <div className="flex size-full flex-col justify-between">
+          <div className="flex justify-center py-3">
             <Logo />
           </div>
           <nav className="flex w-full flex-col gap-3 pt-3 text-center">

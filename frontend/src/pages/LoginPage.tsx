@@ -47,11 +47,11 @@ export default function LoginPage() {
   return (
     <>
       <div
-        className="flex items-center justify-center"
+        className="flex items-center justify-center bg-gray-100 dark:bg-slate-900"
         style={beforeFooterStyle}
       >
-        <form className="flex flex-col items-center justify-center gap-5 rounded-xl bg-gray-700 p-12 text-white shadow-xl shadow-slate-800">
-          <h1 className="mb-4 text-4xl font-bold">
+        <form className="flex flex-col items-center justify-center gap-5 rounded-xl bg-white p-12 text-white shadow-xl shadow-gray-200 dark:bg-gray-700 dark:shadow-slate-800">
+          <h1 className="mb-4 text-center text-4xl font-bold text-black dark:text-white">
             {teacherLogin
               ? msg.login_page.teacher_header
               : msg.login_page.student_header}
@@ -60,7 +60,6 @@ export default function LoginPage() {
             <p className="mb-2 text-red-600">{getErrorMessage()}</p>
           )}
           <Input
-            className="bg-slate-600"
             type="email"
             placeholder="E-mail"
             ref={emailInput}
@@ -75,12 +74,15 @@ export default function LoginPage() {
             minLength={8}
             name="password"
           />
-          <Link to="/forgot-password" className="-mb-4 underline">
+          <Link
+            to="/forgot-password"
+            className="-mb-4 text-black underline dark:text-white"
+          >
             {msg.login_page.forgot_password}
           </Link>
           <Link
             to={teacherLogin ? "/login" : "/teacher-login"}
-            className="underline"
+            className="text-black underline dark:text-white"
           >
             {teacherLogin
               ? msg.login_page.student_login
