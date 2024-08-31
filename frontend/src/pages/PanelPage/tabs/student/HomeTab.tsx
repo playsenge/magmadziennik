@@ -5,6 +5,7 @@ import { memo } from "react";
 import { getStudentGrades } from "../../../../database/pocketbase";
 import LoadingSpinner from "../../../../components/loading-spinner";
 import { useQuery } from "react-query";
+import ActivityTile from "../../../../components/activity-tile";
 
 const AnimatedTile = memo(
   ({
@@ -54,59 +55,37 @@ export default function StudentHomeTab() {
         <h1 className="m-3 text-4xl">{msg.tabs.tests}</h1>
         <p className="ms-3 mt-0">{msg.home_tab_tests.this_week}2</p>
         <div className="max-h-[60%] overflow-y-auto">
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl font-semibold">
-              {msg.home_tab_tests.test}
-            </span>
-            <span className="float-end">Matematyka</span>
-            <br />
-            <span className="text-sm">Logarytmy</span>
-            <span className="float-end">11.11.2022</span>
-          </div>
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">{msg.home_tab_tests.quiz}</span>
-            <span className="float-end">j. Polski</span>
-            <br />
-            <span className="text-sm">Lektura "Konrad Walikoń"</span>
-            <span className="float-end">16.11.2022</span>
-          </div>
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">{msg.home_tab_tests.quiz}</span>
-            <span className="float-end">j. Polski</span>
-            <br />
-            <span className="text-sm">Lektura "Konrad Walikoń"</span>
-            <span className="float-end">16.11.2022</span>
-          </div>
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">{msg.home_tab_tests.quiz}</span>
-            <span className="float-end">j. Polski</span>
-            <br />
-            <span className="text-sm">Lektura "Konrad Walikoń"</span>
-            <span className="float-end">16.11.2022</span>
-          </div>
+          <ActivityTile
+            subject="Matematyka"
+            description="Logarytmy"
+            type="test"
+            date={new Date(2022, 10, 11)}
+          />
+          <ActivityTile
+            subject="Język polski"
+            description='Lektura "Konrad Walikoń"'
+            type="quiz"
+            date={new Date(2022, 10, 16)}
+          />
         </div>
       </AnimatedTile>
       <AnimatedTile>
         <h1 className="m-3 text-4xl">{msg.tabs.homework}</h1>
         <p className="ms-3 mt-0">{msg.home_tab_homework.this_week}2</p>
         <div className="max-h-[60%] overflow-y-auto">
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">{msg.home_tab_homework.homework}</span>
-            <span className="float-end">Fizyka</span>
-            <br />
-            <span className="text-sm">
-              Przeczytać strony 10-120 bo jest początek roku i już zalegamy z
-              materiałem xdd
-            </span>
-            <span className="float-end">03.09.2022</span>
-          </div>
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">{msg.home_tab_homework.homework}</span>
-            <span className="float-end">Historia</span>
-            <br />
-            <span className="text-sm">Prezentacja nt. II Wojny Skibidi</span>
-            <span className="float-end">05.09.2022</span>
-          </div>
+          <ActivityTile
+            subject="Fizyka"
+            description="Przeczytać strony 10-120 bo jest początek roku i już zalegamy z
+              materiałem xdd"
+            type="homework"
+            date={new Date(2022, 8, 3)}
+          />
+          <ActivityTile
+            subject="Historia"
+            description="Prezentacja nt. II Wojny Skibidi"
+            type="homework"
+            date={new Date(2022, 8, 5)}
+          />
         </div>
       </AnimatedTile>
       <AnimatedTile className="col-span-2 hidden lg:block">
