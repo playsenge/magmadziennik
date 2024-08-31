@@ -1,6 +1,14 @@
 import { RecordModel } from "pocketbase";
+import { Student } from "../interfaces";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default (data: RecordModel[]) => {
-    return 'foo';
+export default (data: RecordModel[]): Student[] => {
+    return data.map((data) => ({
+        ...data,
+        class_id: data.class,
+        date_of_birth: new Date(data.date_of_birth),
+        created: new Date(data.created),
+        updated: new Date(data.updated),
+    })) as unknown as Student[];
 }
+
+// 100% - 31.08.2024

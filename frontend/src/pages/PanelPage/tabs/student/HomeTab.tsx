@@ -3,7 +3,7 @@ import { msg } from "../../../../language";
 import { config } from "../../../../config";
 import GradeTile from "../../../../components/grade-tile";
 import { memo } from "react";
-import { getSubjects } from "../../../../database/pocketbase";
+import { getStudentGrades, getSubjects } from "../../../../database/pocketbase";
 import LoadingSpinner from "../../../../components/loading-spinner";
 import { useQuery } from "react-query";
 
@@ -30,28 +30,22 @@ const AnimatedTile = memo(
 );
 
 export default function StudentHomeTab() {
-  const { data: subjects, error: subjectsError } = useQuery(
-    "subjects",
-    getSubjects,
+  const { data: grades, error: gradesError } = useQuery(
+    "grades",
+    getStudentGrades,
   );
-
-  if (subjectsError) return msg.universal.server_side_error;
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <AnimatedTile className="scale-50">
         <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
         <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
-          {subjects ? (
-            subjects.map((subject, i) => (
-              <GradeTile
-                key={subject.id}
-                grade={config.grades[i]}
-                subject={subject}
-              />
-            ))
-          ) : (
+          {grades ? (
+            grades.map((grade) => <GradeTile key={grade.id} grade={grade} />)
+          ) : !gradesError ? (
             <LoadingSpinner />
+          ) : (
+            msg.universal.server_side_error
           )}
         </div>
       </AnimatedTile>
@@ -120,7 +114,9 @@ export default function StudentHomeTab() {
         <p className="my-auto flex items-center justify-center text-8xl font-bold">
           87%
         </p>
-        <p className="ms-5 mt-4">{msg.home_tab_attendance.lowest}Historia - 66%</p>
+        <p className="ms-5 mt-4">
+          {msg.home_tab_attendance.lowest}Historia - 66%
+        </p>
       </AnimatedTile>
       <AnimatedTile>
         <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>

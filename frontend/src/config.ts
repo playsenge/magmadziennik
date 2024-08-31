@@ -3,10 +3,6 @@ import { Language } from "./language";
 
 export const config = {
     grades: [
-        // baka to nie jest ffs baza danych
-        // tutaj to tylko są TEMPLATE'Y JAKIE SA OCENY
-        // w bazie danych będą wagi itp.
-        // nie ruszaj
         { text: "1", value: 1, color: "#d64b4b" },
         { text: "1+", value: 1.33, color: "#d64b4b" },
         { text: "2-", value: 1.66, color: "#ff7f57" },
@@ -24,6 +20,7 @@ export const config = {
         { text: "6", value: 6, color: "#4ac0f6" },
         { text: "nb", value: 0, color: "#9CA3AF" },
     ] as GradeModel[],
+    undefinedGrade: { "text": "?", value: 0, "color": "#dddddd" } as GradeModel, // Grade to fallback to if there's some error
     defaultLanguage: "pl" as Language,
     pocketbaseURL: "https://magmapb.senge1337.cc",
     schoolYear: "2024/2025",

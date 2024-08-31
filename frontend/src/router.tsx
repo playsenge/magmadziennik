@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/teacher-login" element={<LoginPage />} />
-        <Route path="/panele" element={<PanelPage />} />
+        <Route path="/panel" element={<PanelPage />} />
         <Route path="/panel/:route" element={<PanelPage />} />
         <Route path="/logout" element={<LogoutPage />} />
         {import.meta.env.DEV && <Route path="/dev" element={<DevPage />} />}

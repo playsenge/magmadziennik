@@ -1,4 +1,5 @@
 import {
+  getStudentGrades,
   getSubjects,
   getSubjectsForStudent,
   login,
@@ -9,7 +10,6 @@ import { useRerender } from "../components/hooks/rerender";
 import LoadingSpinner from "../components/loading-spinner";
 import { devMsg } from "../utils";
 import { availableLanguages, msg, msgAs, setLanguage } from "../language";
-import { config } from "../config";
 import GradeTile from "../components/grade-tile";
 import { useQuery } from "react-query";
 
@@ -21,6 +21,10 @@ export default function DevPage() {
   const { data: studentSubjects, error: studentSubjectsError } = useQuery(
     "studentSubjects",
     getSubjectsForStudent,
+  );
+  const { data: grades, error: gradesError } = useQuery(
+    "grades",
+    getStudentGrades,
   );
 
   const rerender = useRerender();
@@ -39,7 +43,7 @@ export default function DevPage() {
     }
   };
 
-  if (subjectsError || studentSubjectsError)
+  if (subjectsError || studentSubjectsError || gradesError)
     return <h1>{msg.universal.server_side_error}</h1>;
   if (!import.meta.env.DEV) return null;
 
@@ -116,10 +120,8 @@ export default function DevPage() {
       <section className="flex flex-col">
         <h2 className="text-xl font-semibold">{msg.universal.grades}</h2>
         <div className="my-4 grid max-w-sm grid-cols-5 gap-3">
-          {subjects &&
-            config.grades.map((grade) => (
-              <GradeTile key={grade.text} grade={grade} subject={subjects[0]} />
-            ))}
+          {grades &&
+            grades.map((grade) => <GradeTile key={grade.id} grade={grade} />)}
         </div>
       </section>
     </div>

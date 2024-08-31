@@ -1,12 +1,11 @@
 import { RecordModel } from "pocketbase";
-import { Subject } from "../interfaces";
+import { Teacher } from "../interfaces";
 
-export default (data: RecordModel[]): Subject[] => {
+export default (data: RecordModel[]): Teacher[] => {
     return data.map((data) => ({
         ...data,
+        subject_ids: data.subjects,
         created: new Date(data.created),
         updated: new Date(data.updated),
-    })) as unknown as Subject[];
-};
-
-// 100% - 31.08.2024
+    })) as unknown as Teacher[];
+}

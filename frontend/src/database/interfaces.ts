@@ -6,21 +6,21 @@ export interface UserGeneric {
     email: string;
     first_name: string;
     last_name: string;
-    phone_number: string;
     avatar: string;
     created: Date;
     updated: Date;
 }
 
 export interface Student extends UserGeneric {
-    class: SchoolClass;
+    phone_number: string;
+    class_id: string;
     date_of_birth: Date;
     address: string;
 }
 
 export interface Teacher extends UserGeneric {
     admin: boolean;
-    subjects: string[];
+    subject_ids: string[];
 }
 
 export interface Subject {
@@ -40,8 +40,11 @@ export interface GradeModel {
 export interface Grade {
     id: string;
     grade: GradeModel;
+    teacher: Teacher;
     student: Student;
+    subject: Subject;
     semester: number;
+    weight: number;
     created: Date;
     updated: Date;
 }
@@ -49,7 +52,7 @@ export interface Grade {
 export interface SchoolClass {
     id: string;
     name: string;
-    students: Student[];
+    student_ids: string[];
     teacher_subject_pairs: TeacherSubjectPair;
     created: Date;
     updated: Date;
