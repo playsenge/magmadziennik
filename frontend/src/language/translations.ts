@@ -185,9 +185,9 @@ export default {
             "privacy_policy": "Privacy Vibes"
         },
         "greetings": {
-            "morning": "Skibidi Morning!",
-            "afternoon": "Skibidi Afternoon!",
-            "evening": "Skibidi Evening!"
+            "morning": "Skibidi Morning",
+            "afternoon": "Skibidi Afternoon",
+            "evening": "Skibidi Evening"
         },
         "tabs": {
             "home": "Main Vibe",
