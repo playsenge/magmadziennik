@@ -135,9 +135,9 @@ export default function TeacherHomeTab() {
             </tr>
           </thead>
           <tbody>
-            {students.map((student) => (
+            {students.map((student, i) => (
               <tr key={student.id}>
-                <td className="text-center">{student.id}</td>
+                <td className="text-center">{i + 1}</td>
                 <td className="px-4 py-2">{student.name}</td>
                 {[...Array(40)].map((_, i) => {
                   const grade = getGrade(
