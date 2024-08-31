@@ -32,7 +32,7 @@ export function ActivityTile({
 
   return (
     <div
-      className={`mx-auto mt-2 w-11/12 rounded-xl ${unreadBorder && "border-2 border-green-500"} flex flex-col bg-slate-100 p-3 shadow-xl`}
+      className={`mx-auto mt-2 w-11/12 rounded-xl ${unreadBorder && "border-2 border-green-500"} flex flex-col bg-slate-100 p-3 shadow-xl dark:bg-slate-600 dark:text-white`}
     >
       <div className="flex items-center justify-between">
         <span className="text-xl font-semibold">{getHeaderMessage()}</span>

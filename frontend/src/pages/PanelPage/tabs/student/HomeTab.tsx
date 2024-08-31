@@ -16,7 +16,7 @@ const AnimatedTile = memo(
     className?: string;
   }) => (
     <motion.div
-      className={`h-64 rounded-2xl bg-white ${className ?? ""}`}
+      className={`h-64 rounded-2xl bg-white dark:bg-gray-800 ${className ?? ""}`}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5, type: "tween" }}
       initial={{ scale: 0, opacity: 0 }}
@@ -38,7 +38,9 @@ export default function StudentHomeTab() {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <AnimatedTile className="scale-50">
-        <h1 className="m-3 text-4xl">{msg.universal.grades}</h1>
+        <h1 className="m-3 text-4xl text-black dark:text-white">
+          {msg.universal.grades}
+        </h1>
         <div className="flex flex-row gap-5 *:aspect-square *:w-16 *:p-5 *:text-center">
           {grades ? (
             grades.map((grade) => <GradeTile key={grade.id} grade={grade} />)
@@ -52,8 +54,12 @@ export default function StudentHomeTab() {
         </div>
       </AnimatedTile>
       <AnimatedTile>
-        <h1 className="m-3 text-4xl">{msg.tabs.tests}</h1>
-        <p className="ms-3 mt-0">{msg.home_tab_tests.this_week}2</p>
+        <h1 className="m-3 text-4xl text-black dark:text-white">
+          {msg.tabs.tests}
+        </h1>
+        <p className="ms-3 mt-0 text-black dark:text-white">
+          {msg.home_tab_tests.this_week}2
+        </p>
         <div className="max-h-[60%] overflow-y-auto">
           <ActivityTile
             meta="Matematyka"
@@ -70,8 +76,12 @@ export default function StudentHomeTab() {
         </div>
       </AnimatedTile>
       <AnimatedTile>
-        <h1 className="m-3 text-4xl">{msg.tabs.homework}</h1>
-        <p className="ms-3 mt-0">{msg.home_tab_homework.this_week}2</p>
+        <h1 className="m-3 text-4xl text-black dark:text-white">
+          {msg.tabs.homework}
+        </h1>
+        <p className="ms-3 mt-0 text-black dark:text-white">
+          {msg.home_tab_homework.this_week}2
+        </p>
         <div className="max-h-[60%] overflow-y-auto">
           <ActivityTile
             meta="Fizyka"
@@ -89,20 +99,28 @@ export default function StudentHomeTab() {
         </div>
       </AnimatedTile>
       <AnimatedTile className="col-span-2 hidden lg:block">
-        <h1 className="m-3 text-4xl">{msg.universal.timetable}</h1>
+        <h1 className="m-3 text-4xl text-black dark:text-white">
+          {msg.universal.timetable}
+        </h1>
       </AnimatedTile>
       <AnimatedTile className="hidden lg:block">
-        <h1 className="m-3 text-4xl">{msg.tabs.attendance}</h1>
-        <p className="my-auto flex items-center justify-center text-8xl font-bold">
+        <h1 className="m-3 text-4xl text-black dark:text-white">
+          {msg.tabs.attendance}
+        </h1>
+        <p className="my-auto flex items-center justify-center text-8xl font-bold text-black dark:text-white">
           87%
         </p>
-        <p className="ms-5 mt-4">
+        <p className="ms-5 mt-4 text-black dark:text-white">
           {msg.home_tab_attendance.lowest}Historia - 66%
         </p>
       </AnimatedTile>
       <AnimatedTile>
-        <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>
-        <p className="ms-3 mt-0">1{msg.home_tab_messages.unread_singular}</p>
+        <h1 className="m-3 text-4xl text-black dark:text-white">
+          {msg.tabs.messages}
+        </h1>
+        <p className="ms-3 mt-0 text-black dark:text-white">
+          1{msg.home_tab_messages.unread_singular}
+        </p>
         <div className="max-h-[60%] overflow-y-auto">
           <ActivityTile
             meta="Odwołana lekcja"
@@ -129,7 +147,7 @@ export default function StudentHomeTab() {
         </div>
       </AnimatedTile>
       <AnimatedTile className="col-span-2 hidden lg:block">
-        <h1 className="m-3 text-4xl">idk</h1>
+        <h1 className="m-3 text-4xl text-black dark:text-white">idk</h1>
       </AnimatedTile>
     </div>
   );

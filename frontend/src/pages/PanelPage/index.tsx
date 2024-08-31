@@ -104,8 +104,9 @@ export default function PanelPage() {
       <span
         className={
           (params.route === route
-            ? "bg-gray-700"
-            : "cursor-pointer hover:bg-gray-600") + " block rounded px-4 py-2.5"
+            ? "bg-gray-200 dark:bg-gray-700"
+            : "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600") +
+          " block rounded px-4 py-2.5"
         }
         onClick={() => navigate(`/panel/${params.route}`)}
       >
@@ -159,49 +160,49 @@ export default function PanelPage() {
   );
 
   return (
-    <div className="flex bg-slate-200">
+    <div className="flex bg-slate-200 dark:bg-slate-700">
       {mobileExpanded && (
         <TransparentCover onClick={() => setMobileExpanded(false)} />
       )}
 
-      <AnimatePresence mode="wait">
-        {mobileExpanded && (
-          <motion.div
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ type: "keyframes", stiffness: 300 }}
-            className="fixed left-0 top-0 z-50 h-screen w-full bg-gray-800 text-white md:hidden"
-          >
-            {NavContents}
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <div className="z-50 hidden h-screen w-64 bg-gray-800 text-white md:block">
-        {NavContents}
+      <div className="*:bg-slate-300 *:text-gray-800 dark:*:bg-gray-800 *:dark:text-white">
+        <AnimatePresence mode="wait">
+          {mobileExpanded && (
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "keyframes", stiffness: 300 }}
+              className="fixed left-0 top-0 z-50 h-screen w-full md:hidden"
+            >
+              {NavContents}
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div className="z-50 hidden h-screen w-64 md:block">{NavContents}</div>
       </div>
 
       <div className={`flex-1 ${mobileExpanded ? "overflow-hidden" : ""}`}>
         <div className="flex h-screen flex-col">
-          <div className="flex flex-row items-center justify-end bg-slate-200 pr-3 shadow-xl">
+          <div className="flex flex-row items-center justify-end bg-gray-200 pr-3 text-slate-600 shadow-xl dark:bg-gray-700 dark:text-gray-200">
             <Logo className="ml-4 mr-auto" />
             <div className="flex flex-row items-center justify-center gap-2">
-              <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 border-4" />
+              <LanguageSwitcher imageClasses="w-8 rounded-full border-gray-300 dark:border-gray-800 border-4" />
             </div>
-            <div className="mx-2 block h-14 w-1 rounded-full bg-gray-300"></div>
+            <div className="mx-2 block h-14 w-1 rounded-full bg-gray-300 dark:bg-gray-800"></div>
             <div className="relative inline-block text-left">
               <img
                 src={userAvatar()}
                 alt="Avatar"
-                className="aspect-square size-8 cursor-pointer rounded-full border-4 border-gray-300 object-cover"
+                className="aspect-square size-8 cursor-pointer rounded-full border-4 border-gray-300 object-cover dark:border-gray-800"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               />
               <div
-                className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none`}
+                className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-slate-700`}
               >
                 <div className="py-1" role="none">
                   <span
-                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
                     onClick={() => {
                       pb.authStore.clear();
                       navigate(teacherPanel ? "/teacher-login" : "/login");
