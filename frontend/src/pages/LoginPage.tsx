@@ -1,7 +1,7 @@
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import Footer, { beforeFooterStyle } from "../components/footer";
@@ -11,6 +11,12 @@ import LoadingSpinner from "../components/loading-spinner";
 import { msg } from "../language";
 
 export default function LoginPage() {
+  const location = useLocation();
+  const teacherLogin = useMemo(
+    () => location.pathname.slice(1) === "teacher-login",
+    [location],
+  );
+
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
@@ -45,7 +51,11 @@ export default function LoginPage() {
         style={beforeFooterStyle}
       >
         <form className="flex flex-col items-center justify-center gap-5 rounded-xl bg-gray-700 p-12 text-white shadow-xl shadow-slate-800">
-          <h1 className="mb-4 text-4xl font-bold">{msg.universal.login}</h1>
+          <h1 className="mb-4 text-4xl font-bold">
+            {teacherLogin
+              ? msg.login_page.teacher_header
+              : msg.login_page.student_header}
+          </h1>
           {error !== LoginResult.SUCCESS && (
             <p className="mb-2 text-red-600">{getErrorMessage()}</p>
           )}
@@ -65,8 +75,16 @@ export default function LoginPage() {
             minLength={8}
             name="password"
           />
-          <Link to="/forgot-password" className="underline">
+          <Link to="/forgot-password" className="-mb-4 underline">
             {msg.login_page.forgot_password}
+          </Link>
+          <Link
+            to={teacherLogin ? "/login" : "/teacher-login"}
+            className="underline"
+          >
+            {teacherLogin
+              ? msg.login_page.student_login
+              : msg.login_page.teacher_login}
           </Link>
           <Button
             type="submit"
@@ -82,7 +100,7 @@ export default function LoginPage() {
               setLoading(true);
               setError(LoginResult.SUCCESS);
 
-              const result = await login(email, password);
+              const result = await login(email, password, teacherLogin);
 
               switch (result) {
                 case LoginResult.SUCCESS:

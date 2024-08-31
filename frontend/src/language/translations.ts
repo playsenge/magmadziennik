@@ -20,8 +20,12 @@ export default {
             "log_to_console": "Log to Console",
         },
         "login_page": {
+            "teacher_header": "Teacher Login",
+            "student_header": "Student Login",
             "incorrect_email_or_password": "Incorrect email or password",
             "forgot_password": "Forgot password?",
+            "teacher_login": "Switch to teacher login?",
+            "student_login": "Switch to student login?"
         },
         "register_page": {
             "password_too_short": "Your password must be at least 8 characters long.",
@@ -76,9 +80,12 @@ export default {
             "log_to_console": "Wypisz do konsoli",
         },
         "login_page": {
+            "teacher_header": "Logowanie nauczyciela",
+            "student_header": "Logowanie ucznia",
             "incorrect_email_or_password": "Nieprawidłowy e-mail lub hasło",
             "forgot_password": "Nie pamiętasz hasła?",
-            "password_too_short": "Twoje hasło musi mieć co najmniej 8 znaków.",
+            "teacher_login": "Przejść do logowania nauczyciela?",
+            "student_login": "Przejść do logowania ucznia?"
         },
         "register_page": {
             "password_too_short": "Twoje hasło musi mieć co najmniej 8 znaków.",
@@ -102,7 +109,7 @@ export default {
             "homework": "Zadania domowe",
             "attendance": "Frekwencja",
             "messages": "Wiadomości",
-            "settings": "Ustawienia"
+            "settings": "Ustawienia",
         },
         "grade_details": {
             "weight": "Waga",
@@ -123,6 +130,7 @@ export default {
             "account": "My Spot",
             "logout": "Peace Out",
             "login": "Hop In",
+            "teacher_login": "Hop In Mr Educator",
             "password": "Secret Code",
             "server_side_error": "Server bugged out. But hey, we still got better uptime than Ohio Librus.",
         },
@@ -133,9 +141,12 @@ export default {
             "log_to_console": "Yeet to Console"
         },
         "login_page": {
+            "teacher_header": "Educator Hoppin In'",
+            "student_header": "Teachee Hoppin In'",
             "incorrect_email_or_password": "Bruh, wrong email or secret code",
             "forgot_password": "Forgot your secret code?",
-            "password_too_short": "Yo, your secret code needs at least 8 letters."
+            "teacher_login": "You an educator bro?",
+            "student_login": "You go learnin' bro?"
         },
         "register_page": {
             "password_too_short": "Yo, your secret code needs at least 8 letters."

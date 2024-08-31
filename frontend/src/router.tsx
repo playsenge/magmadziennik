@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
+// eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
   const rerender = useRerender();
 
@@ -30,8 +31,9 @@ const App = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/logout" element={<LogoutPage />} />
+        <Route path="/teacher-login" element={<LoginPage />} />
         <Route path="/panel" element={<PanelPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
         {import.meta.env.DEV && <Route path="/dev" element={<DevPage />} />}
       </Routes>
     </AnimatePresence>

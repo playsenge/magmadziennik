@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { msg } from "../../../language";
-import { config } from "../../../config";
-import GradeTile from "../../../components/grade-tile";
+import { msg } from "../../../../language";
+import { config } from "../../../../config";
+import GradeTile from "../../../../components/grade-tile";
 import { memo } from "react";
-import { getSubjects } from "../../../database/pocketbase";
-import LoadingSpinner from "../../../components/loading-spinner";
+import { getSubjects } from "../../../../database/pocketbase";
+import LoadingSpinner from "../../../../components/loading-spinner";
 import { useQuery } from "react-query";
 
 const AnimatedTile = memo(
@@ -29,7 +29,7 @@ const AnimatedTile = memo(
     prevProps.children === nextProps.children,
 );
 
-export default function HomeTab() {
+export default function StudentHomeTab() {
   const { data: subjects, error: subjectsError } = useQuery(
     "subjects",
     getSubjects,

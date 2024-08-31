@@ -35,3 +35,10 @@ export interface GradeModel {
     value: number;
     color: string;
 }
+
+export interface Grade {
+    id: string;
+    grade: GradeModel;
+    created: Date;
+    updated: Date;
+}

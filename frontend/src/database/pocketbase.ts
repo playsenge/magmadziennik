@@ -58,6 +58,7 @@ export const getSubjectsForStudent = async (): Promise<Subject[]> => {
     if (subjectIds.length <= 0) return [];
 
     const subjects = await pb.collection("subjects").getFullList({
+        // TODO: potentially refactor into queried parameter with pb.filter()??? (shouldn't cause SQL injection tho, it's sanitized server-side)
         filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
         requestKey: "getSubjectsForStudent",
     });

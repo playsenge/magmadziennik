@@ -11,39 +11,56 @@ import { FaBars, FaPenFancy } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
 import { AiOutlineAppstore } from "react-icons/ai";
 
-import HomeTab from "./tabs/HomeTab";
-import TimetableTab from "./tabs/TimetableTab";
-import GradesTab from "./tabs/GradesTab";
-import TestsTab from "./tabs/TestsTab";
-import HomeworkTab from "./tabs/HomeworkTab";
-import AttendaceTab from "./tabs/AttendanceTab";
-import MessagesTab from "./tabs/MessagesTab";
-import SettingsTab from "./tabs/SettingsTab";
 import React from "react";
 import LanguageSwitcher from "../../components/language-switcher";
 import TransparentCover from "../../components/transparent-cover";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../components/logo";
 
+import StudentHomeTab from "./tabs/student/HomeTab";
+import StudentAttendaceTab from "./tabs/student/AttendanceTab";
+import StudentGradesTab from "./tabs/student/GradesTab";
+import StudentHomeworkTab from "./tabs/student/HomeworkTab";
+import StudentMessagesTab from "./tabs/student/MessagesTab";
+import StudentSettingsTab from "./tabs/student/SettingsTab";
+import StudentTestsTab from "./tabs/student/TestsTab";
+import StudentTimetableTab from "./tabs/student/TimetableTab";
+import TeacherHomeTab from "./tabs/teacher/HomeTab";
+
 enum CurrentTab {
-  HOME,
-  TIMETABLE,
-  GRADES,
-  TESTS,
-  HOMEWORK,
-  ATTENDANCE,
+  // Student
+  STUDENT_HOME,
+  STUDENT_TIMETABLE,
+  STUDENT_GRADES,
+  STUDENT_TESTS,
+  STUDENT_HOMEWORK,
+  STUDENT_ATTENDANCE,
+  STUDENT_SETTINGS,
+  // Teacher
+  TEACHER_HOME,
+  TEACHER_TIMETABLE,
+  TEACHER_GRADES,
+  TEACHER_HOMEWORK,
+  // Universal
   MESSAGES,
-  SETTINGS,
 }
 
 export default function PanelPage() {
   const navigate = useNavigate();
+
   const user: UserGeneric = useMemo(
     () => pb.authStore.model as UserGeneric,
     [],
   );
 
-  const [currentTab, setCurrentTab] = useState<CurrentTab>(CurrentTab.HOME);
+  const teacherPanel = useMemo(
+    () => pb.authStore.model?.collectionName === "teachers",
+    [],
+  );
+
+  const [currentTab, setCurrentTab] = useState<CurrentTab>(
+    teacherPanel ? CurrentTab.TEACHER_HOME : CurrentTab.STUDENT_HOME,
+  );
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
@@ -103,47 +120,80 @@ export default function PanelPage() {
       <div className="flex items-center p-4 text-lg font-bold">
         {getTimeOfDay()}, {user.first_name}!
       </div>
+
       <nav>
-        <NavTab
-          icon={<AiOutlineAppstore />}
-          label={msg.tabs.home}
-          value={CurrentTab.HOME}
-        />
-        <NavTab
-          icon={<LuCalendarDays />}
-          label={msg.tabs.timetable}
-          value={CurrentTab.TIMETABLE}
-        />
-        <NavTab
-          icon={<FaListCheck />}
-          label={msg.tabs.grades}
-          value={CurrentTab.GRADES}
-        />
-        <NavTab
-          icon={<FaPenFancy />}
-          label={msg.tabs.tests}
-          value={CurrentTab.TESTS}
-        />
-        <NavTab
-          icon={<RiFilePaper2Line />}
-          label={msg.tabs.homework}
-          value={CurrentTab.HOMEWORK}
-        />
-        <NavTab
-          icon={<IoIosCheckmarkCircleOutline />}
-          label={msg.tabs.attendance}
-          value={CurrentTab.ATTENDANCE}
-        />
-        <NavTab
-          icon={<FiMessageSquare />}
-          label={msg.tabs.messages}
-          value={CurrentTab.MESSAGES}
-        />
-        <NavTab
-          icon={<IoIosSettings />}
-          label={msg.tabs.settings}
-          value={CurrentTab.SETTINGS}
-        />
+        {teacherPanel ? (
+          <>
+            <NavTab
+              icon={<AiOutlineAppstore />}
+              label={msg.tabs.home}
+              value={CurrentTab.TEACHER_HOME}
+            />
+            <NavTab
+              icon={<LuCalendarDays />}
+              label={msg.tabs.timetable}
+              value={CurrentTab.TEACHER_TIMETABLE}
+            />
+            <NavTab
+              icon={<FaListCheck />}
+              label={msg.tabs.grades}
+              value={CurrentTab.TEACHER_GRADES}
+            />
+            <NavTab
+              icon={<RiFilePaper2Line />}
+              label={msg.tabs.homework}
+              value={CurrentTab.TEACHER_HOMEWORK}
+            />
+            <NavTab
+              icon={<FiMessageSquare />}
+              label={msg.tabs.messages}
+              value={CurrentTab.MESSAGES}
+            />
+          </>
+        ) : (
+          <>
+            <NavTab
+              icon={<AiOutlineAppstore />}
+              label={msg.tabs.home}
+              value={CurrentTab.STUDENT_HOME}
+            />
+            <NavTab
+              icon={<LuCalendarDays />}
+              label={msg.tabs.timetable}
+              value={CurrentTab.STUDENT_TIMETABLE}
+            />
+            <NavTab
+              icon={<FaListCheck />}
+              label={msg.tabs.grades}
+              value={CurrentTab.STUDENT_GRADES}
+            />
+            <NavTab
+              icon={<FaPenFancy />}
+              label={msg.tabs.tests}
+              value={CurrentTab.STUDENT_TESTS}
+            />
+            <NavTab
+              icon={<RiFilePaper2Line />}
+              label={msg.tabs.homework}
+              value={CurrentTab.STUDENT_HOMEWORK}
+            />
+            <NavTab
+              icon={<IoIosCheckmarkCircleOutline />}
+              label={msg.tabs.attendance}
+              value={CurrentTab.STUDENT_ATTENDANCE}
+            />
+            <NavTab
+              icon={<FiMessageSquare />}
+              label={msg.tabs.messages}
+              value={CurrentTab.MESSAGES}
+            />
+            <NavTab
+              icon={<IoIosSettings />}
+              label={msg.tabs.settings}
+              value={CurrentTab.STUDENT_SETTINGS}
+            />
+          </>
+        )}
       </nav>
     </>
   );
@@ -194,10 +244,10 @@ export default function PanelPage() {
                     className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => {
                       pb.authStore.clear();
-                      navigate("/login");
+                      navigate(teacherPanel ? "/teacher-login" : "/login");
                     }}
                   >
-                    Wyloguj
+                    {msg.universal.logout}
                   </span>
                 </div>
               </div>
@@ -206,14 +256,28 @@ export default function PanelPage() {
           </div>
 
           <div className="overflow-y-auto p-6">
-            {currentTab === CurrentTab.HOME && <HomeTab />}
-            {currentTab === CurrentTab.TIMETABLE && <TimetableTab />}
-            {currentTab === CurrentTab.GRADES && <GradesTab />}
-            {currentTab === CurrentTab.TESTS && <TestsTab />}
-            {currentTab === CurrentTab.HOMEWORK && <HomeworkTab />}
-            {currentTab === CurrentTab.ATTENDANCE && <AttendaceTab />}
-            {currentTab === CurrentTab.MESSAGES && <MessagesTab />}
-            {currentTab === CurrentTab.SETTINGS && <SettingsTab />}
+            {/* Student */}
+            {currentTab === CurrentTab.STUDENT_HOME && <StudentHomeTab />}
+            {currentTab === CurrentTab.STUDENT_TIMETABLE && (
+              <StudentTimetableTab />
+            )}
+            {currentTab === CurrentTab.STUDENT_GRADES && <StudentGradesTab />}
+            {currentTab === CurrentTab.STUDENT_TESTS && <StudentTestsTab />}
+            {currentTab === CurrentTab.STUDENT_HOMEWORK && (
+              <StudentHomeworkTab />
+            )}
+            {currentTab === CurrentTab.STUDENT_ATTENDANCE && (
+              <StudentAttendaceTab />
+            )}
+            {currentTab === CurrentTab.STUDENT_MESSAGES && (
+              <StudentMessagesTab />
+            )}
+            {currentTab === CurrentTab.STUDENT_SETTINGS && (
+              <StudentSettingsTab />
+            )}
+
+            {/* Teacher */}
+            {currentTab === CurrentTab.TEACHER_HOME && <TeacherHomeTab />}
           </div>
         </div>
       </div>
