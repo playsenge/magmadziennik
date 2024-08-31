@@ -1,5 +1,10 @@
 // Interfaces to match PocketBase SQLite DB schema
 
+// Some might have slight changes and builders are made to reflect data from
+// the database, including expands on queries into these functional interfaces.
+// Some might contain IDs as a performance fallback to avoid unnecessary fetches
+// for every single entry, which will require pb.collection("...").getOne() later.
+
 export interface UserGeneric {
     id: string;
     username: string;
