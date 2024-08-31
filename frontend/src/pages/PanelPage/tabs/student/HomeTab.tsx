@@ -56,15 +56,15 @@ export default function StudentHomeTab() {
         <p className="ms-3 mt-0">{msg.home_tab_tests.this_week}2</p>
         <div className="max-h-[60%] overflow-y-auto">
           <ActivityTile
-            subject="Matematyka"
+            meta="Matematyka"
             description="Logarytmy"
-            type="test"
+            header="test"
             date={new Date(2022, 10, 11)}
           />
           <ActivityTile
-            subject="Język polski"
+            meta="Język polski"
             description='Lektura "Konrad Walikoń"'
-            type="quiz"
+            header="quiz"
             date={new Date(2022, 10, 16)}
           />
         </div>
@@ -74,16 +74,16 @@ export default function StudentHomeTab() {
         <p className="ms-3 mt-0">{msg.home_tab_homework.this_week}2</p>
         <div className="max-h-[60%] overflow-y-auto">
           <ActivityTile
-            subject="Fizyka"
+            meta="Fizyka"
             description="Przeczytać strony 10-120 bo jest początek roku i już zalegamy z
               materiałem xdd"
-            type="homework"
+            header="homework"
             date={new Date(2022, 8, 3)}
           />
           <ActivityTile
-            subject="Historia"
+            meta="Historia"
             description="Prezentacja nt. II Wojny Skibidi"
-            type="homework"
+            header="homework"
             date={new Date(2022, 8, 5)}
           />
         </div>
@@ -104,33 +104,28 @@ export default function StudentHomeTab() {
         <h1 className="m-3 text-4xl">{msg.tabs.messages}</h1>
         <p className="ms-3 mt-0">1{msg.home_tab_messages.unread_singular}</p>
         <div className="max-h-[60%] overflow-y-auto">
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">Mariusz Kiła</span>
-            <span className="float-end">Odwołana lekcja</span>
-            <br />
-            <span className="text-sm">
-              Historia o 8 rano odwołana mozna spac dluzej !!!
-            </span>
-            <span className="float-end">03.09.2022 08:05</span>
-          </div>
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">Anna Kula</span>
-            <span className="float-end">Zwrot książek</span>
-            <br />
-            <span className="text-sm">
-              Ten kto nie zwróci książek zostanie zabity :-)
-            </span>
-            <span className="float-end">03.09.2022 08:05</span>
-          </div>
-          <div className="mx-auto mt-2 w-11/12 rounded-xl border-slate-700 bg-slate-100 p-2 shadow-xl">
-            <span className="text-xl">Mariusz Kiła</span>
-            <span className="float-end">Zmiana planu lekcji</span>
-            <br />
-            <span className="text-sm">
-              pprsze wszystkih o sprawdzenie sal bo byly tez korekty sal
-            </span>
-            <span className="float-end">03.09.2022 08:05</span>
-          </div>
+          <ActivityTile
+            meta="Odwołana lekcja"
+            description="Historia o 8 rano odwołana mozna spac dluzej !!!"
+            header="Mariusz Kiła"
+            date={new Date(2022, 8, 3, 8, 5)}
+            includeTime={true}
+            unreadBorder={true}
+          />
+          <ActivityTile
+            meta="Zwrot książek"
+            description="Ten kto nie zwróci książek zostanie zabity :-)"
+            header="Anna Kula"
+            date={new Date(2022, 8, 3, 8, 5)}
+            includeTime={true}
+          />
+          <ActivityTile
+            meta="Zmiana planu lekcji"
+            description="pprsze wszystkih o sprawdzenie sal bo byly tez korekty sal"
+            header="Mariusz Kiła"
+            date={new Date(2022, 8, 3, 8, 5)}
+            includeTime={true}
+          />
         </div>
       </AnimatedTile>
       <AnimatedTile className="col-span-2 hidden lg:block">
