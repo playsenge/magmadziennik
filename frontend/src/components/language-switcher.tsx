@@ -1,4 +1,3 @@
-import { memo } from "react";
 import {
   availableLanguages,
   getCurrentLanguage,
@@ -6,7 +5,11 @@ import {
   setLanguage,
 } from "../language";
 
-export function LanguageSwitcher({ imageClasses }: { imageClasses?: string }) {
+export default function LanguageSwitcher({
+  imageClasses,
+}: {
+  imageClasses?: string;
+}) {
   return (
     <>
       {availableLanguages.map((language) => (
@@ -30,5 +33,3 @@ export function LanguageSwitcher({ imageClasses }: { imageClasses?: string }) {
     </>
   );
 }
-
-export default memo(LanguageSwitcher);
