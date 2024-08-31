@@ -32,16 +32,20 @@ export function ActivityTile({
 
   return (
     <div
-      className={`mx-auto mt-2 w-11/12 rounded-xl ${unreadBorder && "border-2 border-green-500"} bg-slate-100 p-2 shadow-xl`}
+      className={`mx-auto mt-2 w-11/12 rounded-xl ${unreadBorder && "border-2 border-green-500"} flex flex-col bg-slate-100 p-3 shadow-xl`}
     >
-      <span className="text-xl font-semibold">{getHeaderMessage()}</span>
-      <span className="float-end">{meta}</span>
-      <br />
-      <span className="text-sm">{description}</span>
-      <span className="float-end">
-        {date.toLocaleDateString()}
-        {includeTime ? " " + date.toLocaleTimeString() : ""}
-      </span>
+      <div className="flex items-center justify-between">
+        <span className="text-xl font-semibold">{getHeaderMessage()}</span>
+        <span className="ml-auto">{meta}</span>
+      </div>
+
+      <div className="mt-2 flex items-center justify-between">
+        <span className="text-sm">{description}</span>
+        <span className="ml-auto text-sm">
+          {date.toLocaleDateString()}
+          {includeTime ? " " + date.toLocaleTimeString() : ""}
+        </span>
+      </div>
     </div>
   );
 }
