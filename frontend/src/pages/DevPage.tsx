@@ -34,7 +34,7 @@ export default function DevPage() {
     rerender();
   };
 
-  const handleDemoLogin = async () => {
+  const handleDemoStudentLogin = async () => {
     try {
       await login("demo@demo.com", "12345678");
       rerender();
@@ -43,8 +43,28 @@ export default function DevPage() {
     }
   };
 
+  const handleDemoTeacherLogin = async () => {
+    try {
+      await login("demo@demo.com", "12345678", true);
+      rerender();
+    } catch (error) {
+      devMsg("Login failed: " + error);
+    }
+  };
+
   if (subjectsError || studentSubjectsError || gradesError)
-    return <h1>{msg.universal.server_side_error}</h1>;
+    return (
+      <>
+        <h1>{msg.universal.server_side_error}</h1>
+        <pre>
+          {JSON.stringify(
+            { subjectsError, studentSubjectsError, gradesError },
+            undefined,
+            2,
+          )}
+        </pre>
+      </>
+    );
   if (!import.meta.env.DEV) return null;
 
   return (
@@ -101,8 +121,11 @@ export default function DevPage() {
       </section>
 
       <section className="flex gap-4">
-        <Button onClick={handleDemoLogin} variant="secondary">
-          {msg.dev_page.login_as_demo}
+        <Button onClick={handleDemoStudentLogin} variant="secondary">
+          S: {msg.dev_page.login_as_demo}
+        </Button>
+        <Button onClick={handleDemoTeacherLogin} variant="secondary">
+          T: {msg.dev_page.login_as_demo}
         </Button>
         <Button onClick={handleClearAuth} variant="destructive">
           {msg.universal.logout}
@@ -120,8 +143,11 @@ export default function DevPage() {
       <section className="flex flex-col">
         <h2 className="text-xl font-semibold">{msg.universal.grades}</h2>
         <div className="my-4 grid max-w-sm grid-cols-5 gap-3">
-          {grades &&
-            grades.map((grade) => <GradeTile key={grade.id} grade={grade} />)}
+          {grades ? (
+            grades.map((grade) => <GradeTile key={grade.id} grade={grade} />)
+          ) : (
+            <LoadingSpinner />
+          )}
         </div>
       </section>
     </div>

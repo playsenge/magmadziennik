@@ -1,11 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { config } from "../../../../config";
-import { GradeModel } from "../../../../database/interfaces";
+import { EditedGrade, GradeModel } from "../../../../database/interfaces";
 import { Button } from "../../../../components/ui/button";
-
-// Function to generate unique IDs for grades
-const generateUniqueId = (prefix: string, index: number) =>
-  `${prefix}-${index}`;
 
 export default function TeacherHomeTab() {
   // TODO: Real DB data, quickKeyboard too little length if theres too many grades, memoization, mobile, dark & light mode
@@ -32,35 +28,40 @@ export default function TeacherHomeTab() {
     return students.reduce(
       (acc, student) => {
         acc[student.id] = Array.from({ length: 40 }, (_, i) => ({
-          id: generateUniqueId(student.id, i), // Unique ID for each grade
+          student: student.id,
+          column: `${i}`,
           text: "",
           value: 0,
           color: "black",
         }));
         return acc;
       },
-      {} as Record<string, GradeModel[]>,
+      {} as Record<string, EditedGrade[]>,
     );
   };
 
   const [grades, setGrades] =
-    useState<Record<string, GradeModel[]>>(generateGrades());
+    useState<Record<string, EditedGrade[]>>(generateGrades());
   const [focusedField, setFocusedField] = useState<{
     studentId: string;
-    gradeId: string;
+    columnId: string;
   } | null>(null);
   const tableRef = useRef<HTMLTableElement>(null);
   const gradesContainerRef = useRef<HTMLDivElement>(null);
 
   const setGradeAt = (
     studentId: string,
-    gradeId: string,
-    value: Omit<GradeModel, "id">,
+    columnId: string,
+    value: GradeModel | null,
   ) => {
     setGrades((prevGrades) => ({
       ...prevGrades,
       [studentId]: prevGrades[studentId].map((grade) =>
-        grade.id === gradeId ? { ...grade, ...value } : grade,
+        grade.student === studentId && grade.column === columnId
+          ? value
+            ? { ...grade, ...value }
+            : { ...grade, text: "", color: "black" } // Handle deletion
+          : grade,
       ),
     }));
   };
@@ -83,19 +84,21 @@ export default function TeacherHomeTab() {
     };
   }, []);
 
-  const getGrade = (studentId: string, gradeId: string) => {
+  const getGrade = (studentId: string, columnId: string) => {
     return (
-      grades[studentId]?.find((grade) => grade.id === gradeId) || {
+      grades[studentId]?.find(
+        (grade) => grade.student === studentId && grade.column === columnId,
+      ) || {
         text: "",
         color: "black",
       }
     );
   };
 
-  const computeChanges = (initialGrades: Record<string, GradeModel[]>) => {
+  const computeChanges = (initialGrades: Record<string, EditedGrade[]>) => {
     const changes: {
       studentId: string;
-      gradeId: string;
+      columnId: string;
       grade: GradeModel;
     }[] = [];
     for (const studentId in grades) {
@@ -103,12 +106,12 @@ export default function TeacherHomeTab() {
       const initialStudentGrades = initialGrades[studentId] || [];
       for (const currentGrade of currentStudentGrades) {
         const initialGrade = initialStudentGrades.find(
-          (g) => g.id === currentGrade.id,
+          (g) => g.student === studentId && g.column === currentGrade.column,
         );
         if (initialGrade && initialGrade.text !== currentGrade.text) {
           changes.push({
             studentId,
-            gradeId: currentGrade.id,
+            columnId: currentGrade.column,
             grade: currentGrade,
           });
         }
@@ -140,10 +143,7 @@ export default function TeacherHomeTab() {
                 <td className="text-center">{i + 1}</td>
                 <td className="px-4 py-2">{student.name}</td>
                 {[...Array(40)].map((_, i) => {
-                  const grade = getGrade(
-                    student.id,
-                    generateUniqueId(student.id, i),
-                  );
+                  const grade = getGrade(student.id, `${i}`);
                   return (
                     <td key={i} className="text-center">
                       <input
@@ -157,19 +157,20 @@ export default function TeacherHomeTab() {
                         onFocus={() =>
                           setFocusedField({
                             studentId: student.id,
-                            gradeId: grade.id,
+                            columnId: `${i}`,
                           })
                         }
                         onKeyDown={(e) => {
+                          if (["Backspace", "Delete"].includes(e.key)) {
+                            setGradeAt(student.id, `${i}`, null);
+                            return;
+                          }
+
                           if (!quickKeyboard.includes(e.key)) return;
 
                           const grade =
                             config.grades[quickKeyboard.indexOf(e.key)];
-                          setGradeAt(
-                            student.id,
-                            generateUniqueId(student.id, i),
-                            grade,
-                          );
+                          setGradeAt(student.id, `${i}`, grade);
                         }}
                         readOnly
                       />
@@ -198,9 +199,9 @@ export default function TeacherHomeTab() {
 
                 if (!focusedField) return;
 
-                const { studentId, gradeId } = focusedField;
+                const { studentId, columnId } = focusedField;
 
-                setGradeAt(studentId, gradeId, grade);
+                setGradeAt(studentId, columnId, grade);
                 setFocusedField(null);
               }}
             >

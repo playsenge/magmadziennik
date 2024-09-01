@@ -61,10 +61,19 @@ export const getSubjectsForStudent = async (): Promise<Subject[]> => {
 };
 
 export const getStudentGrades = async (): Promise<Grade[]> => {
-    if(!pb.authStore.isValid) return [];
+    if (!pb.authStore.isValid) return [];
 
     return GradeBuilder(await pb.collection("grades").getFullList({
         expand: "student,subject,teacher",
         sort: "-created",
     }));
+};
+
+export const getSingleGrade = async (id: string): Promise<Grade | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    return GradeBuilder([await pb.collection("grades").getOne(id, {
+        expand: "student,subject,teacher",
+        sort: "-created",
+    })])[0];
 };

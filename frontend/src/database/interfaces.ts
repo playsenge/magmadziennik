@@ -54,6 +54,11 @@ export interface Grade {
     updated: Date;
 }
 
+export interface EditedGrade extends GradeModel {
+    student: string;
+    column: string;
+}
+
 export interface SchoolClass {
     id: string;
     name: string;
