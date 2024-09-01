@@ -24,12 +24,18 @@ export default function TeacherHomeTab() {
     { id: "fjdsk282k", name: "Judy White" },
   ];
 
+  const columns = [
+    { id: "abcdef", name: "SPR1" },
+    { id: "aabdef", name: "SPR2" },
+    { id: "abbdef", name: "SPR3" },
+  ];
+
   const generateGrades = () => {
     return students.reduce(
       (acc, student) => {
-        acc[student.id] = Array.from({ length: 40 }, (_, i) => ({
+        acc[student.id] = Array.from({ length: columns.length }, (_, i) => ({
           student: student.id,
-          column: `${i}`,
+          column: columns[i].id,
           text: "",
           value: 0,
           color: "black",
@@ -130,9 +136,9 @@ export default function TeacherHomeTab() {
             <tr>
               <th></th>
               <th></th>
-              {[...Array(40)].map((_, i) => (
-                <th key={i} className="py-1 text-center">
-                  {i + 1}
+              {columns.map((i) => (
+                <th key={i.id} className="py-1 text-center">
+                  {i.name}
                 </th>
               ))}
             </tr>
@@ -142,10 +148,10 @@ export default function TeacherHomeTab() {
               <tr key={student.id}>
                 <td className="text-center">{i + 1}</td>
                 <td className="px-4 py-2">{student.name}</td>
-                {[...Array(40)].map((_, i) => {
-                  const grade = getGrade(student.id, `${i}`);
+                {columns.map((i) => {
+                  const grade = getGrade(student.id, i.id);
                   return (
-                    <td key={i} className="text-center">
+                    <td key={i.id} className="text-center">
                       <input
                         type="text"
                         className={`size-12 rounded-md bg-gray-50 text-center font-mono focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 ${grade.text && "border-4"}`}
@@ -157,12 +163,12 @@ export default function TeacherHomeTab() {
                         onFocus={() =>
                           setFocusedField({
                             studentId: student.id,
-                            columnId: `${i}`,
+                            columnId: i.id,
                           })
                         }
                         onKeyDown={(e) => {
                           if (["Backspace", "Delete"].includes(e.key)) {
-                            setGradeAt(student.id, `${i}`, null);
+                            setGradeAt(student.id, i.id, null);
                             return;
                           }
 
@@ -170,7 +176,7 @@ export default function TeacherHomeTab() {
 
                           const grade =
                             config.grades[quickKeyboard.indexOf(e.key)];
-                          setGradeAt(student.id, `${i}`, grade);
+                          setGradeAt(student.id, i.id, grade);
                         }}
                         readOnly
                       />
@@ -183,11 +189,11 @@ export default function TeacherHomeTab() {
         </table>
       </div>
 
-      <div ref={gradesContainerRef} className="grid grid-cols-2 gap-4">
+      <div ref={gradesContainerRef} className="grid grid-cols-3 gap-4">
         {config.grades.map((grade, i) => (
           <div
             key={grade.text}
-            className="flex flex-col items-center justify-center gap-2"
+            className="flex flex-col items-center justify-center gap-1"
           >
             <span className="text-white">{quickKeyboard[i]}</span>
             <div
@@ -210,7 +216,7 @@ export default function TeacherHomeTab() {
           </div>
         ))}
         <Button
-          className="col-span-2"
+          className="col-span-3"
           onClick={() => computeChanges(generateGrades())}
         >
           Save
