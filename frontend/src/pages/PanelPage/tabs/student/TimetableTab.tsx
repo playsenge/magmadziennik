@@ -36,7 +36,7 @@ function formatTimeframe(timeframe: TimetableEntry["timeframe"]) {
 
 function TimetableTable({ timetable }: { timetable: Timetable }) {
   const transformTimetable = () => {
-    const transformed: Record<string, Record<string, string>> = {};
+    const transformed: Record<string, Record<string, JSX.Element>> = {};
 
     for (const [day, entries] of Object.entries(timetable.entries)) {
       entries.forEach((entry) => {
@@ -46,8 +46,12 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
           transformed[timeRange] = {};
         }
 
-        transformed[timeRange][day.toString()] =
-          `${entry.subject.name} (${entry.teacher.first_name} ${entry.teacher.last_name})`;
+        transformed[timeRange][day.toString()] = (
+          <div className="flex flex-col gap-2">
+            <span className="font-bold">{entry.subject.name}</span>(
+            {entry.teacher.first_name} {entry.teacher.last_name})
+          </div>
+        );
       });
     }
 
