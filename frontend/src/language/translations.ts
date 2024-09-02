@@ -73,7 +73,9 @@ export default {
         "home_tab_attendance": {
             "lowest": "The lowest: "
         },
-
+        "teacher_editors": {
+            "grades_editor": "Grades Editor",
+        }
     },
 
     "pl": {
@@ -150,6 +152,9 @@ export default {
         "home_tab_attendance": {
             "lowest": "Najniższa: "
         },
+        "teacher_editors": {
+            "grades_editor": "Edytor ocen",
+        }
     },
 
     "sb": {
@@ -227,6 +232,9 @@ export default {
         "home_tab_attendance": {
             "lowest": "The weakest: "
         },
+        "teacher_editors": {
+            "grades_editor": "W's and L's Ch'nger"
+        }
     }
 
 };
