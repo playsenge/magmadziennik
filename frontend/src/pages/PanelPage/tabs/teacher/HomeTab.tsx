@@ -4,6 +4,7 @@ import LoadingSpinner from "../../../../components/loading-spinner";
 import Modal from "../../../../components/modal";
 import { AnimatePresence } from "framer-motion";
 import { msg } from "../../../../language";
+
 const EditGradesModal = lazy(() => import("./modals/EditGradesModal"));
 
 export default function TeacherHomeTab() {

@@ -169,7 +169,7 @@ export default function EditGradesModal(props: {
                     <td key={i.id} className="text-center">
                       <input
                         type="text"
-                        className={`size-12 rounded-md bg-gray-50 text-center font-mono focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 ${grade.text && "border-4"}`}
+                        className={`size-12 rounded-md bg-gray-50 text-center font-mono focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 ${grade.text && "border-4"}`}
                         style={{
                           color: grade.color || "black",
                           borderColor: grade.color || "black",
