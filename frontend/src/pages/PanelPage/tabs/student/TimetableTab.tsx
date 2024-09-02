@@ -3,7 +3,6 @@ import { Timetable, TimetableEntry } from "../../../../database/interfaces";
 import { getTimetable } from "../../../../database/pocketbase";
 import LoadingSpinner from "../../../../components/loading-spinner";
 import { msg } from "../../../../language";
-import TimeTableArrow from "../../../../components/timetable-arrow";
 
 const daysOfWeek = [
   msg.week_days.monday,
@@ -12,6 +11,15 @@ const daysOfWeek = [
   msg.week_days.thursday,
   msg.week_days.friday,
 ];
+
+const timeTableArrow = (
+  <div className="absolute inset-x-0 bottom-0 top-[67%]">
+    <div className="relative">
+      <div className="size-0 border-y-[9px] border-l-[9px] border-y-transparent border-l-rose-600"></div>
+      <hr className="absolute inset-x-0 bottom-0 top-2 h-[2px] border-0 bg-rose-600 opacity-50" />
+    </div>
+  </div>
+);
 
 function formatTimeframe(timeframe: TimetableEntry["timeframe"]) {
   const startHour = Math.floor(timeframe.since_midnight_seconds / 3600)
@@ -95,7 +103,8 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
           </tr>
         </thead>
         <tbody className="relative divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-            <TimeTableArrow/>
+          {timeTableArrow}
+
           {sortedTimeRanges.map((timeRange) => (
             <tr key={timeRange}>
               <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -113,8 +122,6 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
           ))}
         </tbody>
       </table>
-
-
     </div>
   );
 }
