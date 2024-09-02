@@ -19,14 +19,14 @@ export default function TeacherHomeTab() {
 
       <AnimatePresence mode="wait">
         {isModalOpen && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Modal
-              className="h-3/4 min-w-[50%]"
-              heading={msg.teacher_editors.grades_editor}
-            >
+          <Modal
+            className="h-3/4 min-w-[50%]"
+            heading={msg.teacher_editors.grades_editor}
+          >
+            <Suspense fallback={<LoadingSpinner />}>
               <EditGradesModal hook={setIsModalOpen} />
-            </Modal>
-          </Suspense>
+            </Suspense>
+          </Modal>
         )}
       </AnimatePresence>
     </div>
