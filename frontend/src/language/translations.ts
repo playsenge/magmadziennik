@@ -82,7 +82,11 @@ export default {
             "wednesday": "Wednesday",
             "thursday": "Thursday",
             "friday": "Friday",
-        }
+        },
+        "timetable_tab_buttons": {
+            "week_ago": "Week ago",
+            "next_week": "Next week",
+        },
     },
 
     "pl": {
@@ -168,7 +172,12 @@ export default {
             "wednesday": "Środa",
             "thursday": "Czwartek",
             "friday": "Piątek",
-        }
+        },
+        "timetable_tab_buttons": {
+            "week_ago": "Poprzedni tydzień",
+            "next_week": "Następny tydzień",
+        },
+        
     },
 
     "sb": {
@@ -255,7 +264,11 @@ export default {
             "wednesday": "Wednes'",
             "thursday": "Thurs'",
             "friday": "Fris'",
-        }
+        },
+        "timetable_tab_buttons": {
+            "week_ago": "Week ago",
+            "next_week": "Next week",
+        },
     }
 
 };

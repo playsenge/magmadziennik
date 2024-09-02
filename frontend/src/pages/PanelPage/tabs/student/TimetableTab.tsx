@@ -3,6 +3,8 @@ import { Timetable, TimetableEntry } from "../../../../database/interfaces";
 import { getTimetable } from "../../../../database/pocketbase";
 import LoadingSpinner from "../../../../components/loading-spinner";
 import { msg } from "../../../../language";
+import { Button } from "../../../../components/ui/button";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const daysOfWeek = [
   msg.week_days.monday,
@@ -122,6 +124,8 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
           ))}
         </tbody>
       </table>
+      <Button className="float-left mt-2"><IoIosArrowBack />{msg.timetable_tab_buttons.week_ago}</Button>
+      <Button className="float-right mt-2">{msg.timetable_tab_buttons.next_week}<IoIosArrowForward /></Button>
     </div>
   );
 }
