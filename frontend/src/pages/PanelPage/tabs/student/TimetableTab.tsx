@@ -47,7 +47,7 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
         }
 
         transformed[timeRange][day.toString()] =
-          `${entry.subject.name} (${entry.teacher.username})`;
+          `${entry.subject.name} (${entry.teacher.first_name} ${entry.teacher.last_name})`;
       });
     }
 
