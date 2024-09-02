@@ -59,7 +59,16 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
   };
 
   const transformedTimetable = transformTimetable();
-  const timeRanges = Object.keys(transformedTimetable);
+
+  // Sort timeRanges by start time
+  const sortedTimeRanges = Object.keys(transformedTimetable).sort((a, b) => {
+    const [startHourA, startMinuteA] = a.split(" - ")[0].split(":").map(Number);
+    const [startHourB, startMinuteB] = b.split(" - ")[0].split(":").map(Number);
+
+    if (startHourA !== startHourB) return startHourA - startHourB;
+    return startMinuteA - startMinuteB;
+  });
+
   const days = Object.keys(timetable.entries);
 
   return (
@@ -82,7 +91,7 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-          {timeRanges.map((timeRange) => (
+          {sortedTimeRanges.map((timeRange) => (
             <tr key={timeRange}>
               <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
                 {timeRange}
