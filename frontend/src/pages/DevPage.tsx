@@ -56,7 +56,7 @@ export default function DevPage() {
     }
   };
 
-  if (subjectsError || studentSubjectsError || gradesError)
+  if (subjectsError || studentSubjectsError || gradesError || timetableError)
     return (
       <>
         <h1>{msg.universal.server_side_error}</h1>
