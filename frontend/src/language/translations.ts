@@ -75,6 +75,13 @@ export default {
         },
         "teacher_editors": {
             "grades_editor": "Grades Editor",
+        },
+        "week_days": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
         }
     },
 
@@ -154,6 +161,13 @@ export default {
         },
         "teacher_editors": {
             "grades_editor": "Edytor ocen",
+        },
+        "week_days": {
+            "monday": "Poniedziałek",
+            "tuesday": "Wtorek",
+            "wednesday": "Środa",
+            "thursday": "Czwartek",
+            "friday": "Piątek",
         }
     },
 
@@ -234,6 +248,13 @@ export default {
         },
         "teacher_editors": {
             "grades_editor": "W's and L's Ch'nger"
+        },
+        "week_days": {
+            "monday": "Mond'",
+            "tuesday": "Tues'",
+            "wednesday": "Wednes'",
+            "thursday": "Thurs'",
+            "friday": "Fris'",
         }
     }
 

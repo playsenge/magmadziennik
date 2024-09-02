@@ -2,6 +2,7 @@ import {
   getStudentGrades,
   getSubjects,
   getSubjectsForStudent,
+  getTimetable,
   login,
   pb,
 } from "../database/pocketbase";
@@ -25,6 +26,9 @@ export default function DevPage() {
   const { data: grades, error: gradesError } = useQuery(
     "grades",
     getStudentGrades,
+  );
+  const { data: timetable, error: timetableError } = useQuery("timetable", () =>
+    getTimetable(new Date()),
   );
 
   const rerender = useRerender();
@@ -149,6 +153,11 @@ export default function DevPage() {
             <LoadingSpinner />
           )}
         </div>
+      </section>
+
+      <section className="flex flex-col">
+        <h2 className="text-xl font-semibold">Timetable</h2>
+        <pre>{JSON.stringify(timetable, undefined, 2)}</pre>
       </section>
     </div>
   );

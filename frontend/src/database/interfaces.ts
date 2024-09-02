@@ -72,3 +72,40 @@ export interface TeacherSubjectPair {
     teacher: Teacher;
     authorized_subjects: Subject[];
 }
+
+export interface Timeframe {
+    id: string;
+    since_midnight_seconds: number;
+    length: number;
+    created: Date;
+    updated: Date;
+}
+
+export interface Room {
+    id: string;
+    display: string;
+    created: Date;
+    updated: Date;
+}
+
+
+export interface UnparsedTimetableEntry {
+    room: string;
+    subject: string;
+    teacher: string;
+    timeframe: string;
+}
+
+export interface TimetableEntry {
+    room: Room;
+    subject: Subject;
+    teacher: Teacher;
+    timeframe: Timeframe;
+}
+
+export interface Timetable {
+    id: string;
+    entries: Record<number, TimetableEntry[]>;
+    created: Date;
+    updated: Date;
+}

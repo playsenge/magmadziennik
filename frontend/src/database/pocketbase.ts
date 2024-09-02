@@ -1,10 +1,14 @@
 import PocketBase, { ClientResponseError } from "pocketbase";
-import { Grade, Student, Subject, Teacher, UserGeneric } from "./interfaces";
+import { Grade, Room, Student, Subject, Teacher, Timeframe, Timetable, UnparsedTimetableEntry, UserGeneric } from "./interfaces";
 import { LoginResult } from "./enums";
 import { devMsg } from "../utils";
 import { config } from "../config";
 import SubjectBuilder from "./builders/SubjectBuilder";
 import GradeBuilder from "./builders/GradeBuilder";
+import RoomBuilder from "./builders/RoomBuilder";
+import TeacherBuilder from "./builders/TeacherBuilder";
+import TimeframeBuilder from "./builders/TimeframeBuilder";
+import TimetableBuilder from "./builders/TimetableBuilder";
 
 export const pb = new PocketBase(
     config.pocketbaseURL
@@ -30,6 +34,7 @@ export const formatUsername = (username: string) => {
 
 export const login = async (email: string, password: string, teacher?: boolean): Promise<LoginResult> => {
     try {
+
         await pb.collection(teacher ? "teachers" : "students").authWithPassword(email, password);
     } catch (e) {
         if (e instanceof ClientResponseError) {
@@ -74,6 +79,96 @@ export const getSingleGrade = async (id: string): Promise<Grade | undefined> => 
 
     return GradeBuilder([await pb.collection("grades").getOne(id, {
         expand: "student,subject,teacher",
-        sort: "-created",
     })])[0];
+};
+
+export const getRooms = async (ids: string[]): Promise<Room[] | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    return RoomBuilder(await pb.collection("rooms").getFullList({
+        filter: ids.map((id: string) => `id='${id}'`).join("||"),
+        requestKey: null
+    }));
+}
+
+export const getSubjectsSpecific = async (ids: string[]): Promise<Subject[] | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    return SubjectBuilder(await pb.collection("subjects").getFullList({
+        filter: ids.map((id: string) => `id='${id}'`).join("||"),
+        requestKey: null
+    }));
+}
+
+export const getTeachers = async (ids: string[]): Promise<Teacher[] | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    return TeacherBuilder(await pb.collection("teachers").getFullList({
+        filter: ids.map((id: string) => `id='${id}'`).join("||"),
+        requestKey: null
+    }));
+}
+
+export const getTimeframes = async (ids: string[]): Promise<Timeframe[] | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    return TimeframeBuilder(await pb.collection("timeframes").getFullList({
+        filter: ids.map((id: string) => `id='${id}'`).join("||"),
+        requestKey: null
+    }));
+}
+
+export const getTimetable = async (date: Date): Promise<Timetable | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    const response = await pb.collection("timetables").getList(1, 1, {
+        filter: `starting <= '${date.toISOString()}' && ending >= '${date.toISOString()}'`,
+        sort: "-ending",
+    });
+
+    const item = response.items[0];
+
+    const roomIds = new Set<string>();
+    const subjectIds = new Set<string>();
+    const teacherIds = new Set<string>();
+    const timeframeIds = new Set<string>();
+
+    item.data.forEach((x: UnparsedTimetableEntry[]) =>
+        x.forEach((y: UnparsedTimetableEntry) => {
+            roomIds.add(y.room);
+            subjectIds.add(y.subject);
+            teacherIds.add(y.teacher);
+            timeframeIds.add(y.timeframe);
+        })
+    );
+
+    const [roomsArray, subjectsArray, teachersArray, timeframesArray] = await Promise.all([
+        getRooms(Array.from(roomIds)),
+        getSubjectsSpecific(Array.from(subjectIds)),
+        getTeachers(Array.from(teacherIds)),
+        getTimeframes(Array.from(timeframeIds)),
+    ]);
+
+    const rooms: Record<string, Room> = {};
+    const subjects: Record<string, Subject> = {};
+    const teachers: Record<string, Teacher> = {};
+    const timeframes: Record<string, Timeframe> = {};
+
+    (roomsArray ?? []).forEach(room => {
+        rooms[room.id] = room;
+    });
+
+    (subjectsArray ?? []).forEach(subject => {
+        subjects[subject.id] = subject;
+    });
+
+    (teachersArray ?? []).forEach(teacher => {
+        teachers[teacher.id] = teacher;
+    });
+
+    (timeframesArray ?? []).forEach(timeframe => {
+        timeframes[timeframe.id] = timeframe;
+    });
+
+    return TimetableBuilder(item, rooms, subjects, teachers, timeframes);
 };
