@@ -48,10 +48,14 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
         }
 
         transformed[timeRange][day.toString()] = (
-          <div className="flex flex-col gap-2">
-            <span className="font-bold">{entry.subject.name}</span>(
-            {entry.teacher.first_name} {entry.teacher.last_name})
+          <div className="rounded p-1 hover:bg-white/10">
+            <div className="flex flex-row gap-2 ">
+              <span className="font-bold ">{entry.subject.name}</span>
+              <p className="order-2 ml-auto flex size-6 items-center justify-center rounded border font-bold text-white">{Math.floor(Math.random() * 70)}</p>
+            </div>
+          <div>({entry.teacher.first_name} {entry.teacher.last_name})</div>
           </div>
+          
         );
       });
     }
@@ -79,7 +83,6 @@ function TimetableTable({ timetable }: { timetable: Timetable }) {
         <thead>
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-              Hour Ranges
             </th>
             {days.map((day) => (
               <th
