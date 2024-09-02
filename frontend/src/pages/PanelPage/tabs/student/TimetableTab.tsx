@@ -1,3 +1,4 @@
+import { useState, useMemo } from "react";
 import { useQuery } from "react-query";
 import { Timetable, TimetableEntry } from "../../../../database/interfaces";
 import { getTimetable } from "../../../../database/pocketbase";
@@ -5,8 +6,8 @@ import LoadingSpinner from "../../../../components/loading-spinner";
 import { msg } from "../../../../language";
 import { Button } from "../../../../components/ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useMemo } from "react";
 
+// Arrow component for the timetable
 const TimeTableArrow = () => (
   <div className="absolute inset-x-0 bottom-0 top-[67%]">
     <div className="relative">
@@ -16,6 +17,7 @@ const TimeTableArrow = () => (
   </div>
 );
 
+// Formats the timeframe for display
 const formatTimeframe = (timeframe: TimetableEntry["timeframe"]) => {
   const startHour = Math.floor(timeframe.since_midnight_seconds / 3600)
     .toString()
@@ -38,6 +40,7 @@ const formatTimeframe = (timeframe: TimetableEntry["timeframe"]) => {
   return `${startHour}:${startMinute} - ${endHour}:${endMinute}`;
 };
 
+// Transforms timetable entries for display
 const transformTimetable = (timetable: Timetable) => {
   const transformed: Record<string, Record<string, JSX.Element>> = {};
   const timeRangeMap: Record<string, number> = {};
@@ -68,13 +71,43 @@ const transformTimetable = (timetable: Timetable) => {
   return { transformed, timeRangeMap };
 };
 
-const TimetableTable = ({ timetable }: { timetable: Timetable }) => {
+// Timetable table component
+const TimetableTable = ({
+  timetable,
+  onPreviousWeek,
+  onNextWeek,
+  currentDate,
+}: {
+  timetable: Timetable;
+  onPreviousWeek: () => void;
+  onNextWeek: () => void;
+  currentDate: Date;
+}) => {
+  // Calculate dates for the week
   const daysOfWeek = [
     msg.week_days.monday,
     msg.week_days.tuesday,
     msg.week_days.wednesday,
     msg.week_days.thursday,
     msg.week_days.friday,
+  ];
+
+  const daysOfWeekDates = [
+    new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1),
+    ).toLocaleDateString(),
+    new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 2),
+    ).toLocaleDateString(),
+    new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 3),
+    ).toLocaleDateString(),
+    new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 4),
+    ).toLocaleDateString(),
+    new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 5),
+    ).toLocaleDateString(),
   ];
 
   const { transformed, timeRangeMap } = useMemo(
@@ -100,13 +133,18 @@ const TimetableTable = ({ timetable }: { timetable: Timetable }) => {
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead>
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"></th>
-            {days.map((day) => (
+            <th className="w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"></th>
+            {days.map((day, index) => (
               <th
                 key={day}
-                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"
+                className="w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"
               >
-                {daysOfWeek[Number(day)]}
+                <div className="flex flex-col items-start">
+                  <span>{daysOfWeek[Number(day)]}</span>
+                  <span className="text-xs text-gray-500">
+                    {daysOfWeekDates[index]}
+                  </span>
+                </div>
               </th>
             ))}
           </tr>
@@ -121,7 +159,7 @@ const TimetableTable = ({ timetable }: { timetable: Timetable }) => {
               {days.map((day) => (
                 <td
                   key={day}
-                  className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+                  className="w-[18%] min-w-[18%] max-w-[18%] px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
                 >
                   {transformed[timeRange][day] || "-"}
                 </td>
@@ -130,11 +168,11 @@ const TimetableTable = ({ timetable }: { timetable: Timetable }) => {
           ))}
         </tbody>
       </table>
-      <Button className="float-left mt-2">
+      <Button className="float-left mt-2" onClick={onPreviousWeek}>
         <IoIosArrowBack />
         {msg.timetable_tab_buttons.week_ago}
       </Button>
-      <Button className="float-right mt-2">
+      <Button className="float-right mt-2" onClick={onNextWeek}>
         {msg.timetable_tab_buttons.next_week}
         <IoIosArrowForward />
       </Button>
@@ -142,17 +180,45 @@ const TimetableTable = ({ timetable }: { timetable: Timetable }) => {
   );
 };
 
+// Main component for student timetable page
 export default function StudentTimetablePage() {
-  const { data: timetable, error: timetableError } = useQuery("timetable", () =>
-    getTimetable(new Date()),
-  );
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+
+  const {
+    data: timetable,
+    error: timetableError,
+    isLoading: timetableLoading,
+  } = useQuery(["timetable", currentDate], () => getTimetable(currentDate), {
+    keepPreviousData: true,
+  });
+
+  const handlePreviousWeek = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() - 7);
+    setCurrentDate(newDate);
+  };
+
+  const handleNextWeek = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() + 7);
+    setCurrentDate(newDate);
+  };
+
+  if (timetableLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (timetableError) {
     return <div>{msg.universal.server_side_error}</div>;
   }
 
   return timetable ? (
-    <TimetableTable timetable={timetable} />
+    <TimetableTable
+      timetable={timetable}
+      onPreviousWeek={handlePreviousWeek}
+      onNextWeek={handleNextWeek}
+      currentDate={currentDate}
+    />
   ) : (
     <LoadingSpinner />
   );
