@@ -6,6 +6,7 @@ import LoadingSpinner from "../../../../components/loading-spinner";
 import { msg } from "../../../../language";
 import { Button } from "../../../../components/ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 // Arrow component for the timetable
 const TimeTableArrow = () => (
@@ -56,7 +57,7 @@ const transformTimetable = (timetable: Timetable) => {
         <div className="rounded p-1 hover:bg-white/10">
           <div className="flex flex-row gap-2">
             <span className="font-bold">{entry.subject.name}</span>
-            <p className="order-2 ml-auto flex size-6 items-center justify-center rounded border font-bold text-white">
+            <p className="order-2 ml-auto flex h-6 min-w-6 items-center justify-center rounded border p-2 font-bold text-white">
               {entry.room.display}
             </p>
           </div>
@@ -168,12 +169,20 @@ const TimetableTable = ({
           ))}
         </tbody>
       </table>
-      <Button className="float-left mt-2" onClick={onPreviousWeek}>
-        <IoIosArrowBack />
+      <Button className="float-left mx-2 mt-2" onClick={onPreviousWeek}>
+      <MdKeyboardDoubleArrowLeft />
         {msg.timetable_tab_buttons.week_ago}
       </Button>
-      <Button className="float-right mt-2" onClick={onNextWeek}>
+      <Button className="float-right mx-2 mt-2" onClick={onNextWeek}>
         {msg.timetable_tab_buttons.next_week}
+        <MdKeyboardDoubleArrowRight />
+      </Button>
+      <Button className="float-left mt-2 block lg:hidden" onClick={onPreviousWeek}>
+        <IoIosArrowBack />
+        {msg.timetable_tab_buttons.previous_day}
+      </Button>
+      <Button className="float-right mt-2 block lg:hidden" onClick={onNextWeek}>
+        {msg.timetable_tab_buttons.next_day}
         <IoIosArrowForward />
       </Button>
     </div>

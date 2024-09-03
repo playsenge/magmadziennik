@@ -7,6 +7,7 @@ export default function EditGradesModal(props: {
   hook: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   // TODO: Real DB data, quickKeyboard too little length if theres too many grades, memoization, mobile, dark & light mode
+  // TODO: dodać opcję wstawiania ocen losowo dla pewnego nauczyciela HiTu
 
   const quickKeyboard = "qwertyuiopasdfghjklzxcvbnm-+[];',./".substring(
     0,

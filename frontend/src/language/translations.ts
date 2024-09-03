@@ -86,6 +86,8 @@ export default {
         "timetable_tab_buttons": {
             "week_ago": "Week ago",
             "next_week": "Next week",
+            "previous_day": "Previous day",
+            "next_day": "Next day"
         },
     },
 
@@ -176,6 +178,8 @@ export default {
         "timetable_tab_buttons": {
             "week_ago": "Poprzedni tydzień",
             "next_week": "Następny tydzień",
+            "previous_day": "Poprzedni dzień",
+            "next_day": "Następny dzień"
         },
         
     },
@@ -268,6 +272,8 @@ export default {
         "timetable_tab_buttons": {
             "week_ago": "Week ago",
             "next_week": "Next week",
+            "previous_day": "Previous day",
+            "next_day": "Next day"
         },
     }
 
