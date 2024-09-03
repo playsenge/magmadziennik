@@ -6,7 +6,10 @@ import LoadingSpinner from "../../../../components/loading-spinner";
 import { msg } from "../../../../language";
 import { Button } from "../../../../components/ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+} from "react-icons/md";
 
 // Arrow component for the timetable
 const TimeTableArrow = () => (
@@ -170,14 +173,17 @@ const TimetableTable = ({
         </tbody>
       </table>
       <Button className="float-left mx-2 mt-2" onClick={onPreviousWeek}>
-      <MdKeyboardDoubleArrowLeft />
+        <MdKeyboardDoubleArrowLeft />
         {msg.timetable_tab_buttons.week_ago}
       </Button>
       <Button className="float-right mx-2 mt-2" onClick={onNextWeek}>
         {msg.timetable_tab_buttons.next_week}
         <MdKeyboardDoubleArrowRight />
       </Button>
-      <Button className="float-left mt-2 block lg:hidden" onClick={onPreviousWeek}>
+      <Button
+        className="float-left mt-2 block lg:hidden"
+        onClick={onPreviousWeek}
+      >
         <IoIosArrowBack />
         {msg.timetable_tab_buttons.previous_day}
       </Button>

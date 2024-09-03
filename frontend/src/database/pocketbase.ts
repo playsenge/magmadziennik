@@ -69,7 +69,7 @@ export const getStudentGrades = async (): Promise<Grade[]> => {
     if (!pb.authStore.isValid) return [];
 
     return GradeBuilder(await pb.collection("grades").getFullList({
-        expand: "student,subject,teacher",
+        expand: "student,subject,teacher,class",
         sort: "-created",
     }));
 };
@@ -78,7 +78,7 @@ export const getSingleGrade = async (id: string): Promise<Grade | undefined> => 
     if (!pb.authStore.isValid) return undefined;
 
     return GradeBuilder([await pb.collection("grades").getOne(id, {
-        expand: "student,subject,teacher",
+        expand: "student,subject,teacher,class",
     })])[0];
 };
 

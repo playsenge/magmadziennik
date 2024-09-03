@@ -18,7 +18,7 @@ export interface UserGeneric {
 
 export interface Student extends UserGeneric {
     phone_number: string;
-    class_id: string;
+    class_ids: string[];
     date_of_birth: Date;
     address: string;
 }
@@ -48,6 +48,7 @@ export interface Grade {
     teacher: Teacher;
     student: Student;
     subject: Subject;
+    class: SchoolClass;
     semester: number;
     weight: number;
     created: Date;
