@@ -9,6 +9,7 @@ import RoomBuilder from "./builders/RoomBuilder";
 import TeacherBuilder from "./builders/TeacherBuilder";
 import TimeframeBuilder from "./builders/TimeframeBuilder";
 import TimetableBuilder from "./builders/TimetableBuilder";
+import { getCache, setCache } from "./cache";
 
 export const pb = new PocketBase(
     config.pocketbaseURL
@@ -49,74 +50,204 @@ export const login = async (email: string, password: string, teacher?: boolean):
 };
 
 export const getSubjects = async (): Promise<Subject[]> => {
-    return SubjectBuilder(await pb.collection("subjects").getFullList({
-        requestKey: "getSubjects",
+    const key = "getSubjects";
+
+    const cachedData = getCache<Subject[]>(key);
+    if (cachedData) return cachedData;
+
+    const data = SubjectBuilder(await pb.collection("subjects").getFullList({
+        requestKey: key
     }));
+
+    setCache(key, data);
+
+    return data;
 };
 
 export const getSubjectsForStudent = async (): Promise<Subject[]> => {
     const subjectIds = pb.authStore!.model!.subjects ?? [];
     if (subjectIds.length <= 0) return [];
 
-    return SubjectBuilder(await pb.collection("subjects").getFullList({
+    const key = "getSubjectsForStudent";
+
+    const cachedData = getCache<Subject[]>(key);
+    if (cachedData) return cachedData;
+
+    const data = SubjectBuilder(await pb.collection("subjects").getFullList({
         // TODO: potentially refactor into queried parameter with pb.filter()??? (shouldn't cause SQL injection tho, it's sanitized server-side)
         filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
-        requestKey: "getSubjectsForStudent",
+        requestKey: key
     }));
+
+    setCache(key, data);
+
+    return data;
 };
 
 export const getStudentGrades = async (): Promise<Grade[]> => {
     if (!pb.authStore.isValid) return [];
 
-    return GradeBuilder(await pb.collection("grades").getFullList({
+    const key = "getStudentGrades";
+
+    const cachedData = getCache<Grade[]>(key);
+    if (cachedData) return cachedData;
+
+    const data = GradeBuilder(await pb.collection("grades").getFullList({
         expand: "student,subject,teacher,class",
         sort: "-created",
     }));
+
+    setCache(key, data);
+
+    return data;
 };
 
 export const getSingleGrade = async (id: string): Promise<Grade | undefined> => {
     if (!pb.authStore.isValid) return undefined;
 
-    return GradeBuilder([await pb.collection("grades").getOne(id, {
+    const key = `getGrade-${id}`;
+
+    const cachedData = getCache<Grade>(key);
+    if (cachedData) return cachedData;
+
+    const data = GradeBuilder([await pb.collection("grades").getOne(id, {
         expand: "student,subject,teacher,class",
+        requestKey: key
     })])[0];
+
+    setCache(key, data);
+
+    return data;
 };
 
 export const getRooms = async (ids: string[]): Promise<Room[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;
 
-    return RoomBuilder(await pb.collection("rooms").getFullList({
-        filter: ids.map((id: string) => `id='${id}'`).join("||"),
-        requestKey: null
-    }));
-}
+    const cachedRooms: Room[] = [];
+    const idsToFetch: string[] = [];
+
+    for (const id of ids) {
+        const cacheKey = `getRoom-${id}`;
+        const cachedRoom = getCache<Room>(cacheKey);
+        if (cachedRoom) {
+            cachedRooms.push(cachedRoom);
+        } else {
+            idsToFetch.push(id);
+        }
+    }
+
+    let fetchedRooms: Room[] = [];
+    if (idsToFetch.length > 0) {
+        fetchedRooms = await RoomBuilder(await pb.collection("rooms").getFullList({
+            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+            requestKey: null,
+        }));
+
+        for (const room of fetchedRooms) {
+            const cacheKey = `getRoom-${room.id}`;
+            setCache(cacheKey, room);
+        }
+    }
+
+    return [...cachedRooms, ...fetchedRooms];
+};
 
 export const getSubjectsSpecific = async (ids: string[]): Promise<Subject[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;
 
-    return SubjectBuilder(await pb.collection("subjects").getFullList({
-        filter: ids.map((id: string) => `id='${id}'`).join("||"),
-        requestKey: null
-    }));
-}
+    const cachedSubjects: Subject[] = [];
+    const idsToFetch: string[] = [];
+
+    for (const id of ids) {
+        const cacheKey = `getSubject-${id}`;
+        const cachedSubject = getCache<Subject>(cacheKey);
+        if (cachedSubject) {
+            cachedSubjects.push(cachedSubject);
+        } else {
+            idsToFetch.push(id);
+        }
+    }
+
+    let fetchedSubjects: Subject[] = [];
+    if (idsToFetch.length > 0) {
+        fetchedSubjects = await SubjectBuilder(await pb.collection("subjects").getFullList({
+            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+            requestKey: null,
+        }));
+
+        for (const subject of fetchedSubjects) {
+            const cacheKey = `getSubject-${subject.id}`;
+            setCache(cacheKey, subject);
+        }
+    }
+
+    return [...cachedSubjects, ...fetchedSubjects];
+};
+
 
 export const getTeachers = async (ids: string[]): Promise<Teacher[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;
 
-    return TeacherBuilder(await pb.collection("teachers").getFullList({
-        filter: ids.map((id: string) => `id='${id}'`).join("||"),
-        requestKey: null
-    }));
-}
+    const cachedTeachers: Teacher[] = [];
+    const idsToFetch: string[] = [];
+
+    for (const id of ids) {
+        const cacheKey = `getTeacher-${id}`;
+        const cachedTeacher = getCache<Teacher>(cacheKey);
+        if (cachedTeacher) {
+            cachedTeachers.push(cachedTeacher);
+        } else {
+            idsToFetch.push(id);
+        }
+    }
+
+    let fetchedTeachers: Teacher[] = [];
+    if (idsToFetch.length > 0) {
+        fetchedTeachers = await TeacherBuilder(await pb.collection("teachers").getFullList({
+            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+            requestKey: null,
+        }));
+
+        for (const teacher of fetchedTeachers) {
+            const cacheKey = `getTeacher-${teacher.id}`;
+            setCache(cacheKey, teacher);
+        }
+    }
+
+    return [...cachedTeachers, ...fetchedTeachers];
+};
 
 export const getTimeframes = async (ids: string[]): Promise<Timeframe[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;
 
-    return TimeframeBuilder(await pb.collection("timeframes").getFullList({
-        filter: ids.map((id: string) => `id='${id}'`).join("||"),
-        requestKey: null
-    }));
-}
+    const cachedTimeframes: Timeframe[] = [];
+    const idsToFetch: string[] = [];
+
+    for (const id of ids) {
+        const cacheKey = `getTimeframe-${id}`;
+        const cachedTimeframe = getCache<Timeframe>(cacheKey);
+        if (cachedTimeframe) {
+            cachedTimeframes.push(cachedTimeframe);
+        } else {
+            idsToFetch.push(id);
+        }
+    }
+
+    let fetchedTimeframes: Timeframe[] = [];
+    if (idsToFetch.length > 0) {
+        fetchedTimeframes = await TimeframeBuilder(await pb.collection("timeframes").getFullList({
+            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+            requestKey: null,
+        }));
+
+        for (const timeframe of fetchedTimeframes) {
+            const cacheKey = `getTimeframe-${timeframe.id}`;
+            setCache(cacheKey, timeframe);
+        }
+    }
+
+    return [...cachedTimeframes, ...fetchedTimeframes];
+};
 
 export const getTimetable = async (date: Date): Promise<Timetable[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;
