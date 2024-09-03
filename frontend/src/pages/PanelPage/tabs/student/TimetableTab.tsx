@@ -237,11 +237,17 @@ export default function StudentTimetablePage() {
 
   const buttons = (
     <>
-      <Button className="float-left mx-2 mt-2" onClick={handlePreviousWeek}>
+      <Button
+        className="float-left mx-2 mt-2 hidden lg:block"
+        onClick={handlePreviousWeek}
+      >
         <MdKeyboardDoubleArrowLeft />
         {msg.timetable_tab_buttons.week_ago}
       </Button>
-      <Button className="float-right mx-2 mt-2" onClick={handleNextWeek}>
+      <Button
+        className="float-right mx-2 mt-2 hidden lg:block"
+        onClick={handleNextWeek}
+      >
         {msg.timetable_tab_buttons.next_week}
         <MdKeyboardDoubleArrowRight />
       </Button>
