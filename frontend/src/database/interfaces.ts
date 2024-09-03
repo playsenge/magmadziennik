@@ -63,6 +63,7 @@ export interface EditedGrade extends GradeModel {
 export interface SchoolClass {
     id: string;
     name: string;
+    semester: number;
     student_ids: string[];
     teacher_subject_pairs: TeacherSubjectPair;
     created: Date;
