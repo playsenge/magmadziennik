@@ -180,7 +180,7 @@ const TimetableTable = ({
         </tr>
       </thead>
       <tbody className="relative divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-        <TimeTableArrow />
+        {/* <TimeTableArrow /> */}
         {sortedTimeRanges.map((timeRange) => (
           <tr key={timeRange}>
             <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
