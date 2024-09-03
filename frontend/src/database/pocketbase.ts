@@ -118,57 +118,61 @@ export const getTimeframes = async (ids: string[]): Promise<Timeframe[] | undefi
     }));
 }
 
-export const getTimetable = async (date: Date): Promise<Timetable | undefined> => {
+export const getTimetable = async (date: Date): Promise<Timetable[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;
 
-    const response = await pb.collection("timetables").getList(1, 1, {
+    const response = await pb.collection("timetables").getFullList({
         filter: `starting <= '${date.toISOString()}' && ending >= '${date.toISOString()}'`,
         sort: "-ending",
     });
 
-    const item = response.items[0];
-
-    const roomIds = new Set<string>();
-    const subjectIds = new Set<string>();
-    const teacherIds = new Set<string>();
-    const timeframeIds = new Set<string>();
-
-    item.data.forEach((x: UnparsedTimetableEntry[]) =>
-        x.forEach((y: UnparsedTimetableEntry) => {
-            roomIds.add(y.room);
-            subjectIds.add(y.subject);
-            teacherIds.add(y.teacher);
-            timeframeIds.add(y.timeframe);
-        })
-    );
-
-    const [roomsArray, subjectsArray, teachersArray, timeframesArray] = await Promise.all([
-        getRooms(Array.from(roomIds)),
-        getSubjectsSpecific(Array.from(subjectIds)),
-        getTeachers(Array.from(teacherIds)),
-        getTimeframes(Array.from(timeframeIds)),
-    ]);
+    const timetables = [];
 
     const rooms: Record<string, Room> = {};
     const subjects: Record<string, Subject> = {};
     const teachers: Record<string, Teacher> = {};
     const timeframes: Record<string, Timeframe> = {};
 
-    (roomsArray ?? []).forEach(room => {
-        rooms[room.id] = room;
-    });
+    const roomIds = new Set<string>();
+    const subjectIds = new Set<string>();
+    const teacherIds = new Set<string>();
+    const timeframeIds = new Set<string>();
 
-    (subjectsArray ?? []).forEach(subject => {
-        subjects[subject.id] = subject;
-    });
+    for (const item of response) {
+        item.data.forEach((x: UnparsedTimetableEntry[]) =>
+            x.forEach((y: UnparsedTimetableEntry) => {
+                roomIds.add(y.room);
+                subjectIds.add(y.subject);
+                teacherIds.add(y.teacher);
+                timeframeIds.add(y.timeframe);
+            })
+        );
 
-    (teachersArray ?? []).forEach(teacher => {
-        teachers[teacher.id] = teacher;
-    });
+        const [roomsArray, subjectsArray, teachersArray, timeframesArray] = await Promise.all([
+            getRooms(Array.from(roomIds)),
+            getSubjectsSpecific(Array.from(subjectIds)),
+            getTeachers(Array.from(teacherIds)),
+            getTimeframes(Array.from(timeframeIds)),
+        ]);
 
-    (timeframesArray ?? []).forEach(timeframe => {
-        timeframes[timeframe.id] = timeframe;
-    });
+        (roomsArray ?? []).forEach(room => {
+            rooms[room.id] = room;
+        });
 
-    return TimetableBuilder(item, rooms, subjects, teachers, timeframes);
+        (subjectsArray ?? []).forEach(subject => {
+            subjects[subject.id] = subject;
+        });
+
+        (teachersArray ?? []).forEach(teacher => {
+            teachers[teacher.id] = teacher;
+        });
+
+        (timeframesArray ?? []).forEach(timeframe => {
+            timeframes[timeframe.id] = timeframe;
+        });
+
+        timetables.push(TimetableBuilder(item, rooms, subjects, teachers, timeframes));
+    }
+
+    return timetables;
 };

@@ -89,6 +89,9 @@ export default {
             "previous_day": "Previous day",
             "next_day": "Next day"
         },
+        "timetable_general": {
+            "no_lessons": "No lessons this week!",
+        }
     },
 
     "pl": {
@@ -181,7 +184,9 @@ export default {
             "previous_day": "Poprzedni dzień",
             "next_day": "Następny dzień"
         },
-        
+        "timetable_general": {
+            "no_lessons": "W tym tygodniu nie ma lekcji!",
+        }
     },
 
     "sb": {
@@ -275,6 +280,9 @@ export default {
             "previous_day": "Previous day",
             "next_day": "Next day"
         },
+        "timetable_general": {
+            "no_lessons": "Yo, no classes this week!",
+        }
     }
 
 };
