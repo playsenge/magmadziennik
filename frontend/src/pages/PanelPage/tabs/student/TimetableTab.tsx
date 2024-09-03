@@ -65,7 +65,7 @@ const generateTimetableEntry = (entry: TimetableEntry) => (
   <div className="rounded p-1 hover:bg-white/10">
     <div className="flex flex-row gap-2">
       <span className="font-bold">{entry.subject.name}</span>
-      <p className="order-2 ml-auto flex h-6 min-w-6 items-center justify-center rounded border p-2 font-bold text-white">
+      <p className="order-2 ml-auto flex h-6 min-w-6 items-center justify-center rounded border p-2 font-bold text-black dark:text-white">
         {entry.room.display}
       </p>
     </div>
