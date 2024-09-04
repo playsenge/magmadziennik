@@ -198,6 +198,7 @@ export default function PanelPage() {
                 className="aspect-square size-8 cursor-pointer rounded-full border-4 border-gray-300 object-cover dark:border-gray-800"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               />
+              {/*TODO: add the ability to close the menu by clicking anywhere on the screen*/}
               <div
                 className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-slate-600`}
               >
@@ -210,7 +211,7 @@ export default function PanelPage() {
               />
               <span className="mt-2 text-center text-2xl font-bold">{user.first_name} {user.last_name}</span>
               <span className=" text-center">{user.email}</span>
-                <div className="flex flex-row">
+                <div className="mb-2 flex flex-row">
                   <FaUser className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/45"/>
                   <IoMdSettings className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/40"/>
                     <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-red-600/60"
