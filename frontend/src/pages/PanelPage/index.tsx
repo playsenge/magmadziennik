@@ -212,9 +212,9 @@ export default function PanelPage() {
               <span className="mt-2 text-center text-2xl font-bold">{user.first_name} {user.last_name}</span>
               <span className=" text-center">{user.email}</span>
                 <div className="mb-2 flex flex-row">
-                  <FaUser className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/45"/>
-                  <IoMdSettings className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/40"/>
-                    <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-red-600/60"
+                  <FaUser className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/45" title={msg.helpers.user}/>
+                  <IoMdSettings className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/40" title={msg.helpers.settings}/>
+                    <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-red-600/60" title={msg.helpers.logout}
                     onClick={() => {
                         pb.authStore.clear();
                         navigate(teacherPanel ? "/teacher-login" : "/login");

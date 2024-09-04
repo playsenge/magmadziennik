@@ -91,7 +91,12 @@ export default {
         },
         "timetable_general": {
             "no_lessons": "No lessons this week!",
-        }
+        },
+        "helpers": {
+            "user": "Information about your account",
+            "settings": "Website settings",
+            "logout": "Log out from your account"
+        },
     },
 
     "pl": {
@@ -186,7 +191,13 @@ export default {
         },
         "timetable_general": {
             "no_lessons": "W tym tygodniu nie ma lekcji!",
-        }
+        },
+        
+        "helpers": {
+            "user": "Informacje o twoim koncie",
+            "settings": "Ustawienia e-dziennika",
+            "logout": "Wyloguj się ze swojego konta"
+        },
     },
 
     "sb": {
@@ -282,7 +293,12 @@ export default {
         },
         "timetable_general": {
             "no_lessons": "Yo, no classes this week!",
-        }
+        },
+        "helpers": {
+            "user": "Info about yo' acc",
+            "settings": "reg settings",
+            "logout": "leave the fam"
+        },
     }
 
 };
