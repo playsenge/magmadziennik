@@ -5,9 +5,9 @@ import { UserGeneric } from "../../database/interfaces";
 import { msg } from "../../language";
 import { LuCalendarDays } from "react-icons/lu";
 import { FiMessageSquare } from "react-icons/fi";
-import { IoIosCheckmarkCircleOutline, IoIosSettings } from "react-icons/io";
+import { IoIosCheckmarkCircleOutline, IoIosSettings, IoMdSettings } from "react-icons/io";
 import { RiFilePaper2Line } from "react-icons/ri";
-import { FaBars, FaPenFancy } from "react-icons/fa";
+import { FaBars, FaPenFancy, FaUser } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
 import { AiOutlineAppstore } from "react-icons/ai";
 
@@ -209,12 +209,17 @@ export default function PanelPage() {
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               />
               <span className="mt-2 text-center text-2xl font-bold">{user.first_name} {user.last_name}</span>
-                  <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg p-3 text-5xl hover:bg-black/40"                    
-                  onClick={() => {
-                      pb.authStore.clear();
-                      navigate(teacherPanel ? "/teacher-login" : "/login");
-                    }}
-                    />
+              <span className=" text-center">{user.email}</span>
+                <div className="flex flex-row">
+                  <FaUser className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/45"/>
+                  <IoMdSettings className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/40"/>
+                    <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-red-600/60"
+                    onClick={() => {
+                        pb.authStore.clear();
+                        navigate(teacherPanel ? "/teacher-login" : "/login");
+                      }}
+                      />
+                </div>
                 </div>
               </div>
             </div>
