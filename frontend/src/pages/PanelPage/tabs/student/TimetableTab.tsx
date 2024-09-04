@@ -92,7 +92,7 @@ const transformTimetable = (timetable: Timetable) => {
         transformed[timeRange][day] = (
           <>
             {transformed[timeRange][day]}
-            <div className="mt-1 border-t border-gray-300 pt-1">
+            <div className="mb-2 border-b border-gray-300 pt-1">
               {generateTimetableEntry(entry)}
             </div>
           </>
@@ -186,7 +186,8 @@ const TimetableTable = ({
             <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
               {timeRange}
             </td>
-            {days.map((day) => (
+            {
+            days.map((day) => (
               <td
                 key={day}
                 className="w-[18%] min-w-[18%] max-w-[18%] px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
