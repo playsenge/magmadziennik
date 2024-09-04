@@ -28,6 +28,7 @@ import StudentTimetableTab from "./tabs/student/TimetableTab";
 import TeacherHomeTab from "./tabs/teacher/HomeTab";
 
 import MessagesTab from "./tabs/MessagesTab";
+import { ImExit } from "react-icons/im";
 
 const studentTabMap: { [key: string]: JSX.Element } = {
   home: <StudentHomeTab />,
@@ -198,18 +199,22 @@ export default function PanelPage() {
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               />
               <div
-                className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-slate-700`}
+                className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-slate-600`}
               >
-                <div className="py-1" role="none">
-                  <span
-                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
-                    onClick={() => {
+                <div className="flex flex-col py-1" role="none">
+                <img
+                src={userAvatar()}
+                alt="Avatar"
+                className="mx-auto mt-2 aspect-square size-24  cursor-pointer rounded-full border-4 border-gray-300 object-cover dark:border-gray-800"
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+              />
+              <span className="mt-2 text-center text-2xl font-bold">{user.first_name} {user.last_name}</span>
+                  <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg p-3 text-5xl hover:bg-black/40"                    
+                  onClick={() => {
                       pb.authStore.clear();
                       navigate(teacherPanel ? "/teacher-login" : "/login");
                     }}
-                  >
-                    {msg.universal.logout}
-                  </span>
+                    />
                 </div>
               </div>
             </div>
