@@ -50,6 +50,7 @@ export default {
             "attendance": "Attendance",
             "messages": "Messages",
             "settings": "Settings",
+            "admin": "Admin Panel",
         },
         "grade_details": {
             "weight": "Multiplier",
@@ -150,6 +151,7 @@ export default {
             "attendance": "Frekwencja",
             "messages": "Wiadomości",
             "settings": "Ustawienia",
+            "admin": "Panel administracyjny",
         },
         "grade_details": {
             "weight": "Waga",
@@ -192,7 +194,7 @@ export default {
         "timetable_general": {
             "no_lessons": "W tym tygodniu nie ma lekcji!",
         },
-        
+
         "helpers": {
             "user": "Informacje o twoim koncie",
             "settings": "Ustawienia e-dziennika",
@@ -251,7 +253,8 @@ export default {
             "homework": "Homework Grind",
             "attendance": "Who's Here?",
             "messages": "DMs",
-            "settings": "Fix Yo Stuff"
+            "settings": "Fix Yo Stuff",
+            "admin": "Bossman Manager",
         },
         "grade_details": {
             "weight": "How much",
