@@ -6,8 +6,7 @@ interface Props {
   className?: string;
 }
 
-export default function Modal(props: Props) {
-  const { children, heading, className } = props;
+export default function Modal({ children, heading, className }: Props) {
   const transitionDuration = 0.15;
 
   return (
@@ -41,7 +40,7 @@ export default function Modal(props: Props) {
       >
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div
-            className={`relative my-8 w-full max-w-lg overflow-hidden rounded-lg bg-white p-8 text-left shadow-sm dark:bg-slate-800 dark:shadow-gray-900 ${
+            className={`relative w-full max-w-lg overflow-hidden rounded-lg bg-white p-8 text-left shadow-sm dark:bg-slate-800 dark:shadow-gray-900 ${
               className || ""
             }`}
           >

@@ -21,7 +21,7 @@ export default function TeacherHomeTab() {
       <AnimatePresence mode="wait">
         {isModalOpen && (
           <Modal
-            className="h-3/4 min-w-[50%]"
+            className="max-h-screen min-h-screen min-w-full"
             heading={msg.teacher_editors.grades_editor}
           >
             <Suspense fallback={<LoadingSpinner />}>

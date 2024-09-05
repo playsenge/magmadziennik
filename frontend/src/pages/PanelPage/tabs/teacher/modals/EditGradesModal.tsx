@@ -146,7 +146,7 @@ export default function EditGradesModal(props: {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 md:flex-row md:items-start md:justify-between">
-      <div className="-mt-4 max-h-[80vh] max-w-full overflow-auto md:max-w-[76vw]">
+      <div className="-mt-4 max-h-[85vh] max-w-full overflow-auto md:max-w-[76vw]">
         <table ref={tableRef} className="mb-3 mr-3 text-black dark:text-white">
           <thead>
             <tr>
