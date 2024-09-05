@@ -282,7 +282,7 @@ export default function StudentTimetablePage() {
       </div>
 
       <TimetableTable
-        timetables={timetables}
+        timetables={timetables!}
         currentDate={currentDate}
         currentDayIndex={currentDayIndex}
       />
