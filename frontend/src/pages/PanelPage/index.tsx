@@ -49,6 +49,8 @@ const teacherTabMap: { [key: string]: JSX.Element } = {
   messages: <MessagesTab />,
 };
 
+
+
 export default function PanelPage() {
   const navigate = useNavigate();
   const params = useParams();
@@ -160,6 +162,12 @@ export default function PanelPage() {
     </>
   );
 
+  const avatarMenuVariants = {
+    open: { opacity: 1, y: 0 },
+    closed: { opacity: 0, y: "-20%" },
+  }
+
+
   return (
     <div className="flex bg-slate-200 dark:bg-slate-700">
       {mobileExpanded && (
@@ -199,30 +207,35 @@ export default function PanelPage() {
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               />
               {/*TODO: add the ability to close the menu by clicking anywhere on the screen*/}
-              <div
-                className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-slate-600`}
-              >
-                <div className="flex flex-col py-1" role="none">
-                <img
-                src={userAvatar()}
-                alt="Avatar"
-                className="mx-auto mt-2 aspect-square size-24  cursor-pointer rounded-full border-4 border-gray-300 object-cover dark:border-gray-800"
-                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              />
-              <span className="mt-2 text-center text-2xl font-bold">{user.first_name} {user.last_name}</span>
-              <span className=" text-center">{user.email}</span>
-                <div className="mb-2 flex flex-row">
-                  <FaUser className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/45" title={msg.helpers.user}/>
-                  <IoMdSettings className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/40" title={msg.helpers.settings}/>
-                    <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-red-600/60" title={msg.helpers.logout}
-                    onClick={() => {
-                        pb.authStore.clear();
-                        navigate(teacherPanel ? "/teacher-login" : "/login");
-                      }}
-                      />
-                </div>
-                </div>
-              </div>
+              <AnimatePresence>
+                <motion.div
+                  className={`${userDropdownOpen ? "absolute" : "hidden"} right-0 z-20 mt-6 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-slate-600`}
+                  initial={{opacity: 1}}
+                  animate= {userDropdownOpen ? 'open' : 'closed'}
+                  variants={avatarMenuVariants}
+                >
+                  <div className="flex flex-col py-1" role="none">
+                  <img
+                  src={userAvatar()}
+                  alt="Avatar"
+                  className="mx-auto mt-2 aspect-square size-24  cursor-pointer rounded-full border-4 border-gray-300 object-cover dark:border-gray-800"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                />
+                <span className="mt-2 text-center text-2xl font-bold">{user.first_name} {user.last_name}</span>
+                <span className=" text-center">{user.email}</span>
+                  <div className="mb-2 flex flex-row">
+                    <FaUser className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/45" title={msg.helpers.user}/>
+                    <IoMdSettings className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-black/40" title={msg.helpers.settings}/>
+                      <ImExit className="mx-auto mt-2 cursor-pointer items-center rounded-lg bg-black/15 p-3 text-5xl hover:bg-red-600/60" title={msg.helpers.logout}
+                      onClick={() => {
+                          pb.authStore.clear();
+                          navigate(teacherPanel ? "/teacher-login" : "/login");
+                        }}
+                        />
+                  </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
             <MobileExpander className="ml-3 bg-gray-800" />
           </div>
