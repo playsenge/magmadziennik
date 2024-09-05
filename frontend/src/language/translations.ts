@@ -98,6 +98,12 @@ export default {
             "settings": "Website settings",
             "logout": "Log out from your account"
         },
+        "admin_panel_managers": {
+            "school_class": "Classes",
+            "student": "Students",
+            "subject": "Subjects",
+            "teacher": "Teachers",
+        }
     },
 
     "pl": {
@@ -200,6 +206,12 @@ export default {
             "settings": "Ustawienia e-dziennika",
             "logout": "Wyloguj się ze swojego konta"
         },
+        "admin_panel_managers": {
+            "school_class": "Klasy",
+            "student": "Uczniowie",
+            "subject": "Przedmioty",
+            "teacher": "Nauczyciele",
+        }
     },
 
     "sb": {
@@ -302,6 +314,12 @@ export default {
             "settings": "reg settings",
             "logout": "leave the fam"
         },
+        "admin_panel_managers": {
+            "school_class": "Classes 'n Stuff",
+            "student": "Teachees",
+            "subject": "Subjects 'n Stuff",
+            "teacher": "Educators"
+        }
     }
 
 };

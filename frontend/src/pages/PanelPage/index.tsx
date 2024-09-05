@@ -33,6 +33,8 @@ import TeacherHomeTab from "./tabs/teacher/HomeTab";
 
 import MessagesTab from "./tabs/MessagesTab";
 import { ImExit } from "react-icons/im";
+import { MdAdminPanelSettings } from "react-icons/md";
+import TeacherAdminTab from "./tabs/teacher/AdminTab";
 
 const studentTabMap: { [key: string]: JSX.Element } = {
   home: <StudentHomeTab />,
@@ -70,9 +72,13 @@ export default function PanelPage() {
     [],
   );
 
-  const tabMap: { [key: string]: JSX.Element } = teacherPanel
-    ? teacherTabMap
-    : studentTabMap;
+  const tabMap = useMemo(() => {
+    return teacherPanel
+      ? pb.authStore!.model!.admin
+        ? { ...teacherTabMap, admin: <TeacherAdminTab /> }
+        : teacherTabMap
+      : studentTabMap;
+  }, [teacherPanel]);
 
   const [currentTab, setCurrentTab] = useState(() => {
     return tabMap[route] || TabNotFound;
@@ -141,6 +147,7 @@ export default function PanelPage() {
       attendance: <IoIosCheckmarkCircleOutline />,
       settings: <IoIosSettings />,
       messages: <FiMessageSquare />,
+      admin: <MdAdminPanelSettings />,
     };
     return icons[route] || <AiOutlineAppstore />;
   }
