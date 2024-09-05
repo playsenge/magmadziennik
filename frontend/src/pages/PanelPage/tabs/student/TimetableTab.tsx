@@ -11,15 +11,15 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 
-// Arrow component for the timetable
-const TimeTableArrow = () => (
-  <div className="absolute inset-x-0 bottom-0 top-[67%]">
-    <div className="relative">
-      <div className="size-0 border-y-[9px] border-l-[9px] border-y-transparent border-l-rose-600"></div>
-      <hr className="absolute inset-x-0 bottom-0 top-2 h-[2px] border-0 bg-rose-600 opacity-50" />
-    </div>
-  </div>
-);
+// // Arrow component for the timetable
+// const TimeTableArrow = () => (
+//   <div className="absolute inset-x-0 bottom-0 top-[67%]">
+//     <div className="relative">
+//       <div className="size-0 border-y-[9px] border-l-[9px] border-y-transparent border-l-rose-600"></div>
+//       <hr className="absolute inset-x-0 bottom-0 top-2 h-[2px] border-0 bg-rose-600 opacity-50" />
+//     </div>
+//   </div>
+// );
 
 // Formats the timeframe for display
 const formatTimeframe = (timeframe: TimetableEntry["timeframe"]) => {
@@ -192,8 +192,7 @@ const TimetableTable = ({
             <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
               {timeRange}
             </td>
-            {
-            days.map((day) => (
+            {days.map((day) => (
               <td
                 key={day}
                 className="w-[18%] min-w-[18%] max-w-[18%] px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
