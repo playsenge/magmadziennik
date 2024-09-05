@@ -50,6 +50,7 @@ const teacherTabMap: { [key: string]: JSX.Element } = {
   timetable: <>tbd</>,
   grades: <>tbd</>,
   homework: <>tbd</>,
+  settings: <>tbd</>,
   messages: <MessagesTab />,
 };
 
