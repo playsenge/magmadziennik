@@ -68,6 +68,12 @@ const generateTimetableEntry = (entry: TimetableEntry) => (
       <p className="order-2 ml-auto flex h-6 min-w-6 items-center justify-center rounded border p-2 font-bold text-black dark:text-white">
         {entry.room.display}
       </p>
+      {/* <div className="order-2 flex size-7 items-center justify-center rounded-[50%] border-2 border-red-500 font-bold text-red-500" title="Nieobecność nieusprawiedliwiona">N</div> */}
+      {/* <div className="order-2 flex size-7 items-center justify-center rounded-[50%] border-2 border-violet-500 font-bold text-violet-500" title="Nieobecność usprawiedliwiona">NU</div> */}
+      {/* <div className="order-2 flex size-7 items-center justify-center rounded-[50%] border-2 border-yellow-500 font-bold text-yellow-500" title="Spóźnienie">S</div> */}
+      {/* <div className="order-2 flex size-7 items-center justify-center rounded-[50%] border-2 border-yellow-200 font-bold text-yellow-200" title="Spóźnienie usprawiedliwione">SU</div> */}
+      {/* <div className="order-2 flex size-7 items-center justify-center rounded-[50%] border-2 border-blue-200 font-bold text-blue-200" title="Zwolnienie">Z</div> */}
+      {/* <div className="order-2 flex size-7 items-center justify-center rounded-[50%] border-2 border-indigo-500 font-bold text-indigo-500" title="Nieobecność z przyczyn szkolnych">NS</div> */}
     </div>
     <div>
       ({entry.teacher.first_name} {entry.teacher.last_name})
