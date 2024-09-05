@@ -1,5 +1,5 @@
 import PocketBase, { ClientResponseError } from "pocketbase";
-import { Grade, Room, Student, Subject, Teacher, Timeframe, Timetable, UnparsedTimetableEntry, UserGeneric } from "./interfaces";
+import { Grade, Room, SchoolClass, Student, Subject, Teacher, Timeframe, Timetable, UnparsedTimetableEntry, UserGeneric } from "./interfaces";
 import { LoginResult } from "./enums";
 import { devMsg } from "../utils";
 import { config } from "../config";
@@ -10,6 +10,8 @@ import TeacherBuilder from "./builders/TeacherBuilder";
 import TimeframeBuilder from "./builders/TimeframeBuilder";
 import TimetableBuilder from "./builders/TimetableBuilder";
 import { getCache, setCache } from "./cache";
+import SchoolClassBuilder from "./builders/SchoolClassBuilder";
+import StudentBuilder from "./builders/StudentBuilder";
 
 export const pb = new PocketBase(
     config.pocketbaseURL
@@ -57,6 +59,27 @@ export const getSubjects = async (): Promise<Subject[]> => {
 
     const data = SubjectBuilder(await pb.collection("subjects").getFullList({
         requestKey: key
+    }));
+
+    setCache(key, data);
+
+    return data;
+};
+
+export const getClasses = async (): Promise<SchoolClass[]> => {
+    const key = "getClasses";
+
+    const cachedData = getCache<SchoolClass[]>(key);
+    if (cachedData) return cachedData;
+
+    const data = SchoolClassBuilder(await pb.collection("classes").getFullList({
+        requestKey: key
+    }));
+
+    await getSubjects();
+    await getTeachers(Array.from(new Set(data.flatMap(x => Object.keys(x.teacher_subject_pairs))).values()));
+    await Promise.all(data.map(async (classItem) => {
+        return await getClassStudents(classItem.id);
     }));
 
     setCache(key, data);
@@ -215,6 +238,54 @@ export const getTeachers = async (ids: string[]): Promise<Teacher[] | undefined>
     }
 
     return [...cachedTeachers, ...fetchedTeachers];
+};
+
+export const getStudents = async (ids: string[]): Promise<Student[] | undefined> => {
+    if (!pb.authStore.isValid) return undefined;
+
+    const cachedStudents: Student[] = [];
+    const idsToFetch: string[] = [];
+
+    for (const id of ids) {
+        const cacheKey = `getStudent-${id}`;
+        const cachedStudent = getCache<Student>(cacheKey);
+        if (cachedStudent) {
+            cachedStudents.push(cachedStudent);
+        } else {
+            idsToFetch.push(id);
+        }
+    }
+
+    let fetchedStudents: Student[] = [];
+    if (idsToFetch.length > 0) {
+        fetchedStudents = await StudentBuilder(await pb.collection("students").getFullList({
+            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+            requestKey: null,
+        }));
+
+        for (const student of fetchedStudents) {
+            const cacheKey = `getStudent-${student.id}`;
+            setCache(cacheKey, student);
+        }
+    }
+
+    return [...cachedStudents, ...fetchedStudents];
+};
+
+export const getClassStudents = async (id: string): Promise<Student[] | undefined> => {
+    const key = `getClassStudents-${id}`;
+
+    const cachedData = getCache<Student[]>(key);
+    if (cachedData) return cachedData;
+
+    const data = StudentBuilder(await pb.collection("students").getFullList({
+        filter: `classes~'${id}'`,
+        requestKey: key
+    }));
+
+    setCache(key, data);
+
+    return data;
 };
 
 export const getTimeframes = async (ids: string[]): Promise<Timeframe[] | undefined> => {

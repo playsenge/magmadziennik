@@ -1,11 +1,13 @@
-import { useState } from "react";
-import SchoolClassManager from "./managers/SchoolClassManager";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { Button } from "../../../../../components/ui/button";
-import TeacherManager from "./managers/TeacherManager";
-import SubjectManager from "./managers/SubjectManager";
-import StudentManager from "./managers/StudentManager";
 import { msg } from "../../../../../language";
 import React from "react";
+import LoadingSpinner from "../../../../../components/loading-spinner";
+
+const SchoolClassManager = lazy(() => import("./managers/SchoolClassManager"));
+const StudentManager = lazy(() => import("./managers/StudentManager"));
+const SubjectManager = lazy(() => import("./managers/SubjectManager"));
+const TeacherManager = lazy(() => import("./managers/TeacherManager"));
 
 enum CurrentTab {
   SCHOOL_CLASS_MANAGER,
@@ -14,32 +16,36 @@ enum CurrentTab {
   STUDENT_MANAGER,
 }
 
-const tabData = [
-  {
-    tabName: msg.admin_panel_managers.school_class,
-    tabValue: CurrentTab.SCHOOL_CLASS_MANAGER,
-    tab: <SchoolClassManager />,
-  },
-  {
-    tabName: msg.admin_panel_managers.teacher,
-    tabValue: CurrentTab.TEACHER_MANAGER,
-    tab: <TeacherManager />,
-  },
-  {
-    tabName: msg.admin_panel_managers.subject,
-    tabValue: CurrentTab.SUBJECT_MANAGER,
-    tab: <SubjectManager />,
-  },
-  {
-    tabName: msg.admin_panel_managers.student,
-    tabValue: CurrentTab.STUDENT_MANAGER,
-    tab: <StudentManager />,
-  },
-];
-
 export default function TeacherAdminTab() {
   const [currentTab, setCurrentTab] = useState<CurrentTab>(
     CurrentTab.SCHOOL_CLASS_MANAGER,
+  );
+
+  const tabData = useMemo(
+    () => [
+      {
+        tabName: msg.admin_panel_managers.school_class,
+        tabValue: CurrentTab.SCHOOL_CLASS_MANAGER,
+        tab: <SchoolClassManager />,
+      },
+      {
+        tabName: msg.admin_panel_managers.teacher,
+        tabValue: CurrentTab.TEACHER_MANAGER,
+        tab: <TeacherManager />,
+      },
+      {
+        tabName: msg.admin_panel_managers.subject,
+        tabValue: CurrentTab.SUBJECT_MANAGER,
+        tab: <SubjectManager />,
+      },
+      {
+        tabName: msg.admin_panel_managers.student,
+        tabValue: CurrentTab.STUDENT_MANAGER,
+        tab: <StudentManager />,
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [msg.name],
   );
 
   return (
@@ -66,7 +72,9 @@ export default function TeacherAdminTab() {
       </div>
 
       <div className="mt-6 overflow-y-auto">
-        {tabData.find((element) => element.tabValue === currentTab)?.tab}
+        <Suspense fallback={<LoadingSpinner />}>
+          {tabData.find((element) => element.tabValue === currentTab)?.tab}
+        </Suspense>
       </div>
     </div>
   );

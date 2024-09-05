@@ -12,6 +12,12 @@ export default {
             "login": "Login",
             "password": "Password",
             "server_side_error": "A server side error occurred. Still, our uptime is higher than that of Librus.",
+            "class": "Class",
+            "semester": "Semester",
+            "students": "Students",
+            "teachers": "Teachers",
+            "created": "Created",
+            "updated": "Updated",
         },
         "dev_page": {
             "title": "Dev Page",
@@ -61,7 +67,7 @@ export default {
         "home_tab_tests": {
             "this_week": "This week: ",
             "test": "Test",
-            "quiz": "Quiz" //idk if "quiz" fits
+            "quiz": "Quiz" // idk if "quiz" fits
         },
         "home_tab_homework": {
             "this_week": "Due this week: ",
@@ -119,6 +125,12 @@ export default {
             "login": "Zaloguj się",
             "password": "Hasło",
             "server_side_error": "Wystąpił błąd po stronie serwera. I tak mamy wyższy uptime niż Librus.",
+            "class": "Klasa",
+            "semester": "Semestr",
+            "students": "Uczniowie",
+            "teachers": "Nauczyciele",
+            "created": "Utworzono",
+            "updated": "Zaktualizowano",
         },
         "dev_page": {
             "title": "Strona deweloperska",
@@ -228,6 +240,12 @@ export default {
             "teacher_login": "Hop In Mr Educator",
             "password": "Secret Code",
             "server_side_error": "Server bugged out. But hey, we still got better uptime than Ohio Librus.",
+            "class": "Class Vibes",
+            "semester": "Semester Flow",
+            "students": "Learners",
+            "teachers": "Instructors",
+            "created": "Creat'd On",
+            "updated": "Updat'd On"
         },
         "dev_page": {
             "title": "Skibidi Dev Zone",

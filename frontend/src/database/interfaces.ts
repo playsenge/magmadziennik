@@ -64,15 +64,9 @@ export interface SchoolClass {
     id: string;
     name: string;
     semester: number;
-    student_ids: string[];
-    teacher_subject_pairs: TeacherSubjectPair;
+    teacher_subject_pairs: Record<string, string[]>;
     created: Date;
     updated: Date;
-}
-
-export interface TeacherSubjectPair {
-    teacher: Teacher;
-    authorized_subjects: Subject[];
 }
 
 export interface Timeframe {

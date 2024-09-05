@@ -4,7 +4,7 @@ import { config } from "../../config";
 import StudentBuilder from "./StudentBuilder";
 import SubjectBuilder from "./SubjectBuilder";
 import TeacherBuilder from "./TeacherBuilder";
-import ClassBuilder from "./ClassBuilder";
+import SchoolClassBuilder from "./SchoolClassBuilder";
 
 export default (data: RecordModel[]): Grade[] => {
     return data.map((data) => ({
@@ -13,7 +13,7 @@ export default (data: RecordModel[]): Grade[] => {
         teacher: TeacherBuilder([data.expand?.teacher])[0],
         subject: SubjectBuilder([data.expand?.subject])[0],
         student: StudentBuilder([data.expand?.student])[0],
-        class: ClassBuilder([data.expand?.class])[0],
+        class: SchoolClassBuilder([data.expand?.class])[0],
         created: new Date(data.created),
         updated: new Date(data.updated),
     })) as unknown as Grade[];

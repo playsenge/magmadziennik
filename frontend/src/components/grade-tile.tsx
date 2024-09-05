@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Grade } from "../database/interfaces";
 import { msg } from "../language";
+import HoverDetail from "./hover-detail";
 
 export function GradeTile({ grade }: { grade: Grade }) {
   return (
@@ -22,7 +23,7 @@ export function GradeTile({ grade }: { grade: Grade }) {
       >
         {grade.subject.shorthand}
       </p>
-      <div className="mt-2 hidden w-56 rounded-r-xl bg-slate-950/40 p-1 text-xs text-white group-hover:block">
+      <HoverDetail>
         <p>
           {msg.grade_details.weight}: {grade.weight}
         </p>
@@ -36,7 +37,7 @@ export function GradeTile({ grade }: { grade: Grade }) {
         <p>
           {msg.grade_details.value}: {grade.grade.value}
         </p>
-      </div>
+      </HoverDetail>
     </div>
   );
 }
