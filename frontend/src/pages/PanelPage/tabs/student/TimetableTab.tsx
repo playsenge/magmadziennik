@@ -243,13 +243,29 @@ export default function StudentTimetablePage() {
   if (timetableLoading) return <LoadingSpinner />;
   if (timetableError) return <div>{msg.universal.server_side_error}</div>;
 
+  const btns = (
+    <>
+      <div className="mb-4 flex justify-between">
+        <Button onClick={handlePreviousWeek}>
+          <IoIosArrowBack />
+          {msg.timetable_tab_buttons.week_ago}
+        </Button>
+
+        <Button onClick={handleNextWeek}>
+          {msg.timetable_tab_buttons.next_week}
+          <IoIosArrowForward />
+        </Button>
+      </div>
+    </>
+  );
+
   return timetables!.length > 0 ? (
     <>
       <h1 className="text-2xl font-bold dark:text-white">
         {msg.universal.timetable}
       </h1>
 
-      <div className="mb-4 flex justify-between">
+      <div className="my-4 flex justify-between">
         <Button
           className="lg:hidden"
           onClick={handlePreviousDay}
@@ -268,18 +284,7 @@ export default function StudentTimetablePage() {
           <IoIosArrowForward />
         </Button>
       </div>
-
-      <div className="mb-4 flex justify-between">
-        <Button onClick={handlePreviousWeek}>
-          <IoIosArrowBack />
-          {msg.timetable_tab_buttons.week_ago}
-        </Button>
-
-        <Button onClick={handleNextWeek}>
-          {msg.timetable_tab_buttons.next_week}
-          <IoIosArrowForward />
-        </Button>
-      </div>
+      {btns}
 
       <TimetableTable
         timetables={timetables!}
@@ -289,26 +294,23 @@ export default function StudentTimetablePage() {
     </>
   ) : (
     <>
-      <div className="p-4">
-        <h2 className="mb-4 text-2xl font-bold text-black dark:text-white">
-          {msg.tabs.timetable}
-        </h2>
-        <span className="text-black dark:text-white">
-          {msg.timetable_general.no_lessons} (
-          {new Date(
-            currentDate.setDate(
-              currentDate.getDate() - currentDate.getDay() + 1,
-            ),
-          ).toLocaleDateString()}
-          {" - "}
-          {new Date(
-            currentDate.setDate(
-              currentDate.getDate() - currentDate.getDay() + 5,
-            ),
-          ).toLocaleDateString()}
-          )
-        </span>
-      </div>
+      <h2 className="mb-4 text-2xl font-bold text-black dark:text-white">
+        {msg.tabs.timetable}
+      </h2>
+
+      {btns}
+
+      <span className="text-black dark:text-white">
+        {msg.timetable_general.no_lessons} (
+        {new Date(
+          currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1),
+        ).toLocaleDateString()}
+        {" - "}
+        {new Date(
+          currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 5),
+        ).toLocaleDateString()}
+        )
+      </span>
     </>
   );
 }
