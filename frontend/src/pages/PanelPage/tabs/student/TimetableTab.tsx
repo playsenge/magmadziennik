@@ -243,7 +243,7 @@ export default function StudentTimetablePage() {
   if (timetableLoading) return <LoadingSpinner />;
   if (timetableError) return <div>{msg.universal.server_side_error}</div>;
 
-  return timetables.length > 0 ? (
+  return timetables!.length > 0 ? (
     <>
       <h1 className="text-2xl font-bold dark:text-white">
         {msg.universal.timetable}
