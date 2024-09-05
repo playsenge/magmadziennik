@@ -6,7 +6,6 @@ import LoadingSpinner from "../../../../../../components/loading-spinner";
 import HoverDetail from "../../../../../../components/hover-detail";
 import {
   getCachedClassStudents,
-  getCachedStudent,
   getCachedSubject,
   getCachedTeacher,
 } from "../../../../../../database/cache-helper";
