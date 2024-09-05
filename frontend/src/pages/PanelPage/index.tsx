@@ -235,9 +235,16 @@ export default function PanelPage() {
                         className="mx-auto mt-2 aspect-square size-24 cursor-pointer rounded-full border-4 border-gray-300 object-cover dark:border-gray-800"
                         onClick={() => setUserDropdownOpen(false)}
                       />
-                      <span className="mt-2 text-center text-2xl font-bold">
-                        {`${user.first_name} ${user.last_name}`}
-                      </span>
+                      <div className="flex flex-col items-center justify-center">
+                        <span className="mt-2 text-center text-2xl font-bold">
+                          {`${user.first_name} ${user.last_name}`}
+                        </span>
+                        {(pb.authStore?.model?.admin ?? false) && (
+                          <span className="mb-2 mt-1 rounded-full bg-red-500 px-2.5 py-[0.3rem] text-[0.7rem] font-bold uppercase">
+                            Admin
+                          </span>
+                        )}
+                      </div>
                       <span className="text-center">{user.email}</span>
                       <div className="mt-4 flex flex-row *:mx-auto *:mt-2 *:cursor-pointer *:items-center *:rounded-lg *:bg-black/15 *:p-3 *:text-5xl *:transition-colors">
                         <FaUser
