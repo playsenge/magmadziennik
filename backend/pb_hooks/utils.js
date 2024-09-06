@@ -25,13 +25,7 @@ module.exports = {
         items.forEach((ogItem) => {
             const item = fix(ogItem);
 
-            const fetchedStudent = fix($app.dao().findRecordById("students", item.student));
-
-            // If student is not in any class, only administrators can view their grades
-            if (fetchedStudent.class === "")
-                return;
-
-            const fetchedClass = fix($app.dao().findRecordById("classes", fetchedStudent.class));
+            const fetchedClass = fix($app.dao().findRecordById("classes", item.class));
             const pairs = fetchedClass.teacher_subject_pairs;
 
             const matchedPairs = fix(pairs[user.id]) || [];
