@@ -66,7 +66,7 @@ const generateTimetableEntry = (entry: TimetableEntry) => (
 );
 
 const generateTimetableEntryMobile = (entry: TimetableEntry) => (
-  <div className="block w-full border-t-[0.1rem] border-gray-200 bg-gray-300 p-3 dark:bg-slate-800">
+  <div className="block w-full border-t-[0.1rem] border-gray-200 bg-gray-100 p-3 dark:bg-slate-800">
     <div className="flex items-center">
       <p className="block text-gray-400">
         <span>
@@ -84,7 +84,7 @@ const generateTimetableEntryMobile = (entry: TimetableEntry) => (
         <br />
         <span className="text-sm">
           <span className="text-gray-400">{entry.room.display}</span>{" "}
-          <span className="ml-1 text-white">
+          <span className="ml-1 text-gray-500 dark:text-white">
             {entry.teacher.first_name} {entry.teacher.last_name}
           </span>
         </span>
