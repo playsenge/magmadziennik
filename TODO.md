@@ -7,7 +7,7 @@
     - teacher account: ✅ (public)
   - classes:
     - student account: ✅ (only classes that student is in)
-    - teacher account: ❌ (TEACHER SHOULD ONLY SEE CLASSES THAT THEY HAVE A KEY IN TEACHER_SUBJECT_PAIRS)
+    - teacher account: ❌ (IS SECURE BUT TEACHERS CANT VIEW ONLY CLASS NAMES FOR MESSAGING)
   - grades:
     - student account: ✅ (only own grades)
     - teacher account: ✅ (secured with hook)
