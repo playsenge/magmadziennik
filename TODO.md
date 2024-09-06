@@ -23,5 +23,8 @@
   - timeframes:
     - student account: ✅ (only classes that student is in)
     - teacher account: ❌ (IS SECURE BUT NON ADMINS CAN'T VIEW THEIR CLASSES TIMETABLES, PB HOOK NEEDED)
+  - messages:
+    - student account: ✅ (only messages sent or received by student)
+    - teacher account: ✅ (only messages sent or received by teacher)
 
 :mewo:
