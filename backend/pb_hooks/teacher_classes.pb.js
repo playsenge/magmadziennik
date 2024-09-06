@@ -6,11 +6,25 @@
 onRecordsListRequest((e) => {
    const utils = require(`${__hooks}/utils.js`);
 
-   e.result.items = utils.teacherFilter(e, e.result.items, utils.fix);
+   e.result.items = utils.teacherGradesAccessFilter(e, e.result.items, utils.fix);
 }, "grades");
 
 onRecordViewRequest((e) => {
    const utils = require(`${__hooks}/utils.js`);
-   
-   e.record = utils.teacherFilter(e, [e.record], utils.fix)[0];
+
+   e.record = utils.teacherGradesAccessFilter(e, [e.record], utils.fix)[0];
 }, "grades");
+
+// Non-admin teachers should only be allowed to see data of classes that they teach in
+// OR see only the name if they request it, no more
+onRecordsListRequest((e) => {
+   const utils = require(`${__hooks}/utils.js`);
+   
+   e.result.items = utils.teacherClassesAccessFilter(e, e.result.items, utils.fix);
+}, "classes");
+
+onRecordViewRequest((e) => {
+   const utils = require(`${__hooks}/utils.js`);
+
+   e.record = utils.teacherClassesAccessFilter(e, [e.record], utils.fix)[0];
+}, "classes");
