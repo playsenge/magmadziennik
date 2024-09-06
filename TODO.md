@@ -1,1 +1,27 @@
+- DB Security:
+  - students:
+    - student account: ✅ (only own account)
+    - teacher account: ✅ (teacher can see all students)
+  - teachers:
+    - student account: ✅ (public)
+    - teacher account: ✅ (public)
+  - classes:
+    - student account: ✅ (only classes that student is in)
+    - teacher account: ❌ (TEACHER SHOULD ONLY SEE CLASSES THAT THEY HAVE A KEY IN TEACHER_SUBJECT_PAIRS)
+  - grades:
+    - student account: ✅ (only own grades)
+    - teacher account: ✅ (secured with hook)
+  - rooms:
+    - student account: ✅ (public)
+    - teacher account: ✅ (public)
+  - subjects:
+    - student account: ✅ (public)
+    - teacher account: ✅ (public)
+  - timeframes:
+    - student account: ✅ (public)
+    - teacher account: ✅ (public)
+  - timeframes:
+    - student account: ✅ (only classes that student is in)
+    - teacher account: ❌ (IS SECURE BUT NON ADMINS CAN'T VIEW THEIR CLASSES TIMETABLES, PB HOOK NEEDED)
+
 :mewo:
