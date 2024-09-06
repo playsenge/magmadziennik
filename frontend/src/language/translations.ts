@@ -97,7 +97,7 @@ export default {
             "next_day": "Next day"
         },
         "timetable_general": {
-            "no_lessons": "No lessons this week!",
+            "no_lessons": "No lessons!",
         },
         "helpers": {
             "user": "Information about your account",
@@ -210,7 +210,7 @@ export default {
             "next_day": "Następny dzień"
         },
         "timetable_general": {
-            "no_lessons": "W tym tygodniu nie ma lekcji!",
+            "no_lessons": "Nie ma lekcji!",
         },
 
         "helpers": {
@@ -325,7 +325,7 @@ export default {
             "next_day": "Next day"
         },
         "timetable_general": {
-            "no_lessons": "Yo, no classes this week!",
+            "no_lessons": "Yo, no classes!",
         },
         "helpers": {
             "user": "Info about yo' acc",

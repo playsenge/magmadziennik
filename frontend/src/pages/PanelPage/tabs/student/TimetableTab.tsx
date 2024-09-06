@@ -6,28 +6,30 @@ import LoadingSpinner from "../../../../components/loading-spinner";
 import { msg } from "../../../../language";
 import { Button } from "../../../../components/ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaWind } from "react-icons/fa6";
+import React from "react";
 
-// Formats the timeframe for display
+const daysOfWeek = () => {
+  return [
+    msg.week_days.monday,
+    msg.week_days.tuesday,
+    msg.week_days.wednesday,
+    msg.week_days.thursday,
+    msg.week_days.friday,
+  ];
+};
+
+const formatSecondsFromMidnight = (seconds: number): string => {
+  const startHour = Math.floor(seconds / 3600)
+    .toString()
+    .padStart(2, "0");
+  const startMinute = ((seconds % 3600) / 60).toString().padStart(2, "0");
+
+  return `${startHour}:${startMinute}`;
+};
+
 const formatTimeframe = (timeframe: TimetableEntry["timeframe"]) => {
-  const startHour = Math.floor(timeframe.since_midnight_seconds / 3600)
-    .toString()
-    .padStart(2, "0");
-  const startMinute = ((timeframe.since_midnight_seconds % 3600) / 60)
-    .toString()
-    .padStart(2, "0");
-  const endHour = Math.floor(
-    (timeframe.since_midnight_seconds + timeframe.length) / 3600,
-  )
-    .toString()
-    .padStart(2, "0");
-  const endMinute = (
-    ((timeframe.since_midnight_seconds + timeframe.length) % 3600) /
-    60
-  )
-    .toString()
-    .padStart(2, "0");
-
-  return `${startHour}:${startMinute} - ${endHour}:${endMinute}`;
+  return `${formatSecondsFromMidnight(timeframe.since_midnight_seconds)} - ${formatSecondsFromMidnight(timeframe.since_midnight_seconds + timeframe.length)}`;
 };
 
 // Helper function to merge multiple timetables
@@ -49,14 +51,44 @@ const mergeTimetables = (timetables: Timetable[]): Timetable => {
 // Function to generate timetable entry JSX
 const generateTimetableEntry = (entry: TimetableEntry) => (
   <div className="rounded p-1 hover:bg-white/10">
-    <div className="flex flex-row gap-2">
-      <span className="font-bold">{entry.subject.name}</span>
-      <p className="order-2 ml-auto flex h-6 min-w-6 items-center justify-center rounded border p-2 font-bold text-black dark:text-white">
+    <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-col">
+        <span className="font-bold">{entry.subject.name}</span>
+        <div>
+          ({entry.teacher.first_name} {entry.teacher.last_name})
+        </div>
+      </div>
+      <p className="ml-auto flex h-6 items-center justify-center rounded border p-2 font-bold text-black dark:text-white">
         {entry.room.display}
       </p>
     </div>
-    <div>
-      ({entry.teacher.first_name} {entry.teacher.last_name})
+  </div>
+);
+
+const generateTimetableEntryMobile = (entry: TimetableEntry) => (
+  <div className="block w-full border-t-[0.1rem] border-gray-200 bg-gray-300 p-3 dark:bg-slate-800">
+    <div className="flex items-center">
+      <p className="block text-gray-400">
+        <span>
+          {formatSecondsFromMidnight(entry.timeframe.since_midnight_seconds)}
+        </span>
+        <br />
+        <span>
+          {formatSecondsFromMidnight(
+            entry.timeframe.since_midnight_seconds + entry.timeframe.length,
+          )}
+        </span>
+      </p>
+      <p className="ml-4 block">
+        <span className="text-black dark:text-white">{entry.subject.name}</span>
+        <br />
+        <span className="text-sm">
+          <span className="text-gray-400">{entry.room.display}</span>{" "}
+          <span className="ml-1 text-white">
+            {entry.teacher.first_name} {entry.teacher.last_name}
+          </span>
+        </span>
+      </p>
     </div>
   </div>
 );
@@ -64,6 +96,7 @@ const generateTimetableEntry = (entry: TimetableEntry) => (
 // Modified transformTimetable function
 const transformTimetable = (timetable: Timetable) => {
   const transformed: Record<string, Record<string, JSX.Element>> = {};
+  const transformedMobile: Record<string, Record<string, JSX.Element>> = {};
   const timeRangeMap: Record<string, number> = {};
 
   for (const [day, entries] of Object.entries(timetable.entries)) {
@@ -71,6 +104,7 @@ const transformTimetable = (timetable: Timetable) => {
       const timeRange = formatTimeframe(entry.timeframe);
       if (!transformed[timeRange]) {
         transformed[timeRange] = {};
+        transformedMobile[timeRange] = {};
         timeRangeMap[timeRange] = entry.timeframe.since_midnight_seconds;
       }
 
@@ -78,18 +112,24 @@ const transformTimetable = (timetable: Timetable) => {
         transformed[timeRange][day] = (
           <>
             {transformed[timeRange][day]}
-            <div className="mb-2 border-b border-gray-300 pt-1">
-              {generateTimetableEntry(entry)}
-            </div>
+            <div className="mb-2 pt-2">{generateTimetableEntry(entry)}</div>
+          </>
+        );
+
+        transformedMobile[timeRange][day] = (
+          <>
+            {transformedMobile[timeRange][day]}
+            <div className="mb-4">{generateTimetableEntryMobile(entry)}</div>
           </>
         );
       } else {
         transformed[timeRange][day] = generateTimetableEntry(entry);
+        transformedMobile[timeRange][day] = generateTimetableEntryMobile(entry);
       }
     });
   }
 
-  return { transformed, timeRangeMap };
+  return { transformed, transformedMobile, timeRangeMap };
 };
 
 // Timetable table component
@@ -107,7 +147,7 @@ const TimetableTable = ({
     [timetables],
   );
 
-  const { transformed, timeRangeMap } = useMemo(
+  const { transformed, transformedMobile, timeRangeMap } = useMemo(
     () => transformTimetable(mergedTimetable),
     [mergedTimetable],
   );
@@ -121,92 +161,99 @@ const TimetableTable = ({
   );
 
   const days = Object.keys(mergedTimetable.entries);
-  const daysOfWeek = [
-    msg.week_days.monday,
-    msg.week_days.tuesday,
-    msg.week_days.wednesday,
-    msg.week_days.thursday,
-    msg.week_days.friday,
-  ];
 
   const daysOfWeekDates = [
     new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1),
+      new Date(currentDate).setDate(
+        currentDate.getDate() - currentDate.getDay() + 1,
+      ),
     ).toLocaleDateString(),
     new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 2),
+      new Date(currentDate).setDate(
+        currentDate.getDate() - currentDate.getDay() + 2,
+      ),
     ).toLocaleDateString(),
     new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 3),
+      new Date(currentDate).setDate(
+        currentDate.getDate() - currentDate.getDay() + 3,
+      ),
     ).toLocaleDateString(),
     new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 4),
+      new Date(currentDate).setDate(
+        currentDate.getDate() - currentDate.getDay() + 4,
+      ),
     ).toLocaleDateString(),
     new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 5),
+      new Date(currentDate).setDate(
+        currentDate.getDate() - currentDate.getDay() + 5,
+      ),
     ).toLocaleDateString(),
   ];
 
   return (
-    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-      <thead>
-        <tr>
-          <th className="w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"></th>
-          {/* Mobile: Only show one day */}
-          <th className="block w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:hidden dark:text-gray-300">
-            <div className="flex flex-col items-start">
-              <span>{daysOfWeek[currentDayIndex]}</span>
-              <span className="text-xs text-gray-500">
-                {daysOfWeekDates[currentDayIndex]}
-              </span>
-            </div>
-          </th>
-          {/* Desktop: Show all five days */}
-          {days.map((day, index) => (
-            <th
-              key={day}
-              className="hidden w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:table-cell dark:text-gray-300"
-            >
-              <div className="flex flex-col items-start">
-                <span>{daysOfWeek[index]}</span>
-                <span className="text-xs text-gray-500">
-                  {daysOfWeekDates[index]}
-                </span>
-              </div>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className="relative divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-        {sortedTimeRanges.map((timeRange) => (
-          <tr key={timeRange}>
-            <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
-              {timeRange}
-            </td>
-            {/* Mobile: Only show one day */}
-            <td className="block w-[18%] min-w-[18%] max-w-[18%] px-6 py-4 text-sm text-gray-500 md:hidden dark:text-gray-400">
-              {transformed[timeRange][days[currentDayIndex]] || "-"}
-            </td>
+    <>
+      <table className="hidden w-full min-w-full divide-y divide-gray-200 lg:table dark:divide-gray-700">
+        <thead>
+          <tr>
+            <th className="w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"></th>
             {/* Desktop: Show all five days */}
-            {days.map((day) => (
-              <td
+            {days.map((day, index) => (
+              <th
                 key={day}
-                className="hidden w-[18%] min-w-[18%] max-w-[18%] px-6 py-4 text-sm text-gray-500 md:table-cell dark:text-gray-400"
+                className="hidden w-[120px] px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:table-cell dark:text-gray-300"
               >
-                {transformed[timeRange][day] || "-"}
-              </td>
+                <div className="flex flex-col items-start">
+                  <span>{daysOfWeek()[index]}</span>
+                  <span className="text-xs text-gray-500">
+                    {daysOfWeekDates[index]}
+                  </span>
+                </div>
+              </th>
             ))}
           </tr>
+        </thead>
+        <tbody className="relative divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+          {sortedTimeRanges.map((timeRange) => (
+            <tr key={timeRange}>
+              <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
+                {timeRange}
+              </td>
+              {/* Desktop: Show all five days */}
+              {days.map((day) => (
+                <td
+                  key={day}
+                  className="hidden w-[18%] min-w-[18%] max-w-[18%] px-6 py-4 text-sm text-gray-500 md:table-cell dark:text-gray-400"
+                >
+                  {transformed[timeRange][day] || ""}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="block lg:hidden">
+        {sortedTimeRanges.map((timeRange) => (
+          <React.Fragment key={timeRange}>
+            {transformedMobile[timeRange][days[currentDayIndex]]}
+          </React.Fragment>
         ))}
-      </tbody>
-    </table>
+      </div>
+    </>
   );
 };
 
 // Main component for student timetable page
 export default function StudentTimetablePage() {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [currentDayIndex, setCurrentDayIndex] = useState(0); // State for tracking which day to display on mobile
+  const [currentDate, setCurrentDate] = useState<Date>(() => {
+    const prevMonday = new Date();
+    prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
+
+    return prevMonday;
+  });
+
+  const [currentDayIndex, setCurrentDayIndex] = useState(
+    (new Date().getDay() + 6) % 7,
+  ); // State for tracking which day to display on mobile
 
   const {
     data: timetables,
@@ -217,10 +264,20 @@ export default function StudentTimetablePage() {
   });
 
   const handlePreviousDay = () => {
+    if (currentDayIndex === 0) {
+      setCurrentDayIndex(4);
+      handlePreviousWeek();
+      return;
+    }
     setCurrentDayIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
   const handleNextDay = () => {
+    if (currentDayIndex === 4) {
+      setCurrentDayIndex(0);
+      handleNextWeek();
+      return;
+    }
     setCurrentDayIndex((prevIndex) => Math.min(prevIndex + 1, 4));
   };
 
@@ -241,11 +298,33 @@ export default function StudentTimetablePage() {
   };
 
   if (timetableLoading) return <LoadingSpinner />;
-  if (timetableError) return <div>{msg.universal.server_side_error}</div>;
+  if (timetableError)
+    return (
+      <div className="text-black dark:text-white">
+        {msg.universal.server_side_error}
+      </div>
+    );
 
   const btns = (
     <>
-      <div className="mb-4 flex justify-between">
+      <div className="my-4 flex items-center justify-between text-black lg:hidden dark:text-white">
+        <Button onClick={handlePreviousDay}>
+          <IoIosArrowBack />
+        </Button>
+
+        <span className="font-semibold">
+          {daysOfWeek()[currentDayIndex]}
+          {", "}
+          {new Date(
+            currentDate.getTime() + currentDayIndex * 24 * 60 * 60 * 1000,
+          ).toLocaleDateString()}
+        </span>
+
+        <Button onClick={handleNextDay}>
+          <IoIosArrowForward />
+        </Button>
+      </div>
+      <div className="my-4 hidden justify-between lg:flex">
         <Button onClick={handlePreviousWeek}>
           <IoIosArrowBack />
           {msg.timetable_tab_buttons.week_ago}
@@ -265,25 +344,6 @@ export default function StudentTimetablePage() {
         {msg.universal.timetable}
       </h1>
 
-      <div className="my-4 flex justify-between">
-        <Button
-          className="lg:hidden"
-          onClick={handlePreviousDay}
-          disabled={currentDayIndex === 0}
-        >
-          <IoIosArrowBack />
-          {msg.timetable_tab_buttons.previous_day}
-        </Button>
-
-        <Button
-          className="lg:hidden"
-          onClick={handleNextDay}
-          disabled={currentDayIndex === 4}
-        >
-          {msg.timetable_tab_buttons.next_day}
-          <IoIosArrowForward />
-        </Button>
-      </div>
       {btns}
 
       <TimetableTable
@@ -301,15 +361,28 @@ export default function StudentTimetablePage() {
       {btns}
 
       <span className="text-black dark:text-white">
-        {msg.timetable_general.no_lessons} (
-        {new Date(
-          currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1),
-        ).toLocaleDateString()}
-        {" - "}
-        {new Date(
-          currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 5),
-        ).toLocaleDateString()}
-        )
+        <div className="mt-6 flex flex-col items-center justify-center gap-2">
+          <FaWind className="text-4xl" />
+          <span className="text-2xl">{msg.timetable_general.no_lessons}</span>
+        </div>
+
+        <div className="mt-2 flex items-center justify-center font-semibold italic">
+          <div className="hidden lg:block">
+            (
+            {new Date(
+              new Date().setDate(
+                new Date().getDate() - new Date().getDay() + 1,
+              ),
+            ).toLocaleDateString()}
+            {" - "}
+            {new Date(
+              new Date().setDate(
+                new Date().getDate() - new Date().getDay() + 5,
+              ),
+            ).toLocaleDateString()}
+            )
+          </div>
+        </div>
       </span>
     </>
   );
