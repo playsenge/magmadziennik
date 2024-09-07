@@ -4,10 +4,10 @@
     - teacher account: ❌ (CAN VIEW ALL DETAILS SUCH AS DOB, PHONE OF ALL STUDENTS!!! TO BE FIXED WITH PB HOOK)
   - classes:
     - student account: ✅ (only classes that student is in)
-    - teacher account: ❌ (IS SECURE BUT TEACHERS CANT VIEW ONLY CLASS NAMES FOR MESSAGING)
+    - teacher account: ❌ (HAS HOOK BUT NEEDS UPDATE FOR NEW SCHEMA, TEACHERS CANT VIEW ONLY CLASS NAMES FOR MESSAGING)
   - grades:
     - student account: ✅ (only own grades)
-    - teacher account: ✅ (secured with hook)
+    - teacher account: ❌ (HAS HOOK BUT NEEDS UPDATE FOR NEW SCHEMA)
   - rooms:
     - student account: ✅ (public)
     - teacher account: ✅ (public)
