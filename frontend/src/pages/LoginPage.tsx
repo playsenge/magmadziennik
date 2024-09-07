@@ -1,7 +1,7 @@
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import Footer, { beforeFooterStyle } from "../components/footer";
@@ -11,12 +11,6 @@ import LoadingSpinner from "../components/loading-spinner";
 import { msg } from "../language";
 
 export default function LoginPage() {
-  const location = useLocation();
-  const teacherLogin = useMemo(
-    () => location.pathname.slice(1) === "teacher-login",
-    [location],
-  );
-
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
@@ -52,9 +46,7 @@ export default function LoginPage() {
       >
         <form className="flex flex-col items-center justify-center gap-5 rounded-xl bg-white p-12 text-white shadow-xl shadow-gray-200 dark:bg-gray-700 dark:shadow-slate-800">
           <h1 className="mb-4 text-center text-4xl font-bold text-black dark:text-white">
-            {teacherLogin
-              ? msg.login_page.teacher_header
-              : msg.login_page.student_header}
+            {msg.login_page.header}
           </h1>
           {error !== LoginResult.SUCCESS && (
             <p className="mb-2 text-red-600">{getErrorMessage()}</p>
@@ -80,15 +72,8 @@ export default function LoginPage() {
           >
             {msg.login_page.forgot_password}
           </Link>
-          <Link
-            to={teacherLogin ? "/login" : "/teacher-login"}
-            className="text-black underline dark:text-white"
-          >
-            {teacherLogin
-              ? msg.login_page.student_login
-              : msg.login_page.teacher_login}
-          </Link>
           <Button
+            className="mt-4"
             type="submit"
             disabled={loading}
             onClick={async (e) => {
@@ -102,7 +87,7 @@ export default function LoginPage() {
               setLoading(true);
               setError(LoginResult.SUCCESS);
 
-              const result = await login(email, password, teacherLogin);
+              const result = await login(email, password);
 
               switch (result) {
                 case LoginResult.SUCCESS:

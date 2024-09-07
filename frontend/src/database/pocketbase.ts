@@ -22,9 +22,7 @@ pb.authStore.onChange(() => {
 });
 
 export const getAvatarUrl = (user: Student | Teacher | UserGeneric) => {
-    if (!user.avatar)
-        return `https://api.dicebear.com/9.x/identicon/svg?seed=${user.id}&backgroundColor=ffffff`;
-    return pb.files.getUrl(user ?? {}, user?.avatar ?? "");
+    return `https://api.dicebear.com/9.x/identicon/svg?seed=${user.id}&backgroundColor=ffffff`;
 };
 
 export const userAvatar = () => {
@@ -35,10 +33,10 @@ export const formatUsername = (username: string) => {
     return username.replace(/[^0-9A-Za-z_-]/g, "");
 };
 
-export const login = async (email: string, password: string, teacher?: boolean): Promise<LoginResult> => {
+export const login = async (email: string, password: string): Promise<LoginResult> => {
     try {
 
-        await pb.collection(teacher ? "teachers" : "students").authWithPassword(email, password);
+        await pb.collection("users").authWithPassword(email, password);
     } catch (e) {
         if (e instanceof ClientResponseError) {
             if (e.status === 400) {  // Check for the status code instead of response.code
@@ -78,34 +76,34 @@ export const getClasses = async (): Promise<SchoolClass[]> => {
 
     await getSubjects();
     await getTeachers(Array.from(new Set(data.flatMap(x => Object.keys(x.teacher_subject_pairs))).values()));
-    await Promise.all(data.map(async (classItem) => {
-        return await getClassStudents(classItem.id);
-    }));
+    // await Promise.all(data.map(async (classItem) => {
+    //     return await getClassStudents(classItem.id);
+    // }));
 
     setCache(key, data);
 
     return data;
 };
 
-export const getSubjectsForStudent = async (): Promise<Subject[]> => {
-    const subjectIds = pb.authStore!.model!.subjects ?? [];
-    if (subjectIds.length <= 0) return [];
+// export const getSubjectsForStudent = async (): Promise<Subject[]> => {
+//     const subjectIds = pb.authStore!.model!.subjects ?? [];
+//     if (subjectIds.length <= 0) return [];
 
-    const key = "getSubjectsForStudent";
+//     const key = "getSubjectsForStudent";
 
-    const cachedData = getCache<Subject[]>(key);
-    if (cachedData) return cachedData;
+//     const cachedData = getCache<Subject[]>(key);
+//     if (cachedData) return cachedData;
 
-    const data = SubjectBuilder(await pb.collection("subjects").getFullList({
-        // TODO: potentially refactor into queried parameter with pb.filter()??? (shouldn't cause SQL injection tho, it's sanitized server-side)
-        filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
-        requestKey: key
-    }));
+//     const data = SubjectBuilder(await pb.collection("subjects").getFullList({
+//         // TODO: potentially refactor into queried parameter with pb.filter()??? (shouldn't cause SQL injection tho, it's sanitized server-side)
+//         filter: subjectIds.map((id: string) => `id='${id}'`).join("||"),
+//         requestKey: key
+//     }));
 
-    setCache(key, data);
+//     setCache(key, data);
 
-    return data;
-};
+//     return data;
+// };
 
 export const getStudentGrades = async (): Promise<Grade[]> => {
     if (!pb.authStore.isValid) return [];
@@ -226,8 +224,8 @@ export const getTeachers = async (ids: string[]): Promise<Teacher[] | undefined>
 
     let fetchedTeachers: Teacher[] = [];
     if (idsToFetch.length > 0) {
-        fetchedTeachers = await TeacherBuilder(await pb.collection("teachers").getFullList({
-            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+        fetchedTeachers = await TeacherBuilder(await pb.collection("users").getFullList({
+            filter: `type='teacher'&&(${idsToFetch.map(id => `id='${id}'`).join("||")})`,
             requestKey: null,
         }));
 
@@ -258,8 +256,8 @@ export const getStudents = async (ids: string[]): Promise<Student[] | undefined>
 
     let fetchedStudents: Student[] = [];
     if (idsToFetch.length > 0) {
-        fetchedStudents = await StudentBuilder(await pb.collection("students").getFullList({
-            filter: idsToFetch.map(id => `id='${id}'`).join("||"),
+        fetchedStudents = await StudentBuilder(await pb.collection("users").getFullList({
+            filter: `type='student'&&(${idsToFetch.map(id => `id='${id}'`).join("||")})`,
             requestKey: null,
         }));
 
@@ -272,21 +270,22 @@ export const getStudents = async (ids: string[]): Promise<Student[] | undefined>
     return [...cachedStudents, ...fetchedStudents];
 };
 
-export const getClassStudents = async (id: string): Promise<Student[] | undefined> => {
-    const key = `getClassStudents-${id}`;
+// WRONG
+// export const getClassStudents = async (id: string): Promise<Student[] | undefined> => {
+//     const key = `getClassStudents-${id}`;
 
-    const cachedData = getCache<Student[]>(key);
-    if (cachedData) return cachedData;
+//     const cachedData = getCache<Student[]>(key);
+//     if (cachedData) return cachedData;
 
-    const data = StudentBuilder(await pb.collection("students").getFullList({
-        filter: `classes~'${id}'`,
-        requestKey: key
-    }));
+//     const data = StudentBuilder(await pb.collection("students").getFullList({
+//         filter: `classes~'${id}'`,
+//         requestKey: key
+//     }));
 
-    setCache(key, data);
+//     setCache(key, data);
 
-    return data;
-};
+//     return data;
+// };
 
 export const getTimeframes = async (ids: string[]): Promise<Timeframe[] | undefined> => {
     if (!pb.authStore.isValid) return undefined;

@@ -245,15 +245,27 @@ const TimetableTable = ({
 // Main component for student timetable page
 export default function StudentTimetablePage() {
   const [currentDate, setCurrentDate] = useState<Date>(() => {
-    const prevMonday = new Date();
-    prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
+    const today = new Date();
+    const dayOfWeek = today.getDay();
 
-    return prevMonday;
+    // If today is Saturday (6) or Sunday (0), calculate the next Monday
+    if (dayOfWeek === 6) {
+      // Saturday: Add 2 days to get to Monday
+      today.setDate(today.getDate() + 2);
+    } else if (dayOfWeek === 0) {
+      // Sunday: Add 1 day to get to Monday
+      today.setDate(today.getDate() + 1);
+    }
+
+    // Otherwise, return today (Monday to Friday)
+    return today;
   });
 
   const [currentDayIndex, setCurrentDayIndex] = useState(
-    (new Date().getDay() + 6) % 7,
+    [6, 0].includes(new Date().getDay()) ? 0 : (new Date().getDay() + 6) % 7,
   ); // State for tracking which day to display on mobile
+
+  console.log({ currentDate, currentDayIndex });
 
   const {
     data: timetables,

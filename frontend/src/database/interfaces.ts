@@ -11,21 +11,21 @@ export interface UserGeneric {
     email: string;
     first_name: string;
     last_name: string;
-    avatar: string;
+    date_of_birth: Date;
+    address: string;
+    phone_number: string;
     created: Date;
     updated: Date;
 }
 
-export interface Student extends UserGeneric {
-    phone_number: string;
-    class_ids: string[];
-    date_of_birth: Date;
-    address: string;
-}
+export type Student = UserGeneric;
 
 export interface Teacher extends UserGeneric {
     admin: boolean;
-    subject_ids: string[];
+}
+
+export interface Guardian extends UserGeneric {
+    mentees_ids: string[];
 }
 
 export interface Subject {

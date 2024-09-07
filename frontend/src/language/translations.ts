@@ -26,12 +26,9 @@ export default {
             "log_to_console": "Log to Console",
         },
         "login_page": {
-            "teacher_header": "Teacher Login",
-            "student_header": "Student Login",
+            "header": "Login",
             "incorrect_email_or_password": "Incorrect email or password",
             "forgot_password": "Forgot password?",
-            "teacher_login": "Switch to teacher login?",
-            "student_login": "Switch to student login?"
         },
         "register_page": {
             "password_too_short": "Your password must be at least 8 characters long.",
@@ -139,12 +136,9 @@ export default {
             "log_to_console": "Wypisz do konsoli",
         },
         "login_page": {
-            "teacher_header": "Logowanie nauczyciela",
-            "student_header": "Logowanie ucznia",
+            "header": "Logowanie",
             "incorrect_email_or_password": "Nieprawidłowy e-mail lub hasło",
             "forgot_password": "Nie pamiętasz hasła?",
-            "teacher_login": "Przejść do logowania nauczyciela?",
-            "student_login": "Przejść do logowania ucznia?"
         },
         "register_page": {
             "password_too_short": "Twoje hasło musi mieć co najmniej 8 znaków.",
@@ -254,12 +248,9 @@ export default {
             "log_to_console": "Yeet to Console"
         },
         "login_page": {
-            "teacher_header": "Educator Hoppin In'",
-            "student_header": "Teachee Hoppin In'",
+            "header": "Hoppin In'",
             "incorrect_email_or_password": "Bruh, wrong email or secret code",
             "forgot_password": "Forgot your secret code?",
-            "teacher_login": "You an educator bro?",
-            "student_login": "You go learnin' bro?"
         },
         "register_page": {
             "password_too_short": "Yo, your secret code needs at least 8 letters."

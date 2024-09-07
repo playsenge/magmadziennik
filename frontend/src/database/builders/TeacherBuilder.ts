@@ -4,7 +4,7 @@ import { Teacher } from "../interfaces";
 export default (data: RecordModel[]): Teacher[] => {
     return data.map((data) => ({
         ...data,
-        subject_ids: data.subjects,
+        date_of_birth: new Date(data.date_of_birth),
         created: new Date(data.created),
         updated: new Date(data.updated),
     })) as unknown as Teacher[];

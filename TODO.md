@@ -1,10 +1,7 @@
 - DB Security:
-  - students:
-    - student account: ✅ (only own account)
-    - teacher account: ✅ (teacher can see all students)
-  - teachers:
-    - student account: ✅ (public)
-    - teacher account: ✅ (public)
+  - users:
+    - student account: ❌ (CAN VIEW ALL DETAILS SUCH AS DOB, PHONE OF ALL TEACHERS!!! TO BE FIXED WITH PB HOOK)
+    - teacher account: ❌ (CAN VIEW ALL DETAILS SUCH AS DOB, PHONE OF ALL STUDENTS!!! TO BE FIXED WITH PB HOOK)
   - classes:
     - student account: ✅ (only classes that student is in)
     - teacher account: ❌ (IS SECURE BUT TEACHERS CANT VIEW ONLY CLASS NAMES FOR MESSAGING)

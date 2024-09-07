@@ -37,7 +37,6 @@ const App = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/teacher-login" element={<LoginPage />} />
         <Route path="/panel" element={<PanelPage />} />
         <Route path="/panel/:route" element={<PanelPage />} />
         <Route path="/logout" element={<LogoutPage />} />

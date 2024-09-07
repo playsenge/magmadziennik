@@ -1,7 +1,7 @@
 import {
   getStudentGrades,
   getSubjects,
-  getSubjectsForStudent,
+  // getSubjectsForStudent,
   getTimetable,
   login,
   pb,
@@ -19,10 +19,10 @@ export default function DevPage() {
     "subjects",
     getSubjects,
   );
-  const { data: studentSubjects, error: studentSubjectsError } = useQuery(
-    "studentSubjects",
-    getSubjectsForStudent,
-  );
+  // const { data: studentSubjects, error: studentSubjectsError } = useQuery(
+  //   "studentSubjects",
+  //   getSubjectsForStudent,
+  // );
   const { data: grades, error: gradesError } = useQuery(
     "grades",
     getStudentGrades,
@@ -40,7 +40,7 @@ export default function DevPage() {
 
   const handleDemoStudentLogin = async () => {
     try {
-      await login("demo@demo.com", "12345678");
+      await login("student@demo.com", "12345678");
       rerender();
     } catch (error) {
       devMsg("Login failed: " + error);
@@ -49,20 +49,28 @@ export default function DevPage() {
 
   const handleDemoTeacherLogin = async () => {
     try {
-      await login("demo@demo.com", "12345678", true);
+      await login("teacher@demo.com", "12345678");
       rerender();
     } catch (error) {
       devMsg("Login failed: " + error);
     }
   };
 
-  if (subjectsError || studentSubjectsError || gradesError || timetableError)
+  if (
+    subjectsError /*|| studentSubjectsError*/ ||
+    gradesError ||
+    timetableError
+  )
     return (
       <>
         <h1>{msg.universal.server_side_error}</h1>
         <pre>
           {JSON.stringify(
-            { subjectsError, studentSubjectsError, gradesError },
+            {
+              subjectsError,
+              /*studentSubjectsError,*/ gradesError,
+              timetableError,
+            },
             undefined,
             2,
           )}
@@ -98,7 +106,7 @@ export default function DevPage() {
 
       <section>
         <h2 className="text-xl font-semibold">{msg.dev_page.your_subjects}</h2>
-        {studentSubjects ? (
+        {/* {studentSubjects ? (
           <ul className="ml-6 list-disc space-y-1">
             {studentSubjects.map((subject) => (
               <li key={subject.id} className="text-sm">
@@ -114,7 +122,7 @@ export default function DevPage() {
           </ul>
         ) : (
           <LoadingSpinner />
-        )}
+        )} */}
       </section>
 
       <section>

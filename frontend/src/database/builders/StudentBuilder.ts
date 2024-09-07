@@ -4,7 +4,6 @@ import { Student } from "../interfaces";
 export default (data: RecordModel[]): Student[] => {
     return data.map((data) => ({
         ...data,
-        class_ids: data.classes,
         date_of_birth: new Date(data.date_of_birth),
         created: new Date(data.created),
         updated: new Date(data.updated),
