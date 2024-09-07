@@ -177,7 +177,6 @@ export default function PanelPage() {
       {(userDropdownOpen || mobileExpanded) && (
         <TransparentCover
           onClick={() => {
-            console.log("foo");
             setUserDropdownOpen(false);
             setMobileExpanded(false);
           }}

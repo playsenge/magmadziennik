@@ -265,8 +265,6 @@ export default function StudentTimetablePage() {
     [6, 0].includes(new Date().getDay()) ? 0 : (new Date().getDay() + 6) % 7,
   ); // State for tracking which day to display on mobile
 
-  console.log({ currentDate, currentDayIndex });
-
   const {
     data: timetables,
     error: timetableError,
